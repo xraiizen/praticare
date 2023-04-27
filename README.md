@@ -77,7 +77,23 @@ Nous sommes persuadés que notre solution répond à un réel besoin dans le mar
 
 ### Construit Avec
 
-Cette section doit répertorier tous les principaux frameworks/bibliothèques utilisés pour démarrer votre projet.
+## Backend :
+
+Node.js avec Express
+ - Node.js est une plateforme JavaScript qui permet de développer des applications côté serveur.
+ - Express est un framework web pour Node.js, qui permet de créer des API RESTful rapidement et facilement.
+
+## Frontend:
+
+Flutter
+ - Un développement rapide : Flutter offre une expérience de développement rapide grâce à la fonctionnalité Hot Reload, qui permet de voir les modifications apportées au code en temps réel.
+
+ - Une grande flexibilité : Flutter offre une grande flexibilité en permettant de créer des interfaces utilisateur personnalisées et animées.
+
+ - Une performance élevée : Flutter utilise un moteur de rendu graphique personnalisé, qui permet d'obtenir des performances élevées et une expérience utilisateur fluide.
+
+ - Une compatibilité multi-plateforme : Flutter permet de développer des applications pour Android, iOS, le web et le bureau, ce qui vous permet de toucher un large public avec une seule base de code.
+
 
 <p align="right"><a href="#readme-top">retour en haut</a></p>
 
