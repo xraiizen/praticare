@@ -29,6 +29,8 @@
     <a href="https://github.com/xraiizen/praticare/issues">Rapportez une Erreur</a>
     ·
     <a href="https://github.com/xraiizen/praticare/issues">Demander une fonctionnalité</a>
+    ·
+    <a href="https://docs.github.com/fr/issues">Docs GitHub</a>
   </p>
 </div>
 
@@ -75,7 +77,32 @@ Nous sommes persuadés que notre solution répond à un réel besoin dans le mar
 
 ### Construit Avec
 
-Cette section doit répertorier tous les principaux frameworks/bibliothèques utilisés pour démarrer votre projet.
+## Backend :
+
+Node.js avec Express
+ - Node.js est une plateforme JavaScript qui permet de développer des applications côté serveur.
+ - Express est un framework web pour Node.js, qui permet de créer des API RESTful rapidement et facilement.
+
+Format d'échange de données JSON
+ - JSON peut être facilement converti en objets JavaScript côté client et en objets JSON côté serveur, ce qui facilite la communication entre le frontend et le backend.
+ -  En utilisant JSON, vous pouvez également bénéficier de la facilité d'utilisation des API RESTful, qui permettent de transférer des données entre le frontend et le backend via des requêtes HTTP.
+ - Node.js dispose d'un module appelé "JSON" qui permet de travailler facilement avec le format JSON. De même, Flutter dispose d'une bibliothèque Dart appelée "dart:convert" qui permet de travailler avec le format JSON côté client.
+ 
+MySQL
+ - MySQL est une base de données relationnelle open source qui est utilisée par de nombreuses applications web.
+ - Elle offre une performance élevée et une grande compatibilité avec les technologies de backend courantes.
+
+## Frontend:
+
+Flutter
+ - Un développement rapide : Flutter offre une expérience de développement rapide grâce à la fonctionnalité Hot Reload, qui permet de voir les modifications apportées au code en temps réel.
+
+ - Une grande flexibilité : Flutter offre une grande flexibilité en permettant de créer des interfaces utilisateur personnalisées et animées.
+
+ - Une performance élevée : Flutter utilise un moteur de rendu graphique personnalisé, qui permet d'obtenir des performances élevées et une expérience utilisateur fluide.
+
+ - Une compatibilité multi-plateforme : Flutter permet de développer des applications pour Android, iOS, le web et le bureau, ce qui vous permet de toucher un large public avec une seule base de code.
+
 
 <p align="right"><a href="#readme-top">retour en haut</a></p>
 
