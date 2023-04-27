@@ -82,6 +82,10 @@ Nous sommes persuadés que notre solution répond à un réel besoin dans le mar
 Node.js avec Express
  - Node.js est une plateforme JavaScript qui permet de développer des applications côté serveur.
  - Express est un framework web pour Node.js, qui permet de créer des API RESTful rapidement et facilement.
+ 
+MySQL
+ - MySQL est une base de données relationnelle open source qui est utilisée par de nombreuses applications web.
+ - Elle offre une performance élevée et une grande compatibilité avec les technologies de backend courantes.
 
 ## Frontend:
 
