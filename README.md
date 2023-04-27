@@ -29,6 +29,8 @@
     <a href="https://github.com/xraiizen/praticare/issues">Rapportez une Erreur</a>
     ·
     <a href="https://github.com/xraiizen/praticare/issues">Demander une fonctionnalité</a>
+    ·
+    <a href="https://docs.github.com/fr/issues">Docs GitHub</a>
   </p>
 </div>
 
