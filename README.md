@@ -86,8 +86,7 @@ Node.js avec Express
 Format d'échange de données JSON
  - JSON peut être facilement converti en objets JavaScript côté client et en objets JSON côté serveur, ce qui facilite la communication entre le frontend et le backend.
  -  En utilisant JSON, vous pouvez également bénéficier de la facilité d'utilisation des API RESTful, qui permettent de transférer des données entre le frontend et le backend via des requêtes HTTP.
-
-Node.js dispose d'un module appelé "JSON" qui permet de travailler facilement avec le format JSON. De même, Flutter dispose d'une bibliothèque Dart appelée "dart:convert" qui permet de travailler avec le format JSON côté client.
+ - Node.js dispose d'un module appelé "JSON" qui permet de travailler facilement avec le format JSON. De même, Flutter dispose d'une bibliothèque Dart appelée "dart:convert" qui permet de travailler avec le format JSON côté client.
  
 MySQL
  - MySQL est une base de données relationnelle open source qui est utilisée par de nombreuses applications web.
