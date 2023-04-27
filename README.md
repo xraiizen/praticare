@@ -19,12 +19,12 @@
   <h3 align="center">PRATICARE</h3>
 
   <p align="center">
-    Le meilleur projet etudiant de tout les temps
+    Le meilleur projet etudiant de tous les temps !
     <br />
     <a href="https://github.com/xraiizen/praticare"><strong>Explorer les docs »</strong></a>
     <br />
     <br />
-    <a href="https://github.com/othneildrew/Best-README-Template">Voir la Démo</a>
+    <a href="https://github.com/xraiizen/praticare">Voir la Démo</a>
     ·
     <a href="https://github.com/xraiizen/praticare/issues">Rapportez une Erreur</a>
     ·
@@ -153,7 +153,7 @@ Distribué sous la licence MIT. Voir `LICENSE.txt` pour plus d'informations.
 
 Morvan Etienne - [Site Web](https://etiennemorvan.com)
 
-Lien du projet: [praticare](https://github.com/xraiizen/praticare)
+Lien du projet - [Praticare](https://github.com/xraiizen/praticare)
 
 <p align="right"><a href="#readme-top">retour en haut</a></p>
 
