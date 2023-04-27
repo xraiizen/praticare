@@ -8,9 +8,6 @@
 *** for contributors-url, forks-url, etc. This is an optional, concise syntax you may use.
 *** https://www.markdownguide.org/basic-syntax/#reference-style-links
 -->
-[[![Issues][issues-shield]][https://github.com/xraiizen/praticare/issues]](https://img.shields.io/bitbucket/issues/xraiizen/praticare?style=for-the-badge)
-
-
 
 <!-- PROJECT LOGO -->
 <br />
@@ -37,7 +34,7 @@
 
 
 
-<!-- TABLE OF CONTENTS -->
+<!-- TABLE DES MATIÈRES -->
 <details>
   <summary>Table des Matières</summary>
   <ol>
@@ -63,8 +60,8 @@
 
 
 
-<!-- ABOUT THE PROJECT -->
-## About The Project
+<!-- À PROPOS DU PROJET -->
+## À PROPOS DU PROJET
 
 Notre plateforme vise à mettre en relation des étudiants dans le domaine de la santé avec des particuliers qui souhaitent bénéficier de services de santé moins chers et plus disponibles. En permettant aux étudiants de pratiquer leurs compétences et en offrant aux particuliers des créneaux dédiés dans les écoles partenaires, nous sommes convaincus que notre solution est bénéfique pour toutes les parties impliquées.
 
@@ -78,11 +75,7 @@ Nous sommes persuadés que notre solution répond à un réel besoin dans le mar
 
 ### Construit Avec
 
-Cette section doit répertorier tous les principaux frameworks/bibliothèques utilisés pour démarrer votre projet. Laissez tous les add-ons/plugins pour la section des remerciements. Voici quelques exemples.
-
-* [![Flutter][Flutter.dev]][Flutter-url]
-* [![Bootstrap][Bootstrap.com]][Bootstrap-url]
-* [![JQuery][JQuery.com]][JQuery-url]
+Cette section doit répertorier tous les principaux frameworks/bibliothèques utilisés pour démarrer votre projet.
 
 <p align="right"><a href="#readme-top">retour en haut</a></p>
 
@@ -158,9 +151,9 @@ Distribué sous la licence MIT. Voir `LICENSE.txt` pour plus d'informations.
 <!-- CONTACT -->
 ## Contact
 
-Morvan Etienne - [@web_site](https://etiennemorvan.com) - https://etiennemorvan.com
+Morvan Etienne - [Site Web](https://etiennemorvan.com)
 
-Lien du projet: [https://github.com/xraiizen/praticare](https://github.com/xraiizen/praticare)
+Lien du projet: [praticare](https://github.com/xraiizen/praticare)
 
 <p align="right"><a href="#readme-top">retour en haut</a></p>
 
