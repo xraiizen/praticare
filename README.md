@@ -8,8 +8,7 @@
 *** for contributors-url, forks-url, etc. This is an optional, concise syntax you may use.
 *** https://www.markdownguide.org/basic-syntax/#reference-style-links
 -->
-[![Issues][issues-shield]][issues-url]
-[![MIT License][license-shield]][license-url]
+[[![Issues][issues-shield]][https://github.com/xraiizen/praticare/issues]](https://img.shields.io/bitbucket/issues/xraiizen/praticare?style=for-the-badge)
 
 
 
@@ -17,7 +16,7 @@
 <br />
 <div align="center">
   <a href="https://github.com/xraiizen/praticare">
-    <img src="images/logo.png" alt="Logo" width="80" height="80">
+    <img src="https://play-lh.googleusercontent.com/y67nalKzxRc3kvo-ZvxxoD1ZT5h91vNIKZyGNIwGVx9QNdam9uPT2Q2Jdjt5Ojv0EQ" alt="Logo" width="80" height="80">
   </a>
 
   <h3 align="center">PRATICARE</h3>
@@ -67,15 +66,13 @@
 <!-- ABOUT THE PROJECT -->
 ## About The Project
 
-[![Product Name Screen Shot][product-screenshot]](https://example.com)
-
 Notre plateforme vise à mettre en relation des étudiants dans le domaine de la santé avec des particuliers qui souhaitent bénéficier de services de santé moins chers et plus disponibles. En permettant aux étudiants de pratiquer leurs compétences et en offrant aux particuliers des créneaux dédiés dans les écoles partenaires, nous sommes convaincus que notre solution est bénéfique pour toutes les parties impliquées.
 
 Notre modèle économique repose sur la facturation d'une commission sur chaque transaction réalisée sur notre plateforme. Nous prévoyons d'atteindre la rentabilité en deux ans grâce à une croissance soutenue de notre nombre d'utilisateurs et à une optimisation constante de notre plateforme.
 
 Nous sommes persuadés que notre solution répond à un réel besoin dans le marché de la santé en offrant une alternative moins coûteuse et plus accessible pour les particuliers, tout en offrant une opportunité pour les étudiants de parfaire leurs compétences pratiques. 
 
-<p align="right">(<a href="#readme-top">retour en haut</a>)</p>
+<p align="right"><a href="#readme-top">retour en haut</a></p>
 
 
 
@@ -87,7 +84,7 @@ Cette section doit répertorier tous les principaux frameworks/bibliothèques ut
 * [![Bootstrap][Bootstrap.com]][Bootstrap-url]
 * [![JQuery][JQuery.com]][JQuery-url]
 
-<p align="right">(<a href="#readme-top">retour en haut</a>)</p>
+<p align="right"><a href="#readme-top">retour en haut</a></p>
 
 
 
@@ -123,7 +120,7 @@ _Vous trouverez ci-dessous un exemple de la façon dont vous pouvez expliquer à
    const API_KEY = 'ENTER YOUR API';
    ```
 
-<p align="right">(<a href="#readme-top">retour en haut</a>)</p>
+<p align="right"><a href="#readme-top">retour en haut</a></p>
 
 
 
@@ -146,7 +143,7 @@ _Pour plus d'exemples, veuillez consulter le [Documentation](https://example.com
 
 Voir le [open issues](https://github.com/xraiizen/praticare/issues) pour une liste complète des fonctionnalités proposées (et des problèmes connus).
 
-<p align="right">(<a href="#readme-top">retour en haut</a>)</p>
+<p align="right"><a href="#readme-top">retour en haut</a></p>
 
 
 <!-- LICENSE -->
@@ -154,7 +151,7 @@ Voir le [open issues](https://github.com/xraiizen/praticare/issues) pour une lis
 
 Distribué sous la licence MIT. Voir `LICENSE.txt` pour plus d'informations.
 
-<p align="right">(<a href="#readme-top">retour en haut</a>)</p>
+<p align="right"><a href="#readme-top">retour en haut</a></p>
 
 
 
@@ -165,6 +162,6 @@ Morvan Etienne - [@web_site](https://etiennemorvan.com) - https://etiennemorvan.
 
 Lien du projet: [https://github.com/xraiizen/praticare](https://github.com/xraiizen/praticare)
 
-<p align="right">(<a href="#readme-top">retour en haut</a>)</p>
+<p align="right"><a href="#readme-top">retour en haut</a></p>
 
 
