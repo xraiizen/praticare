@@ -1,4 +1,4 @@
-// ignore_for_file: use_build_context_synchronously, library_private_types_in_public_api
+// ignore_for_file: use_build_context_synchronously, library_private_types_in_public_api, file_names
 
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
@@ -12,8 +12,8 @@ class SplashScreen extends StatefulWidget {
 
 class _SplashScreenState extends State<SplashScreen> {
   void redirect(BuildContext context) async {
-    await Future.delayed(const Duration(seconds: 2));
-    GoRouter.of(context).goNamed('Home');
+    await Future.delayed(const Duration(seconds: 4));
+    GoRouter.of(context).goNamed('Submit');
   }
 
   @override
@@ -39,16 +39,14 @@ class _SplashScreenState extends State<SplashScreen> {
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: <Widget>[
-          Container(
-            width: MediaQuery.of(context).size.width / 3,
-            height: MediaQuery.of(context).size.height / 6,
-            color: Colors.green[400],
-            child: const Center(child: Text("Picture")),
+          SizedBox(
+            width: MediaQuery.of(context).size.width / 2,
+            child: Image.asset("assets/icons/Logo.png"),
           ),
-          Padding(
-            padding: const EdgeInsets.only(top: 25),
+          const Padding(
+            padding: EdgeInsets.only(top: 25),
             child: CircularProgressIndicator(
-              color: Colors.green[400],
+              color: Colors.black,
             ),
           ),
         ],
