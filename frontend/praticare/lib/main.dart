@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:praticare/pages/AllComponentsScreen.dart';
 import 'package:praticare/pages/ErrorScreen.dart';
 import 'package:praticare/pages/HomeScreen.dart';
 import 'package:praticare/pages/SpashScreen.dart';
@@ -57,6 +58,17 @@ final GoRouter _router = GoRouter(
               pageBuilder: (context, state) => CustomTransitionPage<void>(
                 key: state.pageKey,
                 child: const SubmitScreen(),
+                transitionsBuilder:
+                    (context, animation, secondaryAnimation, child) =>
+                        FadeTransition(opacity: animation, child: child),
+              ),
+            ),
+            GoRoute(
+              path: 'AllComponents',
+              name: 'AllComponents',
+              pageBuilder: (context, state) => CustomTransitionPage<void>(
+                key: state.pageKey,
+                child: const AllComponentsScreen(),
                 transitionsBuilder:
                     (context, animation, secondaryAnimation, child) =>
                         FadeTransition(opacity: animation, child: child),

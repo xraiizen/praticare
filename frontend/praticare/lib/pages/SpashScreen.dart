@@ -13,7 +13,7 @@ class SplashScreen extends StatefulWidget {
 class _SplashScreenState extends State<SplashScreen> {
   void redirect(BuildContext context) async {
     await Future.delayed(const Duration(seconds: 4));
-    GoRouter.of(context).goNamed('Submit');
+    GoRouter.of(context).goNamed('AllComponents');
   }
 
   @override
