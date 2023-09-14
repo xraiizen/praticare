@@ -3,8 +3,10 @@ import 'package:go_router/go_router.dart';
 import 'package:praticare/pages/AllComponentsScreen.dart';
 import 'package:praticare/pages/ErrorScreen.dart';
 import 'package:praticare/pages/HomeScreen.dart';
+import 'package:praticare/pages/LoginPage.dart';
 import 'package:praticare/pages/SpashScreen.dart';
 import 'package:praticare/pages/SubmitScreen.dart';
+import 'package:praticare/theme/theme.dart' as theme;
 
 void main() {
   runApp(const MyApp());
@@ -20,8 +22,10 @@ class MyApp extends StatelessWidget {
       title: 'Praticare',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+        primaryColor: theme.primary400,
         useMaterial3: true,
+        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple)
+            .copyWith(error: theme.negative400),
       ),
       routerConfig: _router,
     );
@@ -47,6 +51,17 @@ final GoRouter _router = GoRouter(
                 child: const HomeScreen(
                   title: 'Home',
                 ),
+                transitionsBuilder:
+                    (context, animation, secondaryAnimation, child) =>
+                        FadeTransition(opacity: animation, child: child),
+              ),
+            ),
+            GoRoute(
+              path: 'Login',
+              name: 'Login',
+              pageBuilder: (context, state) => CustomTransitionPage<void>(
+                key: state.pageKey,
+                child: LoginPage(),
                 transitionsBuilder:
                     (context, animation, secondaryAnimation, child) =>
                         FadeTransition(opacity: animation, child: child),

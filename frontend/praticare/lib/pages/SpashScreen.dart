@@ -1,7 +1,9 @@
 // ignore_for_file: use_build_context_synchronously, library_private_types_in_public_api, file_names
 
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:go_router/go_router.dart';
+import 'package:praticare/theme/theme.dart' as theme;
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({Key? key}) : super(key: key);
@@ -11,15 +13,15 @@ class SplashScreen extends StatefulWidget {
 }
 
 class _SplashScreenState extends State<SplashScreen> {
-  void redirect(BuildContext context) async {
-    await Future.delayed(const Duration(seconds: 4));
-    GoRouter.of(context).goNamed('AllComponents');
-  }
-
   @override
   void initState() {
     super.initState();
-    redirect(context);
+    initialization();
+  }
+
+  void initialization() async {
+    await Future.delayed(const Duration(seconds: 2));
+    GoRouter.of(context).goNamed("Login");
   }
 
   @override
@@ -40,13 +42,12 @@ class _SplashScreenState extends State<SplashScreen> {
         crossAxisAlignment: CrossAxisAlignment.center,
         children: <Widget>[
           SizedBox(
-            width: MediaQuery.of(context).size.width / 2,
-            child: Image.asset("assets/icons/Logo.png"),
-          ),
-          const Padding(
-            padding: EdgeInsets.only(top: 25),
+              width: MediaQuery.of(context).size.width / 2,
+              child: SvgPicture.asset("assets/icons/Logo_unique.svg")),
+          Padding(
+            padding: const EdgeInsets.only(top: 64),
             child: CircularProgressIndicator(
-              color: Colors.black,
+              color: theme.primary400,
             ),
           ),
         ],
