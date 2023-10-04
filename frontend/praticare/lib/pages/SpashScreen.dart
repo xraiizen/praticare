@@ -42,12 +42,16 @@ class _SplashScreenState extends State<SplashScreen> {
         crossAxisAlignment: CrossAxisAlignment.center,
         children: <Widget>[
           SizedBox(
-              width: MediaQuery.of(context).size.width / 2,
+              height: 128,
               child: SvgPicture.asset("assets/icons/Logo_unique.svg")),
           Padding(
             padding: const EdgeInsets.only(top: 64),
-            child: CircularProgressIndicator(
-              color: theme.primary400,
+            child: SizedBox(
+              width: 64,
+              height: 64,
+              child: CircularProgressIndicator(
+                color: theme.primary400,
+              ),
             ),
           ),
         ],

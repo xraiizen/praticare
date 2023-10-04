@@ -3,35 +3,26 @@ import 'package:flutter_svg/svg.dart';
 import 'package:praticare/components/BtnValidator.dart';
 import 'package:praticare/components/Text_field_sign.dart';
 
-void main() {
-  runApp(MyApp());
-}
-
-class MyApp extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      home: LoginPage(),
-    );
-  }
-}
-
 class LoginPage extends StatelessWidget {
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
 
+  LoginPage({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(),
       body: Padding(
-        padding: EdgeInsets.all(16.0),
+        padding: const EdgeInsets.all(16.0),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: <Widget>[
-            SvgPicture.asset("assets/icons/Logo_unique.svg"),
-            const SizedBox(height: 20.0),
+            Padding(
+              padding: const EdgeInsets.only(bottom: 64),
+              child:
+                  SvgPicture.asset("assets/icons/Logo_unique.svg", width: 64),
+            ),
             const Align(
                 alignment: Alignment.centerLeft,
                 child: Text(
@@ -41,19 +32,28 @@ class LoginPage extends StatelessWidget {
                     fontWeight: FontWeight.bold,
                   ),
                 )),
+            const SizedBox(height: 32.0),
+            TextFieldSign(
+                title: 'Email ou numéro de téléphone',
+                controller: emailController,
+                keyboardType: TextInputType.emailAddress,
+                hintText: 'Saisissez votre email ou numéro de téléphone'),
             const SizedBox(height: 20.0),
             TextFieldSign(
-              title: 'Email ou numéro de téléphone',
-              controller: emailController,
-            ),
-            const SizedBox(height: 20.0),
-            TextFieldSign(
-              title: 'Mot de passe',
-              controller: passwordController,
-            ),
-            const SizedBox(height: 20.0),
+                title: 'Mot de passe',
+                controller: passwordController,
+                keyboardType: TextInputType.visiblePassword,
+                hintText: 'Saisissez votre mot de passe'),
+            const SizedBox(height: 32.0),
             BtnValidator(
               text: "Se connecter",
+              activePrimaryTheme: true,
+              routeName: "Home",
+            ),
+            BtnValidator(
+              text: "Créer un compte",
+              activePrimaryTheme: false,
+              routeName: "Submit",
             ),
           ],
         ),

@@ -17,9 +17,7 @@ class AllComponentsScreen extends StatelessWidget {
       body: Center(
           child: Column(
         children: <Widget>[
-          BtnValidator(
-            text: "Se connecter",
-          ),
+          BtnValidator(text: "Se connecter", activePrimaryTheme: true),
         ],
       )),
     );
