@@ -5,7 +5,6 @@ class BtnBottomBar extends StatelessWidget {
   final String title;
   final IconData icon;
   final String routeName;
-  final Color backgroundColor = Colors.blue;
   const BtnBottomBar({
     super.key,
     required this.title,

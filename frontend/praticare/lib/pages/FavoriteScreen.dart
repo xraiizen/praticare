@@ -13,12 +13,15 @@ class FavoriteScreen extends StatefulWidget {
 }
 
 class _FavoriteScreenState extends State<FavoriteScreen> {
+  final int _selectedIndex = 1;
   @override
   Widget build(BuildContext context) {
-    return const Scaffold(
-        appBar: MyAppBar(),
-        bottomNavigationBar: BottomBar(),
-        body: SingleChildScrollView(
+    return Scaffold(
+        appBar: const MyAppBar(),
+        bottomNavigationBar: BottomBar(
+          selectedIndex: _selectedIndex,
+        ),
+        body: const SingleChildScrollView(
           child: Column(
             children: [Center(child: Text("FavoriteScreen"))],
           ),

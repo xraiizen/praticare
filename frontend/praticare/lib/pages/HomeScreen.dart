@@ -19,11 +19,14 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   bool sectionRdvPasser = false;
   bool sectionFavoris = true;
+  final int _selectedIndex = 0;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: const MyAppBar(),
-        bottomNavigationBar: const BottomBar(),
+        bottomNavigationBar: BottomBar(
+          selectedIndex: _selectedIndex,
+        ),
         body: SingleChildScrollView(
           child: Column(
             children: [

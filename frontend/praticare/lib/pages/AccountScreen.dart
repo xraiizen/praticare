@@ -13,12 +13,15 @@ class AccountScreen extends StatefulWidget {
 }
 
 class _AccountScreenState extends State<AccountScreen> {
+  final int _selectedIndex = 2;
   @override
   Widget build(BuildContext context) {
-    return const Scaffold(
-        appBar: MyAppBar(),
-        bottomNavigationBar: BottomBar(),
-        body: SingleChildScrollView(
+    return Scaffold(
+        appBar: const MyAppBar(),
+        bottomNavigationBar: BottomBar(
+          selectedIndex: _selectedIndex,
+        ),
+        body: const SingleChildScrollView(
           child: Column(
             children: [Center(child: Text("AccountScreen"))],
           ),
