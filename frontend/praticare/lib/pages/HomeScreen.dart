@@ -1,8 +1,8 @@
 // ignore_for_file: file_names
 
 import 'package:flutter/material.dart';
-import 'package:praticare/components/cardPratitien/CardPratitien.dart';
-import 'package:praticare/components/cardPratitien/CardPratitienRdvPrevus.dart';
+import 'package:praticare/components/cardPraticien/CardPraticien.dart';
+import 'package:praticare/components/cardPraticien/CardPraticienRdvPrevus.dart';
 import 'package:praticare/components/interface/AppBar.dart';
 
 import '../components/interface/BottomBar.dart';
@@ -31,7 +31,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 isRow: false,
                 title: 'Rendez-vous prévus',
                 children: const [
-                  CardPratitienRdvPrevus(
+                  CardPraticienRdvPrevus(
                     dateRdv: "05/10",
                     urlImage:
                         "https://images.pexels.com/photos/220453/pexels-photo-220453.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
@@ -47,7 +47,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 showMore: true,
                 title: 'Favoris',
                 children: [
-                  CardPratitien(
+                  CardPraticien(
                     isInRow: sectionFavoris,
                     urlImage:
                         "https://images.pexels.com/photos/220453/pexels-photo-220453.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
@@ -63,7 +63,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 showMore: true,
                 title: 'Rendez-vous passés',
                 children: [
-                  CardPratitien(
+                  CardPraticien(
                     isInRow: sectionRdvPasser,
                     urlImage:
                         "https://images.pexels.com/photos/220453/pexels-photo-220453.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",

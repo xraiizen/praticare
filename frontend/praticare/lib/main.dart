@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:praticare/pages/AccountScreen.dart';
 import 'package:praticare/pages/AllComponentsScreen.dart';
 import 'package:praticare/pages/ErrorScreen.dart';
+import 'package:praticare/pages/FavoriteScreen.dart';
 import 'package:praticare/pages/HomeScreen.dart';
 import 'package:praticare/pages/LoginPage.dart';
 import 'package:praticare/pages/SpashScreen.dart';
@@ -44,19 +46,6 @@ final GoRouter _router = GoRouter(
           },
           routes: [
             GoRoute(
-              path: 'Home',
-              name: 'Home',
-              pageBuilder: (context, state) => CustomTransitionPage<void>(
-                key: state.pageKey,
-                child: const HomeScreen(
-                  title: 'Home',
-                ),
-                transitionsBuilder:
-                    (context, animation, secondaryAnimation, child) =>
-                        FadeTransition(opacity: animation, child: child),
-              ),
-            ),
-            GoRoute(
               path: 'Login',
               name: 'Login',
               pageBuilder: (context, state) => CustomTransitionPage<void>(
@@ -73,6 +62,45 @@ final GoRouter _router = GoRouter(
               pageBuilder: (context, state) => CustomTransitionPage<void>(
                 key: state.pageKey,
                 child: const SubmitScreen(),
+                transitionsBuilder:
+                    (context, animation, secondaryAnimation, child) =>
+                        FadeTransition(opacity: animation, child: child),
+              ),
+            ),
+            GoRoute(
+              path: 'Home',
+              name: 'Home',
+              pageBuilder: (context, state) => CustomTransitionPage<void>(
+                key: state.pageKey,
+                child: const HomeScreen(
+                  title: 'Home',
+                ),
+                transitionsBuilder:
+                    (context, animation, secondaryAnimation, child) =>
+                        FadeTransition(opacity: animation, child: child),
+              ),
+            ),
+            GoRoute(
+              path: 'Favories',
+              name: 'Favorite',
+              pageBuilder: (context, state) => CustomTransitionPage<void>(
+                key: state.pageKey,
+                child: const FavoriteScreen(
+                  title: "Favories",
+                ),
+                transitionsBuilder:
+                    (context, animation, secondaryAnimation, child) =>
+                        FadeTransition(opacity: animation, child: child),
+              ),
+            ),
+            GoRoute(
+              path: 'Account',
+              name: 'Account',
+              pageBuilder: (context, state) => CustomTransitionPage<void>(
+                key: state.pageKey,
+                child: const AccountScreen(
+                  title: "Compte",
+                ),
                 transitionsBuilder:
                     (context, animation, secondaryAnimation, child) =>
                         FadeTransition(opacity: animation, child: child),

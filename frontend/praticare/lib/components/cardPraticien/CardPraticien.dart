@@ -4,14 +4,14 @@ import 'package:flutter_svg/svg.dart';
 import 'package:salomon_bottom_bar/salomon_bottom_bar.dart';
 import 'package:praticare/theme/theme.dart' as theme;
 
-class CardPratitien extends StatefulWidget {
+class CardPraticien extends StatefulWidget {
   bool? isInRow;
   final String urlImage;
   final String firstname;
   final String lastname;
   final String metier;
   final String dateRdvPasser;
-  CardPratitien({
+  CardPraticien({
     super.key,
     required this.urlImage,
     required this.firstname,
@@ -22,10 +22,10 @@ class CardPratitien extends StatefulWidget {
   });
 
   @override
-  _CardPratitienState createState() => _CardPratitienState();
+  _CardPraticienState createState() => _CardPraticienState();
 }
 
-class _CardPratitienState extends State<CardPratitien> {
+class _CardPraticienState extends State<CardPraticien> {
   late Widget card;
   @override
   Widget build(BuildContext context) {
@@ -34,37 +34,48 @@ class _CardPratitienState extends State<CardPratitien> {
         : widget.isInRow;
     widget.isInRow!
         ? card = Card(
-            child: Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Padding(
-                    padding:
-                        const EdgeInsets.symmetric(vertical: 8, horizontal: 8),
-                    child: CircleAvatar(
-                      radius: 54.0,
-                      backgroundImage: NetworkImage(widget.urlImage),
-                      backgroundColor: Colors.transparent,
+            child: InkWell(
+              customBorder: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(10),
+              ),
+              onTap: () {},
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.symmetric(
+                          vertical: 8, horizontal: 8),
+                      child: CircleAvatar(
+                        radius: 54.0,
+                        backgroundImage: NetworkImage(widget.urlImage),
+                        backgroundColor: Colors.transparent,
+                      ),
                     ),
-                  ),
-                  Text(
-                    widget.firstname,
-                    style: const TextStyle(
-                      fontSize: 16,
+                    Text(
+                      widget.firstname,
+                      style: const TextStyle(
+                        fontSize: 16,
+                      ),
                     ),
-                  ),
-                  Text(
-                    widget.lastname,
-                    style: const TextStyle(
-                      fontSize: 16,
+                    Text(
+                      widget.lastname,
+                      style: const TextStyle(
+                        fontSize: 16,
+                      ),
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
             ),
           )
         : card = Card(
+            child: InkWell(
+            customBorder: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(10),
+            ),
+            onTap: () {},
             child: Padding(
               padding: const EdgeInsets.all(8.0),
               child: Row(
@@ -100,7 +111,7 @@ class _CardPratitienState extends State<CardPratitien> {
                 ],
               ),
             ),
-          );
+          ));
     return card;
   }
 }

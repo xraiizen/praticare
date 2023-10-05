@@ -28,24 +28,22 @@ class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
   @override
   Widget build(BuildContext context) {
     return AppBar(
-        automaticallyImplyLeading: false,
-        title: Padding(
-          padding: const EdgeInsets.only(top: 20),
-          child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                SvgPicture.asset("assets/icons/Logo.svg", width: 200),
-                IconButton(
-                    onPressed: () {
-                      _showInfoDialog(context);
-                    },
-                    icon: const Icon(
-                      Icons.info_outline_rounded,
-                      size: 34,
-                    ))
-              ]),
-        ));
+      automaticallyImplyLeading: false,
+      title: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            SvgPicture.asset("assets/icons/Logo.svg", width: 200),
+            IconButton(
+                onPressed: () {
+                  _showInfoDialog(context);
+                },
+                icon: const Icon(
+                  Icons.info_outline_rounded,
+                  size: 34,
+                ))
+          ]),
+    );
   }
 
   @override
