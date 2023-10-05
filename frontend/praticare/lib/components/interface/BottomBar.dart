@@ -2,6 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:go_router/go_router.dart';
+import 'package:praticare/components/BtnValidator.dart';
 import 'package:praticare/components/interface/BtnBottomBar.dart';
 import 'package:praticare/theme/theme.dart' as theme;
 
@@ -14,33 +15,60 @@ class BottomBar extends StatefulWidget {
 }
 
 class _BottomBarState extends State<BottomBar> {
+  Widget? searchBtn;
   void goRoute(int index) {
     switch (index) {
       case 0:
-        GoRouter.of(context).goNamed("Home");
+        GoRouter.of(context).pushNamed("Home");
         break;
       case 1:
-        GoRouter.of(context).goNamed("Favorite");
+        GoRouter.of(context).pushNamed("Favorite");
         break;
       case 2:
-        GoRouter.of(context).goNamed("Account");
+        GoRouter.of(context).pushNamed("Account");
         break;
       default:
     }
   }
 
+  void showBtnSearch() {
+    if (widget.selectedIndex == 0) {
+      searchBtn = Container(
+        width: double.infinity,
+        alignment: Alignment.bottomCenter,
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 16),
+          child: BtnValidator(
+            icon: Icons.search_sharp,
+            text: "Rechercher un praticien",
+            activePrimaryTheme: true,
+            routeName: "SearchPage",
+          ),
+        ),
+      );
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
-    return NavigationBar(
-      animationDuration: const Duration(seconds: 1),
-      selectedIndex: widget.selectedIndex,
-      onDestinationSelected: (index) {
-        setState(() {
-          widget.selectedIndex = index;
-        });
-        goRoute(index);
-      },
-      destinations: _navBarItems,
+    showBtnSearch();
+    return Wrap(
+      children: [
+        // Bouton fixe au-dessus de la barre de navigation
+        searchBtn ?? const SizedBox.shrink(),
+        // Barre de navigation avec les trois boutons principaux
+        NavigationBar(
+          animationDuration: const Duration(seconds: 1),
+          selectedIndex: widget.selectedIndex,
+          onDestinationSelected: (index) {
+            setState(() {
+              widget.selectedIndex = index;
+            });
+            goRoute(index);
+          },
+          destinations: _navBarItems,
+        ),
+      ],
     );
   }
 }
@@ -54,7 +82,7 @@ const _navBarItems = [
   NavigationDestination(
     icon: Icon(Icons.favorite_border_outlined),
     selectedIcon: Icon(Icons.favorite_rounded),
-    label: 'Favories',
+    label: 'Favoris',
   ),
   NavigationDestination(
     icon: Icon(Icons.person_outline_rounded),
@@ -62,30 +90,3 @@ const _navBarItems = [
     label: 'Compte',
   ),
 ];
-  //   return Padding(
-  //       padding: const EdgeInsets.symmetric(vertical: 10),
-  //       child: Container(
-  //         width: MediaQuery.of(context).size.width,
-  //         height: 50,
-  //         color: Colors.white,
-  //         child: const Row(
-  //             mainAxisAlignment: MainAxisAlignment.spaceAround,
-  //             crossAxisAlignment: CrossAxisAlignment.center,
-  //             children: [
-  //               BtnBottomBar(
-  //                 title: "Accueil",
-  //                 icon: Icons.home,
-  //                 routeName: "Home",
-  //               ),
-  //               BtnBottomBar(
-  //                   title: "Favories",
-  //                   icon: Icons.star_outline_rounded,
-  //                   routeName: "Favorite"),
-  //               BtnBottomBar(
-  //                   title: "Compte",
-  //                   icon: Icons.person_outlined,
-  //                   routeName: "Account")
-  //             ]),
-  //       ));
-  // }
-// }

@@ -1,12 +1,12 @@
 // ignore_for_file: file_names
 
 import 'package:flutter/material.dart';
-import 'package:praticare/components/cardPraticien/CardPraticien.dart';
-import 'package:praticare/components/cardPraticien/CardPraticienRdvPrevus.dart';
+import 'package:praticare/components/cardPraticiens/CardPraticien.dart';
+import 'package:praticare/components/cardPraticiens/CardPraticienRdvPrevus.dart';
 import 'package:praticare/components/interface/AppBar.dart';
 
 import '../components/interface/BottomBar.dart';
-import '../components/SectionHome.dart';
+import '../components/sections/SectionHome.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key, required this.title});

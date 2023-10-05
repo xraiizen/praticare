@@ -42,7 +42,7 @@ class BtnBottomBar extends StatelessWidget {
                   side: const BorderSide(color: Colors.transparent))),
         ),
         onPressed: () {
-          GoRouter.of(context).goNamed(routeName);
+          GoRouter.of(context).pushNamed(routeName);
         },
         child: Column(
           children: [

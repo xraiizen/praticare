@@ -75,7 +75,7 @@ class _SubmitScreenState extends State<SubmitScreen> {
             ),
             TextButton(
               onPressed: () {
-                GoRouter.of(context).goNamed("Login");
+                GoRouter.of(context).pushNamed("Login");
               },
               child: Text(
                 "J'ai déja un compte",

@@ -1,7 +1,6 @@
 // ignore_for_file: unused_import, library_private_types_in_public_api, must_be_immutable
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:salomon_bottom_bar/salomon_bottom_bar.dart';
 import 'package:praticare/theme/theme.dart' as theme;
 
 class CardPraticien extends StatefulWidget {

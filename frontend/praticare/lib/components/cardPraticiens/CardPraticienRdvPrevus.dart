@@ -2,7 +2,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:praticare/components/BtnValidator.dart';
-import 'package:salomon_bottom_bar/salomon_bottom_bar.dart';
 import 'package:praticare/theme/theme.dart' as theme;
 
 class CardPraticienRdvPrevus extends StatefulWidget {

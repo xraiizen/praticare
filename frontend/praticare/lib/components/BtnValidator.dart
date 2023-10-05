@@ -79,7 +79,7 @@ class BtnValidator extends StatelessWidget {
                     )),
           onPressed: () {
             if (routeName != null) {
-              GoRouter.of(context).goNamed(routeName!);
+              GoRouter.of(context).pushNamed(routeName!);
             }
           },
         ),

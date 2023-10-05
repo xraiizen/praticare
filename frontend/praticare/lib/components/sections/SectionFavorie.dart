@@ -5,13 +5,15 @@ import 'package:praticare/theme/theme.dart' as theme;
 
 class SectionHome extends StatelessWidget {
   final String title;
+  String? subtitle;
   bool? isRow;
-  final List<Widget> children;
+  final List<Widget?> children;
   bool? showMore;
 
   SectionHome({
     super.key,
     required this.title,
+    this.subtitle,
     required this.children,
     this.isRow,
     this.showMore,
@@ -21,6 +23,12 @@ class SectionHome extends StatelessWidget {
   Widget build(BuildContext context) {
     isRow == null || isRow == false ? isRow = false : isRow;
     showMore == null || showMore == false ? showMore = false : showMore;
+    String titleIsRowIsEmplty = title;
+    if (titleIsRowIsEmplty.isNotEmpty &&
+        titleIsRowIsEmplty.toLowerCase().endsWith('s')) {
+      titleIsRowIsEmplty =
+          titleIsRowIsEmplty.substring(0, titleIsRowIsEmplty.length - 1);
+    }
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 32),
       child: Column(
@@ -66,18 +74,31 @@ class SectionHome extends StatelessWidget {
           const SizedBox(height: 8.0),
           SizedBox(
               width: MediaQuery.of(context).size.width,
-              child: SingleChildScrollView(
-                scrollDirection: isRow! ? Axis.horizontal : Axis.vertical,
-                child: isRow!
-                    ? Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: children)
-                    : Column(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: children),
-              )),
+              child: children.isNotEmpty
+                  ? SingleChildScrollView(
+                      scrollDirection: isRow! ? Axis.horizontal : Axis.vertical,
+                      child: isRow!
+                          ? Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: children
+                                  .where((widget) => widget != null)
+                                  .map((widget) => widget!)
+                                  .toList())
+                          : Column(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: children
+                                  .where((widget) => widget != null)
+                                  .map((widget) => widget!)
+                                  .toList()),
+                    )
+                  : Center(
+                      child: Text(
+                        "vous n'avez aucun ${titleIsRowIsEmplty.toLowerCase()}",
+                        style: const TextStyle(fontSize: 16),
+                      ),
+                    )),
         ],
       ),
     );
