@@ -75,13 +75,20 @@ Nous sommes persuadés que notre solution répond à un réel besoin dans le mar
 
 ### Installation
 
-``` npm install -g firebase-tools ```
-``` firebase login ```
-``` firebase projects:list ```
-``` dart pub global activate flutterfire_cli ```
-``` flutter pub get ```
-``` flutterfire configure ```
-``` flutter run  ```
+``` npm install -g firebase-tools ```     
+
+``` firebase login ```     
+
+``` firebase projects:list ```       
+
+``` dart pub global activate flutterfire_cli ```      
+
+``` flutter pub get ```      
+
+``` flutterfire configure ```     
+
+``` flutter run  ```      
+
 
 
 ### Construit Avec
