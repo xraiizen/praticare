@@ -73,24 +73,25 @@ Nous sommes persuadés que notre solution répond à un réel besoin dans le mar
 
 <p align="right"><a href="#readme-top">retour en haut</a></p>
 
+### Installation
+
+``` npm install -g firebase-tools ```
+``` firebase login ```
+``` firebase projects:list ```
+``` dart pub global activate flutterfire_cli ```
+``` flutter pub get ```
+``` flutterfire configure ```
+``` flutter run  ```
 
 
 ### Construit Avec
 
 ## Backend :
 
-Node.js avec Express
- - Node.js est une plateforme JavaScript qui permet de développer des applications côté serveur.
- - Express est un framework web pour Node.js, qui permet de créer des API RESTful rapidement et facilement.
-
-Format d'échange de données JSON
- - JSON peut être facilement converti en objets JavaScript côté client et en objets JSON côté serveur, ce qui facilite la communication entre le frontend et le backend.
- -  En utilisant JSON, vous pouvez également bénéficier de la facilité d'utilisation des API RESTful, qui permettent de transférer des données entre le frontend et le backend via des requêtes HTTP.
- - Node.js dispose d'un module appelé "JSON" qui permet de travailler facilement avec le format JSON. De même, Flutter dispose d'une bibliothèque Dart appelée "dart:convert" qui permet de travailler avec le format JSON côté client.
- 
-MySQL
- - MySQL est une base de données relationnelle open source qui est utilisée par de nombreuses applications web.
- - Elle offre une performance élevée et une grande compatibilité avec les technologies de backend courantes.
+Firebase:
+  -firebase_auth
+  -firebase_storage
+  -firebase_database
 
 ## Frontend:
 
