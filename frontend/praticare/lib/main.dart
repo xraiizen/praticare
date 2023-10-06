@@ -9,9 +9,14 @@ import 'package:praticare/pages/LoginPage.dart';
 import 'package:praticare/pages/SearchPage.dart';
 import 'package:praticare/pages/SpashScreen.dart';
 import 'package:praticare/pages/SubmitScreen.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'firebase_options.dart';
 import 'package:praticare/theme/theme.dart' as theme;
 
-void main() {
+void main() async {
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
   runApp(const MyApp());
 }
 

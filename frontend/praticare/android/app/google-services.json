@@ -1,0 +1,30 @@
+{
+  "project_info": {
+    "project_number": "532752559688",
+    "firebase_url": "https://praticare-fd7f8-default-rtdb.europe-west1.firebasedatabase.app",
+    "project_id": "praticare-fd7f8",
+    "storage_bucket": "praticare-fd7f8.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:532752559688:android:e872445bdc052493af727d",
+        "android_client_info": {
+          "package_name": "com.example.praticare"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDuWXSWe5_AMwR5nBUvqXCiioZ9e-i7U84"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
