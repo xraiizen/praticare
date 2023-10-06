@@ -22,6 +22,7 @@ class _SubmitScreenState extends State<SubmitScreen> {
   final TextEditingController bornDateController = TextEditingController();
   final TextEditingController cityController = TextEditingController();
 
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: Padding(
