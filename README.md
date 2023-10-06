@@ -75,19 +75,19 @@ Nous sommes persuadés que notre solution répond à un réel besoin dans le mar
 
 ### Installation
 
-``` npm install -g firebase-tools ```     
+ - ``` npm install -g firebase-tools ```     
 
-``` firebase login ```     
+ - ``` firebase login ```     
 
-``` firebase projects:list ```       
+ - ``` firebase projects:list ```       
 
-``` dart pub global activate flutterfire_cli ```      
+ - ``` dart pub global activate flutterfire_cli ```      
 
-``` flutter pub get ```      
+ - ``` flutter pub get ```      
 
-``` flutterfire configure ```     
+ - ``` flutterfire configure ```     
 
-``` flutter run  ```      
+ - ``` flutter run  ```      
 
 
 
