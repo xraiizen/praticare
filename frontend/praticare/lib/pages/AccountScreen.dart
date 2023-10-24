@@ -21,8 +21,11 @@ class _AccountScreenState extends State<AccountScreen> {
   final int _selectedIndex = 2;
   User? currentUser;
   Map<String, dynamic>? userData;
+  final firstnameController = TextEditingController();
+  final lastnameController = TextEditingController();
   final bornDateController = TextEditingController();
-  final cityController = TextEditingController();
+  final bornCityController = TextEditingController();
+  final adressController = TextEditingController();
 
   @override
   void initState() {
@@ -38,10 +41,16 @@ class _AccountScreenState extends State<AccountScreen> {
       final DocumentSnapshot userSnapshot = await userDoc.get();
       setState(() {
         userData = userSnapshot.data() as Map<String, dynamic>?;
+        firstnameController.text = userData!['firstname'] ?? '';
+        lastnameController.text = userData!['lastname'] ?? '';
         bornDateController.text = userData!['bornDate'] ?? '';
-        cityController.text = userData!['city'] ?? '';
+        bornCityController.text = userData!['bornCity'] ?? '';
+        adressController.text = userData!['adress'] ?? '';
+        print(firstnameController.text);
+        print(lastnameController.text);
         print(bornDateController.text);
-        print(cityController.text);
+        print(bornCityController.text);
+        print(adressController.text);
       });
     }
   }
@@ -52,8 +61,11 @@ class _AccountScreenState extends State<AccountScreen> {
           FirebaseFirestore.instance.collection('users').doc(currentUser!.uid);
       return userDoc
           .update({
+            'firstname': firstnameController.text,
+            'lastname': lastnameController.text,
             'bornDate': bornDateController.text,
-            'city': cityController.text,
+            'bornCity': bornCityController.text,
+            'adress': adressController.text,
           })
           .then((value) => print("User Info Updated"))
           .catchError((error) => print("Failed to update user info: $error"));
@@ -88,6 +100,18 @@ class _AccountScreenState extends State<AccountScreen> {
             child: Column(
               children: [
                 TextFieldSign(
+                  title: 'Prénom',
+                  controller: firstnameController,
+                  keyboardType: TextInputType.name,
+                  hintText: 'Saisissez votre prénom',
+                ),
+                TextFieldSign(
+                  title: 'Nom',
+                  controller: lastnameController,
+                  keyboardType: TextInputType.name,
+                  hintText: 'Saisissez votre nom',
+                ),
+                TextFieldSign(
                   title: 'Date de naissance',
                   controller: bornDateController,
                   keyboardType: TextInputType.datetime,
@@ -95,9 +119,18 @@ class _AccountScreenState extends State<AccountScreen> {
                 ),
                 TextFieldSign(
                   title: 'Lieu de naissance',
-                  controller: cityController,
+                  controller: bornCityController,
                   keyboardType: TextInputType.streetAddress,
                   hintText: 'Saisissez votre lieu de naissance',
+                ),
+                TextFieldSign(
+                  title: 'Adresse',
+                  controller: adressController,
+                  keyboardType: TextInputType.streetAddress,
+                  hintText: 'Saisissez votre adresse',
+                ),
+                const SizedBox(
+                  height: 24,
                 ),
                 BtnValidator(
                   text: "Enregistrer",
@@ -106,7 +139,7 @@ class _AccountScreenState extends State<AccountScreen> {
                 ),
                 BtnValidator(
                   text: "Deconnexion",
-                  activePrimaryTheme: true,
+                  activePrimaryTheme: false,
                   onPressed: signOut,
                 ),
                 // ... (le reste de votre code)

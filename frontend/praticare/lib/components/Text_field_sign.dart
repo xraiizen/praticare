@@ -35,6 +35,8 @@ class TextFieldSign extends StatelessWidget {
             controller: controller,
             keyboardType: keyboardType,
             decoration: InputDecoration(
+              contentPadding:
+                  const EdgeInsets.symmetric(vertical: 10.0, horizontal: 10),
               border: const OutlineInputBorder(
                 borderRadius: BorderRadius.all(Radius.circular(8.0)),
               ),

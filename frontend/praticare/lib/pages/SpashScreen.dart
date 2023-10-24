@@ -1,5 +1,6 @@
 // ignore_for_file: use_build_context_synchronously, library_private_types_in_public_api, file_names
 
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:go_router/go_router.dart';
@@ -21,7 +22,15 @@ class _SplashScreenState extends State<SplashScreen> {
 
   void initialization() async {
     await Future.delayed(const Duration(seconds: 2));
-    GoRouter.of(context).goNamed("Login");
+
+    // Vérifiez si un utilisateur est déjà connecté
+    if (FirebaseAuth.instance.currentUser != null) {
+      GoRouter.of(context).goNamed(
+          "Home"); // Redirigez vers la page d'accueil si l'utilisateur est déjà connecté
+    } else {
+      GoRouter.of(context)
+          .goNamed("Login"); // Sinon, redirigez vers la page de connexion
+    }
   }
 
   @override
