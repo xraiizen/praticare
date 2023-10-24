@@ -14,6 +14,7 @@ import 'firebase_options.dart';
 import 'package:praticare/theme/theme.dart' as theme;
 
 void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );

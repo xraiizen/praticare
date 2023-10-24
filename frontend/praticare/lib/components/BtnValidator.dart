@@ -1,4 +1,4 @@
-// ignore_for_file: must_be_immutable, file_names
+// ignore_for_file: must_be_immutable, file_names, sort_child_properties_last
 
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
@@ -6,15 +6,17 @@ import 'package:praticare/theme/theme.dart' as theme;
 
 class BtnValidator extends StatelessWidget {
   late String text;
-  late String? routeName;
   bool activePrimaryTheme;
   IconData? icon;
   double? sizeIcon;
+  late String? routeName;
+  VoidCallback? onPressed;
   BtnValidator(
       {super.key,
       required this.text,
       this.routeName,
       required this.activePrimaryTheme,
+      this.onPressed,
       this.icon});
 
   @override
@@ -78,7 +80,9 @@ class BtnValidator extends StatelessWidget {
                       ),
                     )),
           onPressed: () {
-            if (routeName != null) {
+            if (onPressed != null) {
+              onPressed!();
+            } else if (routeName != null) {
               GoRouter.of(context).pushNamed(routeName!);
             }
           },
