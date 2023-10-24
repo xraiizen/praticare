@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:praticare/pages/AccountScreen.dart';
+import 'package:praticare/pages/AccountPage.dart';
 import 'package:praticare/pages/AllComponentsScreen.dart';
-import 'package:praticare/pages/ErrorScreen.dart';
-import 'package:praticare/pages/FavoriteScreen.dart';
-import 'package:praticare/pages/HomeScreen.dart';
+import 'package:praticare/pages/ErrorPage.dart';
+import 'package:praticare/pages/FavoritePage.dart';
+import 'package:praticare/pages/HomePage.dart';
 import 'package:praticare/pages/LoginPage.dart';
 import 'package:praticare/pages/SearchPage.dart';
 import 'package:praticare/pages/SpashScreen.dart';
-import 'package:praticare/pages/SubmitScreen.dart';
+import 'package:praticare/pages/SubmitPage.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'firebase_options.dart';
 import 'package:praticare/theme/theme.dart' as theme;
@@ -44,7 +44,7 @@ class MyApp extends StatelessWidget {
 /// The route configuration.
 final GoRouter _router = GoRouter(
     debugLogDiagnostics: true,
-    errorBuilder: (context, state) => const ErrorScreen(),
+    errorBuilder: (context, state) => const ErrorPage(),
     routes: <RouteBase>[
       GoRoute(
           path: '/',
@@ -68,7 +68,7 @@ final GoRouter _router = GoRouter(
               name: 'Submit',
               pageBuilder: (context, state) => CustomTransitionPage<void>(
                 key: state.pageKey,
-                child: const SubmitScreen(),
+                child: const SubmitPage(),
                 transitionsBuilder:
                     (context, animation, secondaryAnimation, child) =>
                         FadeTransition(opacity: animation, child: child),
@@ -79,7 +79,7 @@ final GoRouter _router = GoRouter(
               name: 'Home',
               pageBuilder: (context, state) => CustomTransitionPage<void>(
                 key: state.pageKey,
-                child: const HomeScreen(
+                child: const HomePage(
                   title: 'Home',
                 ),
                 transitionsBuilder:
@@ -105,7 +105,7 @@ final GoRouter _router = GoRouter(
               name: 'Favorite',
               pageBuilder: (context, state) => CustomTransitionPage<void>(
                 key: state.pageKey,
-                child: const FavoriteScreen(
+                child: const FavoritePage(
                   title: "Favories",
                 ),
                 transitionsBuilder:
@@ -118,7 +118,7 @@ final GoRouter _router = GoRouter(
               name: 'Account',
               pageBuilder: (context, state) => CustomTransitionPage<void>(
                 key: state.pageKey,
-                child: const AccountScreen(
+                child: const AccountPage(
                   title: "Compte",
                 ),
                 transitionsBuilder:

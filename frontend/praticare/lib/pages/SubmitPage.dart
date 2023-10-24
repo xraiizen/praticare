@@ -7,18 +7,20 @@ import 'package:flutter_svg/svg.dart';
 import 'package:go_router/go_router.dart';
 import 'package:praticare/components/BtnValidator.dart';
 import 'package:praticare/components/Text_field_sign.dart';
+import 'package:praticare/models/userModel.dart';
 import 'package:praticare/theme/theme.dart' as theme;
 
-class SubmitScreen extends StatefulWidget {
-  const SubmitScreen({Key? key}) : super(key: key);
+class SubmitPage extends StatefulWidget {
+  const SubmitPage({Key? key}) : super(key: key);
 
   @override
-  State<SubmitScreen> createState() {
-    return _SubmitScreenState();
+  State<SubmitPage> createState() {
+    return _SubmitPageState();
   }
 }
 
-class _SubmitScreenState extends State<SubmitScreen> {
+class _SubmitPageState extends State<SubmitPage> {
+  UserType selectedRole = UserType.Patient; // Valeur par défaut
   final TextEditingController emailController = TextEditingController();
   final TextEditingController firstnameController = TextEditingController();
   final TextEditingController lastnameController = TextEditingController();
@@ -53,13 +55,26 @@ class _SubmitScreenState extends State<SubmitScreen> {
     try {
       CollectionReference users =
           FirebaseFirestore.instance.collection('users');
-      await users.doc(userId).set({
-        'firstname': firstnameController.text,
-        'lastname': lastnameController.text,
-        'bornDate': bornDateController.text,
-        'bornCity': bornCityController.text,
-        'adress': adressController.text,
-      });
+
+      // Création de l'objet UserModel
+      UserModel newUser = UserModel(
+        id: userId,
+        firstname: firstnameController.text,
+        lastname: lastnameController.text,
+        email: emailController.text,
+        bornDate: bornDateController.text,
+        bornCity: bornCityController.text,
+        adress: adressController.text,
+        userType: selectedRole,
+        // Si le type est Ecole et qu'aucune photo n'est fournie, utilisez celle par défaut
+        profilePicture: selectedRole == UserType.Ecole
+            ? 'assets/images/ecole_de_medecine.png'
+            : null,
+      );
+
+      // Sauvegarde de l'objet UserModel dans Firestore
+      await users.doc(userId).set(newUser.toMap());
+
       print("Informations utilisateur ajoutées avec succès.");
     } catch (error) {
       print("Erreur lors de l'ajout des informations utilisateur : $error");
@@ -110,6 +125,35 @@ class _SubmitScreenState extends State<SubmitScreen> {
                         ),
                       )),
                   const SizedBox(height: 32.0),
+                  const Align(
+                    alignment: Alignment.centerLeft,
+                    child: Text(
+                      "Type",
+                      style: TextStyle(
+                        fontSize: 16.0,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ),
+                  Row(
+                    children: UserType.values.map((type) {
+                      return Expanded(
+                        child: ListTile(
+                          title: Text(type
+                              .toShortString()), // Utilisez votre extension ici
+                          leading: Radio<UserType>(
+                            value: type,
+                            groupValue: selectedRole,
+                            onChanged: (UserType? value) {
+                              setState(() {
+                                selectedRole = value!;
+                              });
+                            },
+                          ),
+                        ),
+                      );
+                    }).toList(),
+                  ),
                   TextFieldSign(
                       title: 'Email',
                       controller: emailController,

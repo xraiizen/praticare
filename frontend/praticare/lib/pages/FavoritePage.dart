@@ -6,15 +6,15 @@ import 'package:praticare/components/cardPraticiens/CardPraticien.dart';
 import 'package:praticare/components/interface/AppBar.dart';
 import '../components/interface/BottomBar.dart';
 
-class FavoriteScreen extends StatefulWidget {
-  const FavoriteScreen({super.key, required this.title});
+class FavoritePage extends StatefulWidget {
+  const FavoritePage({super.key, required this.title});
   final String title;
 
   @override
-  State<FavoriteScreen> createState() => _FavoriteScreenState();
+  State<FavoritePage> createState() => _FavoritePageState();
 }
 
-class _FavoriteScreenState extends State<FavoriteScreen> {
+class _FavoritePageState extends State<FavoritePage> {
   final int _selectedIndex = 1;
   bool sectionFavoris = false;
   @override

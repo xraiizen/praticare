@@ -43,6 +43,7 @@ dependencies:
   cloud_firestore: ^4.11.0
   firebase_storage: ^11.2.8
   firebase_database: ^10.2.7
+  image_picker: ^1.0.4
   flutter_form_builder: ^9.1.1
 
 
@@ -73,6 +74,7 @@ flutter:
   #   - assets/images/
   #   - assets/videos/
     - assets/icons/
+    - assets/images/
   #   - assets/fonts/
   # To add assets to your application, add an assets section, like this:
   # assets:

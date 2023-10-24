@@ -8,15 +8,15 @@ import 'package:praticare/components/interface/AppBar.dart';
 import '../components/interface/BottomBar.dart';
 import '../components/sections/SectionHome.dart';
 
-class HomeScreen extends StatefulWidget {
-  const HomeScreen({super.key, required this.title});
+class HomePage extends StatefulWidget {
+  const HomePage({super.key, required this.title});
   final String title;
 
   @override
-  State<HomeScreen> createState() => _HomeScreenState();
+  State<HomePage> createState() => _HomePageState();
 }
 
-class _HomeScreenState extends State<HomeScreen> {
+class _HomePageState extends State<HomePage> {
   bool sectionRdvPasser = false;
   bool sectionFavoris = true;
   final int _selectedIndex = 0;

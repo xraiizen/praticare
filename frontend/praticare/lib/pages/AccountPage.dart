@@ -7,17 +7,18 @@ import 'package:go_router/go_router.dart';
 import 'package:praticare/components/BtnValidator.dart';
 import 'package:praticare/components/Text_field_sign.dart';
 import 'package:praticare/components/interface/AppBar.dart';
+import 'package:praticare/components/sections/SectionFavorie.dart';
 import '../components/interface/BottomBar.dart';
 
-class AccountScreen extends StatefulWidget {
-  const AccountScreen({super.key, required this.title});
+class AccountPage extends StatefulWidget {
+  const AccountPage({super.key, required this.title});
   final String title;
 
   @override
-  State<AccountScreen> createState() => _AccountScreenState();
+  State<AccountPage> createState() => _AccountPageState();
 }
 
-class _AccountScreenState extends State<AccountScreen> {
+class _AccountPageState extends State<AccountPage> {
   final int _selectedIndex = 2;
   User? currentUser;
   Map<String, dynamic>? userData;
@@ -94,57 +95,55 @@ class _AccountScreenState extends State<AccountScreen> {
         selectedIndex: _selectedIndex,
       ),
       body: Center(
-        child: Padding(
-          padding: const EdgeInsets.all(16.0),
-          child: SingleChildScrollView(
-            child: Column(
-              children: [
-                TextFieldSign(
-                  title: 'Prénom',
-                  controller: firstnameController,
-                  keyboardType: TextInputType.name,
-                  hintText: 'Saisissez votre prénom',
-                ),
-                TextFieldSign(
-                  title: 'Nom',
-                  controller: lastnameController,
-                  keyboardType: TextInputType.name,
-                  hintText: 'Saisissez votre nom',
-                ),
-                TextFieldSign(
-                  title: 'Date de naissance',
-                  controller: bornDateController,
-                  keyboardType: TextInputType.datetime,
-                  hintText: 'Saisissez votre date de naissance',
-                ),
-                TextFieldSign(
-                  title: 'Lieu de naissance',
-                  controller: bornCityController,
-                  keyboardType: TextInputType.streetAddress,
-                  hintText: 'Saisissez votre lieu de naissance',
-                ),
-                TextFieldSign(
-                  title: 'Adresse',
-                  controller: adressController,
-                  keyboardType: TextInputType.streetAddress,
-                  hintText: 'Saisissez votre adresse',
-                ),
-                const SizedBox(
-                  height: 24,
-                ),
-                BtnValidator(
-                  text: "Enregistrer",
-                  activePrimaryTheme: true,
-                  onPressed: _saveUserData,
-                ),
-                BtnValidator(
-                  text: "Deconnexion",
-                  activePrimaryTheme: false,
-                  onPressed: signOut,
-                ),
-                // ... (le reste de votre code)
-              ],
-            ),
+        child: SingleChildScrollView(
+          child: SectionHome(
+            isRow: false,
+            title: 'Votre profil',
+            children: [
+              TextFieldSign(
+                title: 'Prénom',
+                controller: firstnameController,
+                keyboardType: TextInputType.name,
+                hintText: 'Saisissez votre prénom',
+              ),
+              TextFieldSign(
+                title: 'Nom',
+                controller: lastnameController,
+                keyboardType: TextInputType.name,
+                hintText: 'Saisissez votre nom',
+              ),
+              TextFieldSign(
+                title: 'Date de naissance',
+                controller: bornDateController,
+                keyboardType: TextInputType.datetime,
+                hintText: 'Saisissez votre date de naissance',
+              ),
+              TextFieldSign(
+                title: 'Lieu de naissance',
+                controller: bornCityController,
+                keyboardType: TextInputType.streetAddress,
+                hintText: 'Saisissez votre lieu de naissance',
+              ),
+              TextFieldSign(
+                title: 'Adresse',
+                controller: adressController,
+                keyboardType: TextInputType.streetAddress,
+                hintText: 'Saisissez votre adresse',
+              ),
+              const SizedBox(
+                height: 24,
+              ),
+              BtnValidator(
+                text: "Enregistrer",
+                activePrimaryTheme: true,
+                onPressed: _saveUserData,
+              ),
+              BtnValidator(
+                text: "Deconnexion",
+                activePrimaryTheme: false,
+                onPressed: signOut,
+              ),
+            ],
           ),
         ),
       ),
