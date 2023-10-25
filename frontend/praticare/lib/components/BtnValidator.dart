@@ -37,6 +37,14 @@ class BtnValidator extends StatelessWidget {
                 return activePrimaryTheme ? theme.primary400 : theme.grey950;
               },
             ),
+            overlayColor: MaterialStateProperty.resolveWith<Color>(
+                (Set<MaterialState> states) {
+              if (activePrimaryTheme) {
+                return theme.secondary400;
+              } else {
+                return theme.grey950;
+              }
+            }),
             shape: MaterialStateProperty.all<RoundedRectangleBorder>(
                 RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(10.0),

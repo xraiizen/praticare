@@ -77,7 +77,7 @@ class _AccountPageState extends State<AccountPage> {
     try {
       await FirebaseAuth.instance.signOut();
       // Rediriger l'utilisateur vers l'écran de connexion ou la page d'accueil après la déconnexion
-      GoRouter.of(context).pushNamed("Login");
+      GoRouter.of(context).goNamed("Login");
     } catch (e) {
       print("Erreur lors de la déconnexion : $e");
       // Traitez les erreurs ici, par exemple en affichant une Snackbar

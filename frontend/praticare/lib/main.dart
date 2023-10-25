@@ -33,8 +33,21 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primaryColor: theme.primary400,
         useMaterial3: true,
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple)
-            .copyWith(error: theme.negative400),
+
+        colorScheme: ColorScheme(
+            background: theme.grey950,
+            onBackground: theme.secondary150,
+            brightness: Brightness.light,
+            primary: theme.primary400,
+            onPrimary: theme.primary400,
+            secondary: theme.primary400,
+            onSecondary: theme.grey950,
+            error: theme.negative400,
+            onError: theme.negative400,
+            surface: theme.grey950,
+            onSurface: theme.grey50),
+        // colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple)
+        //     .copyWith(error: theme.negative400),
       ),
       routerConfig: _router,
     );

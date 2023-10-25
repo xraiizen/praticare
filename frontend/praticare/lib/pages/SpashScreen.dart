@@ -13,7 +13,8 @@ class SplashScreen extends StatefulWidget {
   _SplashScreenState createState() => _SplashScreenState();
 }
 
-class _SplashScreenState extends State<SplashScreen> {
+class _SplashScreenState extends State<SplashScreen>
+    with WidgetsBindingObserver {
   @override
   void initState() {
     super.initState();
@@ -25,11 +26,11 @@ class _SplashScreenState extends State<SplashScreen> {
 
     // Vérifiez si un utilisateur est déjà connecté
     if (FirebaseAuth.instance.currentUser != null) {
-      GoRouter.of(context).goNamed(
+      GoRouter.of(context).pushReplacementNamed(
           "Home"); // Redirigez vers la page d'accueil si l'utilisateur est déjà connecté
     } else {
-      GoRouter.of(context)
-          .goNamed("Login"); // Sinon, redirigez vers la page de connexion
+      GoRouter.of(context).pushReplacementNamed(
+          "Login"); // Sinon, redirigez vers la page de connexion
     }
   }
 

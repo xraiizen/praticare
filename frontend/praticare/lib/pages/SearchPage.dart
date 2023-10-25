@@ -15,9 +15,17 @@ class SearchPage extends StatefulWidget {
 }
 
 class _SearchPageState extends State<SearchPage> {
-  String query = '';
+  String query = ' ';
   List<UserModel> searchResults =
       []; // Supposons que School soit le modèle pour chaque école
+  var refreshKey = GlobalKey<RefreshIndicatorState>();
+
+  Future<void> refresh() async {
+    refreshKey.currentState?.show(atTop: false);
+    await Future.delayed(const Duration(seconds: 2));
+    setState(() {});
+    return;
+  }
 
   // Cette fonction est appelée chaque fois que l'utilisateur modifie sa requête de recherche
   void searchSchools(String query) async {
@@ -37,9 +45,6 @@ class _SearchPageState extends State<SearchPage> {
           .collection('users')
           .where('userType', isEqualTo: 'Ecole')
           .where('firstname', isGreaterThanOrEqualTo: query)
-          .where('lastname', isGreaterThanOrEqualTo: query)
-          .where('adress', isGreaterThanOrEqualTo: query)
-          .where('bornCity', isGreaterThanOrEqualTo: query)
           .get();
 
       // Transforme les documents obtenus en une liste d'écoles
@@ -63,48 +68,75 @@ class _SearchPageState extends State<SearchPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: const MyAppBarWithTitle(title: "Recherche"),
-      body: SingleChildScrollView(
-        child: Column(
-          children: <Widget>[
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: TextField(
-                onChanged: (value) {
-                  query = value;
-                  searchSchools(query);
-                },
-                decoration: const InputDecoration(
-                  labelText: 'Recherchez une école...',
-                  border: OutlineInputBorder(),
+      body: RefreshIndicator(
+        key: refreshKey,
+        onRefresh: refresh,
+        child: SingleChildScrollView(
+          child: Column(
+            children: <Widget>[
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    const Text("A"),
+                    TextButton(
+                      child: Text("Rennes"),
+                      onPressed: () {},
+                    )
+                  ],
                 ),
               ),
-            ),
-            searchResults.isEmpty // Si aucun résultat n'est trouvé
-                ? const Center(child: Text("Aucun résultat"))
-                : ListView.builder(
-                    shrinkWrap: true,
-                    physics: const NeverScrollableScrollPhysics(),
-                    itemCount: searchResults.length,
-                    itemBuilder: (context, index) {
-                      UserModel school = searchResults[index];
-                      return CardPraticienResultat(
-                        urlImage: school.profilePicture!,
-                        firstname: school.firstname,
-                        lastname: school.lastname,
-                        metier: "Par encore fait",
-                        dateRdvPasser: "Par encore fait",
-                      );
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: SizedBox(
+                  height: 55,
+                  child: TextField(
+                    onChanged: (value) {
+                      query = value;
+                      searchSchools(query);
                     },
+                    decoration: const InputDecoration(
+                      prefixIcon: Icon(
+                        Icons.search,
+                        size: 24,
+                      ),
+                      labelText: 'Ville, région, adresse, ...',
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.all(Radius.circular(8)),
+                      ),
+                    ),
                   ),
-            // CardPraticienResultat(
-            //   urlImage:
-            //       "https://images.pexels.com/photos/220453/pexels-photo-220453.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
-            //   firstname: "Victoire",
-            //   lastname: "DONIN",
-            //   metier: "Cardiologue",
-            //   dateRdvPasser: "02/09/23",
-            // ),
-          ],
+                ),
+              ),
+              searchResults.isEmpty // Si aucun résultat n'est trouvé
+                  ? const Center(child: Text("Aucun résultat"))
+                  : ListView.builder(
+                      shrinkWrap: true,
+                      physics: const NeverScrollableScrollPhysics(),
+                      itemCount: searchResults.length,
+                      itemBuilder: (context, index) {
+                        UserModel school = searchResults[index];
+                        return CardPraticienResultat(
+                          urlImage: school.profilePicture!,
+                          firstname: school.firstname,
+                          lastname: school.lastname,
+                          metier: "Par encore fait",
+                          dateRdvPasser: "Par encore fait",
+                        );
+                      },
+                    ),
+              CardPraticienResultat(
+                urlImage:
+                    "https://images.pexels.com/photos/220453/pexels-photo-220453.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
+                firstname: "Victoire",
+                lastname: "DONIN",
+                metier: "Cardiologue",
+                dateRdvPasser: "02/09/23",
+              ),
+            ],
+          ),
         ),
       ),
     );

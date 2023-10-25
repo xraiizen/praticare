@@ -1,22 +1,29 @@
-// ignore_for_file: unused_import, library_private_types_in_public_api, must_be_immutable
+// ignore_for_file: library_private_types_in_public_api
+
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
 import 'package:go_router/go_router.dart';
 import 'package:praticare/components/BtnValidator.dart';
-import 'package:praticare/components/interface/BtnBottomBar.dart';
-import 'package:praticare/theme/theme.dart' as theme;
 
 class BottomBar extends StatefulWidget {
-  int selectedIndex;
-  BottomBar({super.key, required this.selectedIndex});
+  final int selectedIndex;
+  const BottomBar({Key? key, required this.selectedIndex}) : super(key: key);
 
   @override
   _BottomBarState createState() => _BottomBarState();
 }
 
 class _BottomBarState extends State<BottomBar> {
-  Widget? searchBtn;
-  void goRoute(int index) {
+  late int _selectedIndex;
+  late Widget? searchBtn;
+
+  @override
+  void initState() {
+    super.initState();
+    _selectedIndex = widget.selectedIndex;
+    _updateSearchBtn();
+  }
+
+  void _goRoute(int index) {
     switch (index) {
       case 0:
         GoRouter.of(context).pushNamed("Home");
@@ -31,44 +38,54 @@ class _BottomBarState extends State<BottomBar> {
     }
   }
 
-  void showBtnSearch() {
-    if (widget.selectedIndex == 0) {
-      searchBtn = Container(
-        width: double.infinity,
-        alignment: Alignment.bottomCenter,
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 16),
-          child: BtnValidator(
-            icon: Icons.search_sharp,
-            text: "Rechercher un praticien",
-            activePrimaryTheme: true,
-            routeName: "SearchPage",
+  void _updateSearchBtn() {
+    setState(() {
+      if (_selectedIndex == 0) {
+        searchBtn = SizedBox(
+          width: double.infinity,
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 16),
+            child: BtnValidator(
+              icon: Icons.search_sharp,
+              text: "Rechercher un praticien",
+              activePrimaryTheme: true,
+              routeName: "SearchPage",
+            ),
           ),
-        ),
-      );
-    }
+        );
+      } else {
+        searchBtn = null;
+      }
+    });
   }
 
   @override
   Widget build(BuildContext context) {
-    showBtnSearch();
-    return Wrap(
-      children: [
-        // Bouton fixe au-dessus de la barre de navigation
-        searchBtn ?? const SizedBox.shrink(),
-        // Barre de navigation avec les trois boutons principaux
-        NavigationBar(
-          animationDuration: const Duration(seconds: 1),
-          selectedIndex: widget.selectedIndex,
-          onDestinationSelected: (index) {
-            setState(() {
-              widget.selectedIndex = index;
-            });
-            goRoute(index);
-          },
-          destinations: _navBarItems,
-        ),
-      ],
+    return SizedBox(
+      child: Wrap(
+        children: [
+          searchBtn ?? const SizedBox.shrink(),
+          // Assuming NavigationBar is a custom widget you've created
+          ClipRRect(
+            borderRadius: const BorderRadius.only(
+              topLeft: Radius.circular(20.0),
+              topRight: Radius.circular(20.0),
+            ),
+            child: NavigationBar(
+              shadowColor: Colors.black,
+              animationDuration: const Duration(seconds: 1),
+              selectedIndex: _selectedIndex,
+              onDestinationSelected: (index) {
+                setState(() {
+                  _selectedIndex = index;
+                });
+                _goRoute(index);
+              },
+              destinations: _navBarItems,
+            ),
+          ),
+        ],
+      ),
     );
   }
 }

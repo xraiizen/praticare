@@ -20,64 +20,81 @@ class _HomePageState extends State<HomePage> {
   bool sectionRdvPasser = false;
   bool sectionFavoris = true;
   final int _selectedIndex = 0;
+  var refreshKey = GlobalKey<RefreshIndicatorState>();
+
+  Future<void> refresh() async {
+    refreshKey.currentState?.show(atTop: false);
+    await Future.delayed(Duration(seconds: 2));
+    setState(() {});
+    return null;
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+        extendBody: true,
         appBar: const MyAppBar(),
         bottomNavigationBar: BottomBar(
           selectedIndex: _selectedIndex,
         ),
-        body: SingleChildScrollView(
-          child: Column(
-            children: [
-              SectionHome(
-                isRow: false,
-                title: 'Rendez-vous prévus',
-                children: const [
-                  CardPraticienRdvPrevus(
-                    dateRdv: "05/10",
-                    urlImage:
-                        "https://images.pexels.com/photos/220453/pexels-photo-220453.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
-                    firstname: 'Victoire',
-                    lastname: 'DONIN',
-                    metier: 'Cardiologue',
-                    heureRdv: '11:20',
-                  )
-                ],
-              ),
-              SectionHome(
-                isRow: sectionFavoris,
-                showMore: true,
-                title: 'Favoris',
+        body: RefreshIndicator(
+          key: refreshKey,
+          onRefresh: refresh,
+          child: Padding(
+            padding: const EdgeInsets.only(bottom: 150),
+            child: SingleChildScrollView(
+              child: Column(
                 children: [
-                  CardPraticien(
-                    isInRow: sectionFavoris,
-                    urlImage:
-                        "https://images.pexels.com/photos/220453/pexels-photo-220453.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
-                    firstname: "Victoire",
-                    lastname: "DONIN",
-                    metier: "Cardiologue",
-                    dateRdvPasser: "02/09/23",
+                  SectionHome(
+                    isRow: false,
+                    title: 'Rendez-vous prévus',
+                    children: const [
+                      CardPraticienRdvPrevus(
+                        dateRdv: "05/10",
+                        urlImage:
+                            "https://images.pexels.com/photos/220453/pexels-photo-220453.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
+                        firstname: 'Victoire',
+                        lastname: 'DONIN',
+                        metier: 'Cardiologue',
+                        heureRdv: '11:20',
+                      )
+                    ],
+                  ),
+                  SectionHome(
+                    isRow: sectionFavoris,
+                    showMore: true,
+                    title: 'Favoris',
+                    children: [
+                      CardPraticien(
+                        isInRow: sectionFavoris,
+                        urlImage:
+                            "https://images.pexels.com/photos/220453/pexels-photo-220453.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
+                        firstname: "Victoire",
+                        lastname: "DONIN",
+                        metier: "Cardiologue",
+                        dateRdvPasser: "02/09/23",
+                      ),
+                    ],
+                  ),
+                  SectionHome(
+                    isRow: sectionRdvPasser,
+                    showMore: true,
+                    title: 'Rendez-vous passés',
+                    children: [
+                      CardPraticien(
+                        isInRow: sectionRdvPasser,
+                        urlImage:
+                            "https://images.pexels.com/photos/220453/pexels-photo-220453.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
+                        firstname: "Victoire",
+                        lastname: "DONIN",
+                        metier: "Cardiologue",
+                        dateRdvPasser: "02/09/23",
+                      ),
+                    ],
                   ),
                 ],
               ),
-              SectionHome(
-                isRow: sectionRdvPasser,
-                showMore: true,
-                title: 'Rendez-vous passés',
-                children: [
-                  CardPraticien(
-                    isInRow: sectionRdvPasser,
-                    urlImage:
-                        "https://images.pexels.com/photos/220453/pexels-photo-220453.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
-                    firstname: "Victoire",
-                    lastname: "DONIN",
-                    metier: "Cardiologue",
-                    dateRdvPasser: "02/09/23",
-                  ),
-                ],
-              ),
-            ],
+            ),
           ),
         ));
   }

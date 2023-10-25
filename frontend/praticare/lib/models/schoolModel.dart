@@ -2,18 +2,18 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:praticare/models/userModel.dart';
 
 class School {
-  final String imageUrl;
+  final String? imageUrl;
   final String name;
   final String metier;
   final String dateRdvPasser;
-  final String adress;
+  final String address;
 
   School({
-    required this.imageUrl,
+    this.imageUrl,
     required this.name,
     required this.metier,
     required this.dateRdvPasser,
-    required this.adress,
+    required this.address,
   });
 
   factory School.fromDocument(DocumentSnapshot doc) {
@@ -22,7 +22,7 @@ class School {
       name: doc['firstname'],
       metier: doc['metier'],
       dateRdvPasser: doc['dateRdvPasser'],
-      adress: doc['adress'],
+      address: doc['address'],
     );
   }
 
@@ -33,7 +33,7 @@ class School {
       'name': name,
       'metier': metier,
       'dateRdvPasser': dateRdvPasser,
-      'adress': adress,
+      'address': address,
       'role': UserType.Ecole,
     };
   }
