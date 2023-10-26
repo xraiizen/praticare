@@ -6,6 +6,7 @@ import 'package:praticare/pages/ErrorPage.dart';
 import 'package:praticare/pages/FavoritePage.dart';
 import 'package:praticare/pages/HomePage.dart';
 import 'package:praticare/pages/LoginPage.dart';
+import 'package:praticare/pages/SearchMapPage.dart';
 import 'package:praticare/pages/SearchPage.dart';
 import 'package:praticare/pages/SpashScreen.dart';
 import 'package:praticare/pages/SubmitPage.dart';
@@ -106,6 +107,19 @@ final GoRouter _router = GoRouter(
               pageBuilder: (context, state) => CustomTransitionPage<void>(
                 key: state.pageKey,
                 child: const SearchPage(
+                  title: 'Recherche',
+                ),
+                transitionsBuilder:
+                    (context, animation, secondaryAnimation, child) =>
+                        FadeTransition(opacity: animation, child: child),
+              ),
+            ),
+            GoRoute(
+              path: 'SearchMapPage',
+              name: 'SearchMapPage',
+              pageBuilder: (context, state) => CustomTransitionPage<void>(
+                key: state.pageKey,
+                child: const SearchMapPage(
                   title: 'Recherche',
                 ),
                 transitionsBuilder:

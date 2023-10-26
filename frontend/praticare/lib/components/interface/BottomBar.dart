@@ -49,7 +49,7 @@ class _BottomBarState extends State<BottomBar> {
               icon: Icons.search_sharp,
               text: "Rechercher un praticien",
               activePrimaryTheme: true,
-              routeName: "SearchPage",
+              routeName: "SearchMapPage",
             ),
           ),
         );
