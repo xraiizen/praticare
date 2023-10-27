@@ -1,13 +1,7 @@
 // ignore_for_file: file_names
-
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:praticare/components/cardPraticiens/CardPraticienResultat.dart';
-import 'package:praticare/components/interface/AppBarWithTitle.dart';
-import 'package:praticare/models/userModel.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'dart:async';
-
 
 class SearchMapPage extends StatefulWidget {
   const SearchMapPage({super.key, required this.title});
@@ -17,7 +11,7 @@ class SearchMapPage extends StatefulWidget {
   State<SearchMapPage> createState() => _SearchMapPageState();
 }
 
-class _SearchMapPageState extends State<SearchMapPage>{
+class _SearchMapPageState extends State<SearchMapPage> {
   final Completer<GoogleMapController> _controller =
       Completer<GoogleMapController>();
 
@@ -25,7 +19,7 @@ class _SearchMapPageState extends State<SearchMapPage>{
     target: LatLng(37.42796133580664, -122.085749655962),
     zoom: 14.4746,
   );
-  
+
   static const String customMapStyle = '''
 [
   {
@@ -165,7 +159,7 @@ class _SearchMapPageState extends State<SearchMapPage>{
       appBar: AppBar(
         title: Text('Ma Carte Google'),
       ),
-       body: GoogleMap(
+      body: GoogleMap(
         initialCameraPosition: _kGooglePlex,
         onMapCreated: (GoogleMapController controller) {
           _controller.complete(controller);
