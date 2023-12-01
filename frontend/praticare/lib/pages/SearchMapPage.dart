@@ -21,27 +21,27 @@ class _SearchMapPageState extends State<SearchMapPage> {
   );
 
   // Définissez les coordonnées de votre marqueur
-  LatLng markerLatLng = LatLng(48.0900368054287, -1.6751246024528512);
+  LatLng markerLatLng = const LatLng(48.0900368054287, -1.6751246024528512);
 
   // Liste pour stocker les marqueurs
   List<Marker> markers = [];
-  BitmapDescriptor myIcon = BitmapDescriptor.defaultMarker;
+  late BitmapDescriptor myIcon;
   @override
   void initState() {
     super.initState();
     BitmapDescriptor.fromAssetImage(
             const ImageConfiguration(
-              size: Size(48, 48),
+              size: Size(40, 60),
             ),
             'assets/icons/pink_marker.png')
-        .then((value) => value = myIcon);
+        .then((value) => myIcon = value);
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Map'),
+        title: const Text('Map'),
       ),
       body: GoogleMap(
         initialCameraPosition: _kGooglePlex,
