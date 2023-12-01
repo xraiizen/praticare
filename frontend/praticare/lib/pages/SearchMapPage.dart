@@ -21,16 +21,10 @@ class _SearchMapPageState extends State<SearchMapPage> {
   );
 
   // Définissez les coordonnées de votre marqueur
-  LatLng markerLatLng = LatLng(48.0900368054287, -1.6751246024528512);
+  LatLng markerLatLng = LatLng(48.08749771118164, -1.6743696928024292);
 
   // Liste pour stocker les marqueurs
   List<Marker> markers = [];
-late BitmapDescriptor myIcon;
-  @override
-  void initState(){
-    super.initState();
-BitmapDescriptor.fromAssetImage(const ImageConfiguration(size: Size(48,48),) ,'assets/custom_marker.png').then((value) => value = myIcon);
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -51,7 +45,6 @@ BitmapDescriptor.fromAssetImage(const ImageConfiguration(size: Size(48,48),) ,'a
                 markerId: MarkerId('mydigitalschool'),
                 position: markerLatLng,
                 infoWindow: InfoWindow(title: 'MyDigitalSchool'),
-                icon: myIcon,
               ),
             );
           });
