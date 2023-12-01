@@ -24,7 +24,8 @@ class BtnValidator extends StatelessWidget {
     final bool areIcon = icon != null;
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 0),
-      child: SizedBox(
+      child: Container(
+        color: Colors.transparent,
         width: double.infinity,
         child: ElevatedButton(
           style: ButtonStyle(

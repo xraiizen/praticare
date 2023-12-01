@@ -31,6 +31,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp.router(
       title: 'Praticare',
       debugShowCheckedModeBanner: false,
+      
       theme: ThemeData(
         primaryColor: theme.primary400,
         useMaterial3: true,
