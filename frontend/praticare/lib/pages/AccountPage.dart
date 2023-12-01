@@ -60,16 +60,29 @@ class _AccountPageState extends State<AccountPage> {
     if (currentUser != null) {
       final DocumentReference userDoc =
           FirebaseFirestore.instance.collection('users').doc(currentUser!.uid);
-      return userDoc
-          .update({
-            'firstname': firstnameController.text,
-            'lastname': lastnameController.text,
-            'bornDate': bornDateController.text,
-            'bornCity': bornCityController.text,
-            'adress': adressController.text,
-          })
-          .then((value) => print("User Info Updated"))
-          .catchError((error) => print("Failed to update user info: $error"));
+      if (userDoc.id.isNotEmpty) {
+        return userDoc
+            .update({
+              'firstname': firstnameController.text,
+              'lastname': lastnameController.text,
+              'bornDate': bornDateController.text,
+              'bornCity': bornCityController.text,
+              'adress': adressController.text,
+            })
+            .then((value) => print("User Info Updated"))
+            .catchError((error) => print("Failed to update user info: $error"));
+      } else {
+        return userDoc
+            .set({
+              'firstname': firstnameController.text,
+              'lastname': lastnameController.text,
+              'bornDate': bornDateController.text,
+              'bornCity': bornCityController.text,
+              'adress': adressController.text,
+            })
+            .then((value) => print("User Info Updated"))
+            .catchError((error) => print("Failed to update user info: $error"));
+      }
     }
   }
 

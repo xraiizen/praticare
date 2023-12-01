@@ -25,11 +25,16 @@ class _SearchMapPageState extends State<SearchMapPage> {
 
   // Liste pour stocker les marqueurs
   List<Marker> markers = [];
-late BitmapDescriptor myIcon;
+  BitmapDescriptor myIcon = BitmapDescriptor.defaultMarker;
   @override
-  void initState(){
+  void initState() {
     super.initState();
-BitmapDescriptor.fromAssetImage(const ImageConfiguration(size: Size(48,48),) ,'assets/custom_marker.png').then((value) => value = myIcon);
+    BitmapDescriptor.fromAssetImage(
+            const ImageConfiguration(
+              size: Size(48, 48),
+            ),
+            'assets/icons/pink_marker.png')
+        .then((value) => value = myIcon);
   }
 
   @override
