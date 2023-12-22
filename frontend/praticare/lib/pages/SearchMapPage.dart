@@ -1,4 +1,6 @@
 // ignore_for_file: file_names
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'dart:async';
@@ -10,6 +12,10 @@ class SearchMapPage extends StatefulWidget {
   @override
   State<SearchMapPage> createState() => _SearchMapPageState();
 }
+
+
+
+ 
 
 class _SearchMapPageState extends State<SearchMapPage> {
   final Completer<GoogleMapController> _controller =
@@ -29,12 +35,46 @@ class _SearchMapPageState extends State<SearchMapPage> {
   @override
   void initState() {
     super.initState();
+        _loadSchoolData();
     BitmapDescriptor.fromAssetImage(
             const ImageConfiguration(
-              size: Size(40, 60),
+              size: Size(25, 40),
             ),
             'assets/icons/pink_marker.png')
         .then((value) => myIcon = value);
+  }
+  
+  Future<List<Map<String, dynamic>>> _loadSchoolData() async {
+    List<Map<String, dynamic>> allSchoolData = [];
+
+    try {
+      QuerySnapshot querySnapshot = await FirebaseFirestore.instance.collection('ecole').get();
+
+      setState(() {
+        if (querySnapshot.docs.isNotEmpty) {
+          for (QueryDocumentSnapshot doc in querySnapshot.docs) {
+            var schoolData = doc.data() as Map<String, dynamic>;
+            allSchoolData.add(schoolData);
+          }
+
+          // Affichez les données dans la console
+          for (var schoolData in allSchoolData) {
+            print('Adresse: ${schoolData['adresse']}');
+            print('Code Postal: ${schoolData['code_postal']}');
+            print('Nom: ${schoolData['nom']}');
+            print('Secteur: ${schoolData['secteur']}');
+            print('Ville: ${schoolData['ville']}');
+            print('---');
+          }
+        } else {
+          print('Aucun document trouvé dans la collection "ecole".');
+        }
+      });
+    } catch (error) {
+      print('Erreur lors de la récupération des données : $error');
+    }
+
+    return allSchoolData;
   }
 
   @override
