@@ -11,9 +11,11 @@ class BtnValidator extends StatelessWidget {
   double? sizeIcon;
   late String? routeName;
   VoidCallback? onPressed;
+  EdgeInsetsGeometry? padding;
   BtnValidator(
       {super.key,
       required this.text,
+      this.padding,
       this.routeName,
       required this.activePrimaryTheme,
       this.onPressed,
@@ -23,7 +25,7 @@ class BtnValidator extends StatelessWidget {
   Widget build(BuildContext context) {
     final bool areIcon = icon != null;
     return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 0),
+      padding: padding ?? const EdgeInsets.all(0),
       child: Container(
         color: Colors.transparent,
         width: double.infinity,
@@ -48,7 +50,7 @@ class BtnValidator extends StatelessWidget {
             }),
             shape: MaterialStateProperty.all<RoundedRectangleBorder>(
                 RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(10.0),
+                    borderRadius: BorderRadius.circular(40.0),
                     side: BorderSide(color: theme.primary400))),
           ),
           child: Padding(
@@ -62,7 +64,7 @@ class BtnValidator extends StatelessWidget {
                           padding: const EdgeInsets.only(right: 8),
                           child: Icon(
                             icon,
-                            size: sizeIcon ?? 24,
+                            size: sizeIcon ?? 30,
                             color: activePrimaryTheme
                                 ? Colors.white
                                 : theme.primary400,

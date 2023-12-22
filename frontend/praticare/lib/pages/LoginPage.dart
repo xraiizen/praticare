@@ -2,10 +2,10 @@
 
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
 import 'package:go_router/go_router.dart';
-import 'package:praticare/components/BtnValidator.dart';
+import 'package:praticare/components/TextButtonBgColor.dart';
 import 'package:praticare/components/Text_field_sign.dart';
+import 'package:praticare/theme/theme.dart ' as theme;
 
 class LoginPage extends StatelessWidget {
   final TextEditingController _emailController = TextEditingController();
@@ -39,52 +39,95 @@ class LoginPage extends StatelessWidget {
     }
 
     return Scaffold(
+      extendBodyBehindAppBar: true,
+      appBar: AppBar(
+        surfaceTintColor: Colors.transparent,
+        backgroundColor: Colors.transparent,
+      ),
       body: Center(
-        child: Padding(
-          padding: const EdgeInsets.all(16.0),
-          child: SingleChildScrollView(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: <Widget>[
-                Padding(
-                  padding: const EdgeInsets.only(bottom: 64),
-                  child: SvgPicture.asset("assets/icons/Logo_unique.svg",
-                      width: 64),
-                ),
-                const Align(
-                    alignment: Alignment.centerLeft,
-                    child: Text(
+        child: SingleChildScrollView(
+          child: Container(
+            width: MediaQuery.of(context).size.width,
+            height: MediaQuery.of(context).size.height / 1.1,
+            decoration: const BoxDecoration(
+              image: DecorationImage(
+                image: AssetImage("assets/images/backgroundSpline.png"),
+                fit: BoxFit.cover,
+              ),
+            ),
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 20),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: <Widget>[
+                  Padding(
+                    padding: EdgeInsets.only(
+                        top: MediaQuery.of(context).size.height / 8,
+                        bottom: 120),
+                    child: const Text(
                       'Connexion',
+                      textAlign: TextAlign.center,
                       style: TextStyle(
-                        fontSize: 24.0,
-                        fontWeight: FontWeight.bold,
+                        fontSize: 32,
+                        fontWeight: FontWeight.w400,
                       ),
-                    )),
-                const SizedBox(height: 32.0),
-                TextFieldSign(
-                    title: 'Email',
-                    controller: _emailController,
-                    keyboardType: TextInputType.emailAddress,
-                    hintText: 'Saisissez votre email'),
-                const SizedBox(height: 20.0),
-                TextFieldSign(
-                    title: 'Mot de passe',
-                    controller: _passwordController,
-                    keyboardType: TextInputType.visiblePassword,
-                    hintText: 'Saisissez votre mot de passe'),
-                const SizedBox(height: 32.0),
-                BtnValidator(
-                  text: "Se connecter",
-                  activePrimaryTheme: true,
-                  onPressed: signInWithEmailAndPassword,
-                ),
-                BtnValidator(
-                  text: "Créer un compte",
-                  activePrimaryTheme: false,
-                  routeName: "Submit",
-                ),
-              ],
+                    ),
+                  ),
+                  TextFieldSign(
+                      title: 'Adresse email',
+                      controller: _emailController,
+                      keyboardType: TextInputType.emailAddress,
+                      hintText: 'Saisissez votre adresse email'),
+                  const SizedBox(height: 50.0),
+                  TextFieldSign(
+                      isPassword: true,
+                      title: 'Mot de passe',
+                      controller: _passwordController,
+                      keyboardType: TextInputType.visiblePassword,
+                      hintText: 'Saisissez votre mot de passe'),
+                  Align(
+                    alignment: Alignment.centerRight,
+                    child: TextButton(
+                        onPressed: () {},
+                        child: Text(
+                          "Mot de passe oublié ?",
+                          style: TextStyle(
+                              fontSize: 14,
+                              fontWeight: FontWeight.w700,
+                              color: theme.vert),
+                        )),
+                  ),
+                  const Spacer(),
+                  TextButtonBgColor(
+                    text: "Se connecter",
+                    onPressed: signInWithEmailAndPassword,
+                  ),
+                  const Spacer(),
+                  Align(
+                      alignment: Alignment.bottomCenter,
+                      child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Text(
+                              "Vous n'avez pas de compte ?",
+                              style:
+                                  TextStyle(fontSize: 14, color: theme.violet),
+                            ),
+                            TextButton(
+                                onPressed: () {
+                                  GoRouter.of(context).pushNamed("Submit");
+                                },
+                                child: Text(
+                                  "S'inscrire",
+                                  style: TextStyle(
+                                      fontSize: 14,
+                                      fontWeight: FontWeight.w700,
+                                      color: theme.vert),
+                                )),
+                          ]))
+                ],
+              ),
             ),
           ),
         ),

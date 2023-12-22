@@ -4,7 +4,6 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:go_router/go_router.dart';
-import 'package:praticare/theme/theme.dart' as theme;
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({Key? key}) : super(key: key);
@@ -13,8 +12,7 @@ class SplashScreen extends StatefulWidget {
   _SplashScreenState createState() => _SplashScreenState();
 }
 
-class _SplashScreenState extends State<SplashScreen>
-    with WidgetsBindingObserver {
+class _SplashScreenState extends State<SplashScreen> {
   @override
   void initState() {
     super.initState();
@@ -22,7 +20,7 @@ class _SplashScreenState extends State<SplashScreen>
   }
 
   void initialization() async {
-    await Future.delayed(const Duration(seconds: 2));
+    await Future.delayed(const Duration(seconds: 1));
 
     // Vérifiez si un utilisateur est déjà connecté
     if (FirebaseAuth.instance.currentUser != null) {
@@ -30,7 +28,7 @@ class _SplashScreenState extends State<SplashScreen>
           "Home"); // Redirigez vers la page d'accueil si l'utilisateur est déjà connecté
     } else {
       GoRouter.of(context).pushReplacementNamed(
-          "Login"); // Sinon, redirigez vers la page de connexion
+          "SignInAndUpPage"); // Sinon, redirigez vers la page de connexion
     }
   }
 
@@ -53,17 +51,7 @@ class _SplashScreenState extends State<SplashScreen>
         children: <Widget>[
           SizedBox(
               height: 128,
-              child: SvgPicture.asset("assets/icons/Logo_unique.svg")),
-          Padding(
-            padding: const EdgeInsets.only(top: 64),
-            child: SizedBox(
-              width: 64,
-              height: 64,
-              child: CircularProgressIndicator(
-                color: theme.primary400,
-              ),
-            ),
-          ),
+              child: SvgPicture.asset("assets/icons/logo_violet.svg")),
         ],
       ),
     ));

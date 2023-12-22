@@ -38,3 +38,9 @@ Color negative400 = const Color.fromARGB(255, 206, 3, 0);
 Color warning300 = const Color.fromARGB(255, 179, 63, 0);
 Color info400 = const Color.fromARGB(255, 0, 98, 203);
 Color positive300 = const Color.fromARGB(255, 20, 123, 44);
+
+Color violetText = const Color(0xff986AC2);
+Color violetbgInput = const Color(0xffEAE4F1);
+Color violetDark = const Color(0xff685FC7);
+Color violet = const Color(0xff685FC7);
+Color vert = const Color(0xff71AE7B);

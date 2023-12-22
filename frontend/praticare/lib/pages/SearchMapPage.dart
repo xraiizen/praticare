@@ -53,9 +53,9 @@ class _SearchMapPageState extends State<SearchMapPage> {
           setState(() {
             markers.add(
               Marker(
-                markerId: MarkerId('mydigitalschool'),
+                markerId: const MarkerId('mydigitalschool'),
                 position: markerLatLng,
-                infoWindow: InfoWindow(title: 'MyDigitalSchool'),
+                infoWindow: const InfoWindow(title: 'MyDigitalSchool'),
                 icon: myIcon,
               ),
             );

@@ -8,6 +8,7 @@ import 'package:praticare/pages/HomePage.dart';
 import 'package:praticare/pages/LoginPage.dart';
 import 'package:praticare/pages/SearchMapPage.dart';
 import 'package:praticare/pages/SearchPage.dart';
+import 'package:praticare/pages/SignInAndUpPage.dart';
 import 'package:praticare/pages/SpashScreen.dart';
 import 'package:praticare/pages/SubmitPage.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -31,7 +32,6 @@ class MyApp extends StatelessWidget {
     return MaterialApp.router(
       title: 'Praticare',
       debugShowCheckedModeBanner: false,
-      
       theme: ThemeData(
         primaryColor: theme.primary400,
         useMaterial3: true,
@@ -67,6 +67,17 @@ final GoRouter _router = GoRouter(
             return const SplashScreen();
           },
           routes: [
+            GoRoute(
+              path: 'SignInAndUpPage',
+              name: 'SignInAndUpPage',
+              pageBuilder: (context, state) => CustomTransitionPage<void>(
+                key: state.pageKey,
+                child: SignInAndUpPage(),
+                transitionsBuilder:
+                    (context, animation, secondaryAnimation, child) =>
+                        FadeTransition(opacity: animation, child: child),
+              ),
+            ),
             GoRoute(
               path: 'Login',
               name: 'Login',
