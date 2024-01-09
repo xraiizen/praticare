@@ -17,7 +17,7 @@ class TextButtonBorderColor extends StatelessWidget {
   Widget build(BuildContext context) {
     return TextButton(
       style: TextButton.styleFrom(
-          fixedSize: const Size(200, 50),
+          fixedSize: const Size(220, 50),
           backgroundColor: Colors.white,
           shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(40.0),

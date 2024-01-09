@@ -3,9 +3,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
 import 'package:go_router/go_router.dart';
-import 'package:praticare/components/BtnValidator.dart';
+import 'package:praticare/components/TextButtonBgColor.dart';
 import 'package:praticare/components/Text_field_sign.dart';
 import 'package:praticare/models/userModel.dart';
 import 'package:praticare/theme/theme.dart' as theme;
@@ -24,11 +23,11 @@ class _SubmitPageState extends State<SubmitPage> {
   final TextEditingController emailController = TextEditingController();
   final TextEditingController firstnameController = TextEditingController();
   final TextEditingController lastnameController = TextEditingController();
-  final TextEditingController passwordController = TextEditingController();
   final TextEditingController bornDateController = TextEditingController();
-  final TextEditingController bornCityController = TextEditingController();
   final TextEditingController adressController = TextEditingController();
-
+  final TextEditingController passwordController = TextEditingController();
+  final TextEditingController passwordConfirmController =
+      TextEditingController();
   Future<void> registerAccount() async {
     try {
       final UserCredential userCredential =
@@ -59,17 +58,13 @@ class _SubmitPageState extends State<SubmitPage> {
       // Création de l'objet UserModel
       UserModel newUser = UserModel(
         id: userId,
+        email: emailController.text,
         firstname: firstnameController.text,
         lastname: lastnameController.text,
-        email: emailController.text,
         bornDate: bornDateController.text,
-        bornCity: bornCityController.text,
         adress: adressController.text,
         userType: selectedRole,
-        // Si le type est Ecole et qu'aucune photo n'est fournie, utilisez celle par défaut
-        profilePicture: selectedRole == UserType.Ecole
-            ? 'assets/images/ecole_de_medecine.png'
-            : null,
+        profilePicture: null,
       );
 
       // Sauvegarde de l'objet UserModel dans Firestore
@@ -92,7 +87,6 @@ class _SubmitPageState extends State<SubmitPage> {
     firstnameController.dispose();
     lastnameController.dispose();
     bornDateController.dispose();
-    bornCityController.dispose();
     adressController.dispose();
     super.dispose();
   }
@@ -100,114 +94,132 @@ class _SubmitPageState extends State<SubmitPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      extendBodyBehindAppBar: true,
+      extendBody: true,
+      appBar: AppBar(
+        surfaceTintColor: Colors.transparent,
+        backgroundColor: Colors.transparent,
+        elevation: 0,
+        leading: IconButton(
+          icon: const Icon(Icons.arrow_back_ios),
+          onPressed: () {
+            GoRouter.of(context).goNamed("SignInAndUpPage");
+          },
+        ),
+      ),
       body: Center(
-        child: Padding(
-          padding: const EdgeInsets.all(16.0),
-          child: Padding(
-            padding: const EdgeInsets.only(top: 75),
-            child: SingleChildScrollView(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: <Widget>[
-                  Padding(
-                    padding: const EdgeInsets.only(bottom: 64),
-                    child: SvgPicture.asset("assets/icons/Logo_unique.svg",
-                        width: 64),
-                  ),
-                  const Align(
-                      alignment: Alignment.centerLeft,
-                      child: Text(
+        child: SingleChildScrollView(
+          child: Container(
+            width: MediaQuery.of(context).size.width,
+            height: MediaQuery.of(context).size.height,
+            decoration: const BoxDecoration(
+              image: DecorationImage(
+                image: AssetImage("assets/images/backgroundSpline.png"),
+                fit: BoxFit.cover,
+              ),
+            ),
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 20),
+              child: SingleChildScrollView(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: <Widget>[
+                    Padding(
+                      padding: EdgeInsets.only(
+                          top: MediaQuery.of(context).size.height / 8,
+                          bottom: 80),
+                      child: const Text(
                         'Inscription',
+                        textAlign: TextAlign.center,
                         style: TextStyle(
-                          fontSize: 24.0,
-                          fontWeight: FontWeight.bold,
+                          fontSize: 32,
+                          fontWeight: FontWeight.w400,
                         ),
-                      )),
-                  const SizedBox(height: 32.0),
-                  const Align(
-                    alignment: Alignment.centerLeft,
-                    child: Text(
-                      "Type",
-                      style: TextStyle(
-                        fontSize: 16.0,
-                        fontWeight: FontWeight.bold,
                       ),
                     ),
-                  ),
-                  Row(
-                    children: UserType.values.map((type) {
-                      return Expanded(
-                        child: ListTile(
-                          title: Text(type
-                              .toShortString()), // Utilisez votre extension ici
-                          leading: Radio<UserType>(
-                            value: type,
-                            groupValue: selectedRole,
-                            onChanged: (UserType? value) {
-                              setState(() {
-                                selectedRole = value!;
-                              });
-                            },
-                          ),
-                        ),
-                      );
-                    }).toList(),
-                  ),
-                  TextFieldSign(
-                      title: 'Email',
-                      controller: emailController,
-                      keyboardType: TextInputType.emailAddress,
-                      hintText: 'Saisissez votre email'),
-                  const SizedBox(height: 20.0),
-                  TextFieldSign(
-                      title: 'Mot de passe',
-                      controller: passwordController,
-                      keyboardType: TextInputType.visiblePassword,
-                      hintText: 'Saisissez votre mot de passe'),
-                  const SizedBox(height: 20.0),
-                  TextFieldSign(
-                      title: 'Prénom',
-                      controller: firstnameController,
-                      keyboardType: TextInputType.name,
-                      hintText: 'Saisissez votre prénom'),
-                  TextFieldSign(
-                      title: 'Nom',
-                      controller: lastnameController,
-                      keyboardType: TextInputType.name,
-                      hintText: 'Saisissez votre nom'),
-                  TextFieldSign(
-                      title: 'Date de naissance',
-                      controller: bornDateController,
-                      keyboardType: TextInputType.datetime,
-                      hintText: 'Saisissez votre date de naissance'),
-                  const SizedBox(height: 20.0),
-                  TextFieldSign(
-                      title: 'Lieu de naissance',
-                      controller: bornCityController,
-                      keyboardType: TextInputType.streetAddress,
-                      hintText: 'Saisissez votre lieu de naissance'),
-                  TextFieldSign(
-                      title: 'Adresse',
-                      controller: adressController,
-                      keyboardType: TextInputType.streetAddress,
-                      hintText: 'Saisissez votre adresse'),
-                  const SizedBox(height: 32.0),
-                  BtnValidator(
-                    text: "Créer un compte",
-                    activePrimaryTheme: true,
-                    onPressed: registerAccount,
-                  ),
-                  TextButton(
-                    onPressed: () {
-                      GoRouter.of(context).pushNamed("Login");
-                    },
-                    child: Text(
-                      "J'ai déja un compte",
-                      style: TextStyle(color: theme.grey100),
-                    ),
-                  )
-                ],
+                    TextFieldSign(
+                        padding: const EdgeInsets.only(bottom: 30),
+                        title: 'Email',
+                        controller: emailController,
+                        keyboardType: TextInputType.emailAddress,
+                        hintText: 'Saisissez votre email'),
+                    TextFieldSign(
+                        padding: const EdgeInsets.only(bottom: 30),
+                        title: 'Prénom',
+                        controller: firstnameController,
+                        keyboardType: TextInputType.name,
+                        hintText: 'Saisissez votre prénom'),
+                    TextFieldSign(
+                        padding: const EdgeInsets.only(bottom: 30),
+                        title: 'Nom',
+                        controller: lastnameController,
+                        keyboardType: TextInputType.name,
+                        hintText: 'Saisissez votre nom'),
+                    TextFieldSign(
+                        padding: const EdgeInsets.only(bottom: 30),
+                        title: 'Date de naissance',
+                        controller: bornDateController,
+                        keyboardType: TextInputType.datetime,
+                        hintText: 'Saisissez votre date de naissance'),
+                    TextFieldSign(
+                        padding: const EdgeInsets.only(bottom: 30),
+                        title: 'Adresse',
+                        controller: adressController,
+                        keyboardType: TextInputType.streetAddress,
+                        hintText: 'Saisissez votre adresse'),
+                    TextFieldSign(
+                        padding: const EdgeInsets.only(bottom: 30),
+                        isPassword: true,
+                        title: 'Mot de passe',
+                        controller: passwordController,
+                        keyboardType: TextInputType.visiblePassword,
+                        hintText: 'Saisissez votre mot de passe'),
+                    TextFieldSign(
+                        padding: const EdgeInsets.only(bottom: 30),
+                        isPassword: true,
+                        title: 'Confirmez le mot de passe',
+                        controller: passwordConfirmController,
+                        keyboardType: TextInputType.visiblePassword,
+                        hintText: 'Saisissez votre mot de passe'),
+                    TextButtonBgColor(
+                        text: "S'inscrire",
+                        onPressed: () {
+                          if (passwordController.text !=
+                              passwordConfirmController.text) {
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              const SnackBar(
+                                  content: Text(
+                                      "Erreur : Les mots de passe ne correspondent pas. Veuillez réessayer.")),
+                            );
+                          } else {
+                            registerAccount();
+                          }
+                        }),
+                    Align(
+                        alignment: Alignment.bottomCenter,
+                        child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Text(
+                                "Vous avez déjà un compte ?",
+                                style: TextStyle(
+                                    fontSize: 14, color: theme.violet),
+                              ),
+                              TextButton(
+                                  onPressed: () {
+                                    GoRouter.of(context).goNamed("Login");
+                                  },
+                                  child: Text(
+                                    "Se connecter",
+                                    style: TextStyle(
+                                        fontSize: 14,
+                                        fontWeight: FontWeight.w700,
+                                        color: theme.vert),
+                                  )),
+                            ])),
+                  ],
+                ),
               ),
             ),
           ),

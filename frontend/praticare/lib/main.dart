@@ -34,6 +34,7 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
         primaryColor: theme.primary400,
+        fontFamily: 'Poppins',
         useMaterial3: true,
 
         colorScheme: ColorScheme(
@@ -146,6 +147,19 @@ final GoRouter _router = GoRouter(
                 key: state.pageKey,
                 child: const FavoritePage(
                   title: "Favories",
+                ),
+                transitionsBuilder:
+                    (context, animation, secondaryAnimation, child) =>
+                        FadeTransition(opacity: animation, child: child),
+              ),
+            ),
+            GoRoute(
+              path: 'Appointment',
+              name: 'Appointment',
+              pageBuilder: (context, state) => CustomTransitionPage<void>(
+                key: state.pageKey,
+                child: const AccountPage(
+                  title: "Rendez-vous",
                 ),
                 transitionsBuilder:
                     (context, animation, secondaryAnimation, child) =>

@@ -3,7 +3,6 @@
 import 'package:flutter/material.dart';
 import 'package:praticare/components/sections/SectionHome.dart';
 import 'package:praticare/components/cardPraticiens/CardPraticien.dart';
-import 'package:praticare/components/interface/AppBar.dart';
 import '../components/interface/BottomBar.dart';
 
 class FavoritePage extends StatefulWidget {
@@ -20,7 +19,6 @@ class _FavoritePageState extends State<FavoritePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: const MyAppBar(),
         bottomNavigationBar: BottomBar(
           selectedIndex: _selectedIndex,
         ),
@@ -35,8 +33,7 @@ class _FavoritePageState extends State<FavoritePage> {
                     isInRow: sectionFavoris,
                     urlImage:
                         "https://images.pexels.com/photos/220453/pexels-photo-220453.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
-                    firstname: "Victoire",
-                    lastname: "DONIN",
+                    name: "Victoire",
                     metier: "Cardiologue",
                     dateRdvPasser: "02/09/23",
                   ),
@@ -44,8 +41,7 @@ class _FavoritePageState extends State<FavoritePage> {
                     isInRow: sectionFavoris,
                     urlImage:
                         "https://images.pexels.com/photos/220453/pexels-photo-220453.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
-                    firstname: "Victoire",
-                    lastname: "DONIN",
+                    name: "Victoire",
                     metier: "Podologue",
                     dateRdvPasser: "02/09/23",
                   ),
@@ -53,8 +49,7 @@ class _FavoritePageState extends State<FavoritePage> {
                     isInRow: sectionFavoris,
                     urlImage:
                         "https://images.pexels.com/photos/220453/pexels-photo-220453.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
-                    firstname: "Victoire",
-                    lastname: "DONIN",
+                    name: "Victoire",
                     metier: "Cardiologue",
                     dateRdvPasser: "02/09/23",
                   ),

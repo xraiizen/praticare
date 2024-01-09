@@ -6,7 +6,6 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:praticare/components/BtnValidator.dart';
 import 'package:praticare/components/Text_field_sign.dart';
-import 'package:praticare/components/interface/AppBar.dart';
 import 'package:praticare/components/sections/SectionFavorie.dart';
 import '../components/interface/BottomBar.dart';
 
@@ -103,8 +102,7 @@ class _AccountPageState extends State<AccountPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: const MyAppBar(),
-      bottomNavigationBar: BottomBar(
+      bottomNavigationBar: AnimatedBottomAppBar(
         selectedIndex: _selectedIndex,
       ),
       body: Center(

@@ -30,7 +30,7 @@ class SectionHome extends StatelessWidget {
           titleIsRowIsEmplty.substring(0, titleIsRowIsEmplty.length - 1);
     }
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 32),
+      padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 32),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
@@ -42,26 +42,28 @@ class SectionHome extends StatelessWidget {
               children: [
                 Text(
                   title,
-                  style: const TextStyle(
-                    fontSize: 20,
-                    fontWeight: FontWeight.bold,
+                  style: TextStyle(
+                    fontSize: 23,
+                    fontWeight: FontWeight.w400,
+                    color: theme.violetText,
                   ),
                 ),
                 showMore!
                     ? TextButton(
                         onPressed: () {},
                         child: Text(
-                          "Voir tout",
+                          "Voir tous",
                           style: TextStyle(
-                            fontSize: 16,
+                            fontSize: 13,
+                            fontWeight: FontWeight.w400,
                             color: Colors.transparent,
                             shadows: [
                               Shadow(
-                                  color: theme.primary400,
+                                  color: theme.violetText,
                                   offset: const Offset(0, -3))
                             ],
                             decoration: TextDecoration.underline,
-                            decorationColor: theme.primary400,
+                            decorationColor: theme.violetText,
 
                             // Ajouter un soulignement
                           ),

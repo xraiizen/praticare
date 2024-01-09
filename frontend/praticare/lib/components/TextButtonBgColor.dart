@@ -21,7 +21,7 @@ class TextButtonBgColor extends StatelessWidget {
       padding: padding ?? const EdgeInsets.symmetric(vertical: 20),
       child: TextButton(
         style: TextButton.styleFrom(
-          fixedSize: const Size(200, 50),
+          fixedSize: const Size(220, 50),
           backgroundColor: backgroundColor ?? theme.violetText,
         ),
         onPressed: onPressed ?? () => debugPrint(text),

@@ -43,6 +43,13 @@ class LoginPage extends StatelessWidget {
       appBar: AppBar(
         surfaceTintColor: Colors.transparent,
         backgroundColor: Colors.transparent,
+        elevation: 0,
+        leading: IconButton(
+          icon: const Icon(Icons.arrow_back_ios),
+          onPressed: () {
+            GoRouter.of(context).goNamed("SignInAndUpPage");
+          },
+        ),
       ),
       body: Center(
         child: SingleChildScrollView(
@@ -116,7 +123,7 @@ class LoginPage extends StatelessWidget {
                             ),
                             TextButton(
                                 onPressed: () {
-                                  GoRouter.of(context).pushNamed("Submit");
+                                  GoRouter.of(context).goNamed("Submit");
                                 },
                                 child: Text(
                                   "S'inscrire",

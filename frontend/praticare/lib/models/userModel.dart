@@ -34,7 +34,6 @@ class UserModel {
   final String lastname;
   final String email; // Supposant que chaque utilisateur a un email unique
   final String bornDate;
-  final String bornCity;
   final String adress;
   final UserType userType;
   final String?
@@ -46,7 +45,6 @@ class UserModel {
     required this.lastname,
     required this.email,
     required this.bornDate,
-    required this.bornCity,
     required this.adress,
     required this.userType,
     this.profilePicture, // Optionnel pour les patients, mais vérifié pour les écoles
@@ -61,7 +59,6 @@ class UserModel {
       lastname: data['lastname'],
       email: data['email'],
       bornDate: data['bornDate'],
-      bornCity: data['bornCity'],
       adress: data['adress'],
       userType: UserTypeExtension.fromString(data['role']),
       profilePicture: data['profilePicture'],
@@ -75,7 +72,6 @@ class UserModel {
       'lastname': lastname,
       'email': email,
       'bornDate': bornDate,
-      'bornCity': bornCity,
       'adress': adress,
       'role': userType.toShortString(),
       'profilePicture': userType == UserType.Ecole

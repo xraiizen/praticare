@@ -1,5 +1,4 @@
 // ignore_for_file: file_names
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
@@ -12,10 +11,6 @@ class SearchMapPage extends StatefulWidget {
   @override
   State<SearchMapPage> createState() => _SearchMapPageState();
 }
-
-
-
- 
 
 class _SearchMapPageState extends State<SearchMapPage> {
   final Completer<GoogleMapController> _controller =
@@ -35,7 +30,7 @@ class _SearchMapPageState extends State<SearchMapPage> {
   @override
   void initState() {
     super.initState();
-        _loadSchoolData();
+    _loadSchoolData();
     BitmapDescriptor.fromAssetImage(
             const ImageConfiguration(
               size: Size(25, 40),
@@ -43,12 +38,13 @@ class _SearchMapPageState extends State<SearchMapPage> {
             'assets/icons/pink_marker.png')
         .then((value) => myIcon = value);
   }
-  
+
   Future<List<Map<String, dynamic>>> _loadSchoolData() async {
     List<Map<String, dynamic>> allSchoolData = [];
 
     try {
-      QuerySnapshot querySnapshot = await FirebaseFirestore.instance.collection('ecole').get();
+      QuerySnapshot querySnapshot =
+          await FirebaseFirestore.instance.collection('ecole').get();
 
       setState(() {
         if (querySnapshot.docs.isNotEmpty) {

@@ -9,6 +9,7 @@ class TextFieldSign extends StatefulWidget {
   final String? hintText;
   final TextInputType keyboardType;
   final bool isPassword;
+  final EdgeInsetsGeometry? padding;
 
   const TextFieldSign(
       {super.key,
@@ -16,7 +17,8 @@ class TextFieldSign extends StatefulWidget {
       required this.controller,
       required this.hintText,
       required this.keyboardType,
-      this.isPassword = false});
+      this.isPassword = false,
+      this.padding});
 
   @override
   State<TextFieldSign> createState() => _TextFieldSignState();
@@ -27,66 +29,69 @@ class _TextFieldSignState extends State<TextFieldSign> {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: <Widget>[
-        Text(
-          widget.title,
-          style: const TextStyle(
-            fontSize: 16.0,
-            fontWeight: FontWeight.w500,
-          ),
-        ),
-        const SizedBox(height: 8.0),
-        SizedBox(
-          height: 54,
-          child: TextField(
-            controller: widget.controller,
-            keyboardType: widget.keyboardType,
-            obscureText:
-                widget.isPassword ? !_passwordVisible : widget.isPassword,
-            decoration: InputDecoration(
-              filled: true,
-              fillColor: theme.violetbgInput,
-              contentPadding:
-                  const EdgeInsets.symmetric(vertical: 10.0, horizontal: 10),
-              disabledBorder: const OutlineInputBorder(
-                borderSide: BorderSide(width: 0, color: Colors.white),
-                borderRadius: BorderRadius.all(Radius.circular(40)),
-              ),
-              enabledBorder: const OutlineInputBorder(
-                borderSide: BorderSide(width: 0, color: Colors.white),
-                borderRadius: BorderRadius.all(Radius.circular(40)),
-              ),
-              border: const OutlineInputBorder(
-                borderSide: BorderSide(width: 10, color: Colors.white),
-                borderRadius: BorderRadius.all(Radius.circular(40)),
-              ),
-              suffixIcon: widget.isPassword
-                  ? IconButton(
-                      icon: Icon(
-                        // Based on passwordVisible state choose the icon
-                        _passwordVisible
-                            ? Icons.visibility
-                            : Icons.visibility_off,
-                        color: Colors.black,
-                      ),
-                      onPressed: () {
-                        // Update the state i.e. toogle the state of passwordVisible variable
-                        setState(() {
-                          _passwordVisible = !_passwordVisible;
-                        });
-                      },
-                    )
-                  : null,
-              hintStyle: TextStyle(
-                color: theme.violetText,
-              ),
-              hintText: widget.hintText,
+    return Padding(
+      padding: widget.padding ?? const EdgeInsets.all(0),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: <Widget>[
+          Text(
+            widget.title,
+            style: const TextStyle(
+              fontSize: 16.0,
+              fontWeight: FontWeight.w500,
             ),
           ),
-        ),
-      ],
+          const SizedBox(height: 8.0),
+          SizedBox(
+            height: 54,
+            child: TextField(
+              controller: widget.controller,
+              keyboardType: widget.keyboardType,
+              obscureText:
+                  widget.isPassword ? !_passwordVisible : widget.isPassword,
+              decoration: InputDecoration(
+                filled: true,
+                fillColor: theme.violetbgInput,
+                contentPadding:
+                    const EdgeInsets.symmetric(vertical: 10.0, horizontal: 10),
+                disabledBorder: const OutlineInputBorder(
+                  borderSide: BorderSide(width: 0, color: Colors.white),
+                  borderRadius: BorderRadius.all(Radius.circular(40)),
+                ),
+                enabledBorder: const OutlineInputBorder(
+                  borderSide: BorderSide(width: 0, color: Colors.white),
+                  borderRadius: BorderRadius.all(Radius.circular(40)),
+                ),
+                border: const OutlineInputBorder(
+                  borderSide: BorderSide(width: 10, color: Colors.white),
+                  borderRadius: BorderRadius.all(Radius.circular(40)),
+                ),
+                suffixIcon: widget.isPassword
+                    ? IconButton(
+                        icon: Icon(
+                          // Based on passwordVisible state choose the icon
+                          _passwordVisible
+                              ? Icons.visibility_outlined
+                              : Icons.visibility_off_outlined,
+                          color: Colors.black,
+                        ),
+                        onPressed: () {
+                          // Update the state i.e. toogle the state of passwordVisible variable
+                          setState(() {
+                            _passwordVisible = !_passwordVisible;
+                          });
+                        },
+                      )
+                    : null,
+                hintStyle: TextStyle(
+                  color: theme.violetText,
+                ),
+                hintText: widget.hintText,
+              ),
+            ),
+          ),
+        ],
+      ),
     );
   }
 }
