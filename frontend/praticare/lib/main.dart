@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:go_router/go_router.dart';
 import 'package:praticare/pages/AccountPage.dart';
 import 'package:praticare/pages/AllComponentsScreen.dart';
+import 'package:praticare/pages/AppointmentPage.dart';
 import 'package:praticare/pages/ErrorPage.dart';
 import 'package:praticare/pages/FavoritePage.dart';
 import 'package:praticare/pages/HomePage.dart';
@@ -20,6 +22,10 @@ void main() async {
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
+  SystemChrome.setPreferredOrientations([
+    DeviceOrientation.portraitUp,
+    DeviceOrientation.portraitDown,
+  ]);
   runApp(const MyApp());
 }
 
@@ -158,7 +164,7 @@ final GoRouter _router = GoRouter(
               name: 'Appointment',
               pageBuilder: (context, state) => CustomTransitionPage<void>(
                 key: state.pageKey,
-                child: const AccountPage(
+                child: const AppointmentPage(
                   title: "Rendez-vous",
                 ),
                 transitionsBuilder:

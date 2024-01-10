@@ -9,7 +9,7 @@ class CardPraticienResultat extends StatefulWidget {
   final String lastname;
   final String metier;
   final String dateRdvPasser;
-  CardPraticienResultat({
+  const CardPraticienResultat({
     super.key,
     required this.urlImage,
     required this.firstname,

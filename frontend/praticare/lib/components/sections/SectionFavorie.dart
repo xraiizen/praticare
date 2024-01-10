@@ -96,6 +96,7 @@ class SectionHome extends StatelessWidget {
                   : Center(
                       child: Text(
                         "vous n'avez aucun ${titleIsRowIsEmplty.toLowerCase()}",
+                        textAlign: TextAlign.center,
                         style: const TextStyle(fontSize: 16),
                       ),
                     )),

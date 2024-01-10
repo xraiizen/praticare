@@ -33,14 +33,10 @@ class _HomePageState extends State<HomePage> {
         backgroundColor: Colors.white,
         extendBody: true,
         extendBodyBehindAppBar: true,
-        // appBar: const MyAppBar(),
         appBar: MyAppBar().appBar(AppBar().preferredSize.height, context),
-        bottomNavigationBar: AnimatedBottomAppBar(
+        bottomNavigationBar: CircularBottomBar(
           selectedIndex: _selectedIndex,
         ),
-        // bottomNavigationBar: BottomBar(
-        //   selectedIndex: _selectedIndex,
-        // ),
         body: Padding(
           padding: EdgeInsets.only(top: AppBar().preferredSize.height + 130),
           child: SizedBox(

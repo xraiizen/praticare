@@ -19,7 +19,7 @@ class _FavoritePageState extends State<FavoritePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        bottomNavigationBar: BottomBar(
+        bottomNavigationBar: CircularBottomBar(
           selectedIndex: _selectedIndex,
         ),
         body: SingleChildScrollView(

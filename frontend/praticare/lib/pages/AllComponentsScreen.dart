@@ -11,6 +11,7 @@ class AllComponentsScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final TextEditingController bornController = TextEditingController();
+    final TextEditingController textController = TextEditingController();
     return Scaffold(
       appBar: AppBar(
         automaticallyImplyLeading: true,
@@ -25,6 +26,12 @@ class AllComponentsScreen extends StatelessWidget {
             controller: bornController,
             keyboardType: TextInputType.name,
             hintText: 'Saisissez votre date de naissance',
+          ),
+          TextFieldSign(
+            title: 'text',
+            controller: textController,
+            keyboardType: TextInputType.name,
+            hintText: 'Saisissez votre text',
           ),
         ],
       )),

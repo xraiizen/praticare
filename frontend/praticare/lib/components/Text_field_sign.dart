@@ -9,11 +9,7 @@ class TextFieldSign extends StatefulWidget {
   final String? hintText;
   final TextInputType keyboardType;
   final bool isPassword;
-<<<<<<< Updated upstream
-  final EdgeInsetsGeometry? padding;
-=======
   final bool isDate;
->>>>>>> Stashed changes
 
   const TextFieldSign(
       {super.key,
@@ -22,11 +18,7 @@ class TextFieldSign extends StatefulWidget {
       required this.hintText,
       required this.keyboardType,
       this.isPassword = false,
-<<<<<<< Updated upstream
-      this.padding});
-=======
       this.isDate = false});
->>>>>>> Stashed changes
 
   @override
   State<TextFieldSign> createState() => _TextFieldSignState();
@@ -37,26 +29,6 @@ class _TextFieldSignState extends State<TextFieldSign> {
 
   @override
   Widget build(BuildContext context) {
-<<<<<<< Updated upstream
-    return Padding(
-      padding: widget.padding ?? const EdgeInsets.all(0),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: <Widget>[
-          Text(
-            widget.title,
-            style: const TextStyle(
-              fontSize: 16.0,
-              fontWeight: FontWeight.w500,
-            ),
-          ),
-          const SizedBox(height: 8.0),
-          SizedBox(
-            height: 54,
-            child: TextField(
-              controller: widget.controller,
-              keyboardType: widget.keyboardType,
-=======
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
@@ -74,7 +46,6 @@ class _TextFieldSignState extends State<TextFieldSign> {
               controller: widget.controller,
               keyboardType: widget.keyboardType,
               readOnly: widget.isDate,
->>>>>>> Stashed changes
               obscureText:
                   widget.isPassword ? !_passwordVisible : widget.isPassword,
               decoration: InputDecoration(
@@ -99,13 +70,8 @@ class _TextFieldSignState extends State<TextFieldSign> {
                         icon: Icon(
                           // Based on passwordVisible state choose the icon
                           _passwordVisible
-<<<<<<< Updated upstream
-                              ? Icons.visibility_outlined
-                              : Icons.visibility_off_outlined,
-=======
                               ? Icons.visibility
                               : Icons.visibility_off,
->>>>>>> Stashed changes
                           color: Colors.black,
                         ),
                         onPressed: () {
@@ -115,24 +81,14 @@ class _TextFieldSignState extends State<TextFieldSign> {
                           });
                         },
                       )
-<<<<<<< Updated upstream
-                    : null,
-=======
                     : widget.isDate
                         ? const Icon(Icons.calendar_month)
                         : null,
->>>>>>> Stashed changes
                 hintStyle: TextStyle(
                   color: theme.violetText,
                 ),
                 hintText: widget.hintText,
               ),
-<<<<<<< Updated upstream
-            ),
-          ),
-        ],
-      ),
-=======
               onTap: widget.isDate
                   ? () async {
                       DateTime? pickedDate = await showDatePicker(
@@ -150,7 +106,6 @@ class _TextFieldSignState extends State<TextFieldSign> {
                   : null),
         ),
       ],
->>>>>>> Stashed changes
     );
   }
 }
