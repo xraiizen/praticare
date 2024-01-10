@@ -1,6 +1,7 @@
 // ignore_for_file: file_names, use_build_context_synchronously
 
 import 'package:flutter/material.dart';
+import 'package:praticare/components/cardPraticiens/CardPageRendezVous.dart';
 import 'package:praticare/components/sections/SectionFavorie.dart';
 import '../components/interface/BottomBar.dart';
 
@@ -14,6 +15,12 @@ class AppointmentPage extends StatefulWidget {
 
 class _AppointmentPageState extends State<AppointmentPage> {
   final int _selectedIndex = 1;
+
+  String name = 'Pleasant Hill High';
+  String specialite = 'Cardiologie';
+  String heure = '10:30';
+  String date = '12/12/2023';
+  String adresse = '66 rue Michel Ange';
 
   @override
   void initState() {
@@ -32,43 +39,12 @@ class _AppointmentPageState extends State<AppointmentPage> {
           width: MediaQuery.of(context).size.width,
           height: MediaQuery.of(context).size.height,
           child: SectionHome(isRow: false, title: 'Rendez-vous', children: [
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 8.0),
-              child: Card(
-                child: InkWell(
-                  customBorder: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(10),
-                  ),
-                  onTap: () {},
-                  child: Container(
-                    width: MediaQuery.of(context).size.width,
-                    height: MediaQuery.of(context).size.height / 5,
-                    color: const Color.fromARGB(0, 244, 67, 54),
-                    child: Column(
-                      children: [
-                        Container(
-                          decoration: const BoxDecoration(
-                            borderRadius: BorderRadius.only(
-                              topLeft: Radius.circular(10),
-                              topRight: Radius.circular(10),
-                            ),
-                          ),
-                          width: MediaQuery.of(context).size.width,
-                          height: MediaQuery.of(context).size.height / 11,
-                          child: Image.asset(
-                              "assets/images/ecole_de_medecine.png",
-                              fit: BoxFit.cover),
-                        ),
-                        Container(
-                          width: MediaQuery.of(context).size.width,
-                          height: MediaQuery.of(context).size.height / 9.5,
-                          color: const Color.fromARGB(255, 229, 243, 33),
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-              ),
+            CardPageRendezVous(
+              name: name,
+              specialite: specialite,
+              adresse: adresse,
+              heure: heure,
+              date: date,
             ),
           ]),
         )),
