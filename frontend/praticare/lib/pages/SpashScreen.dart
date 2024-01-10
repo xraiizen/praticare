@@ -23,13 +23,14 @@ class _SplashScreenState extends State<SplashScreen> {
     await Future.delayed(const Duration(seconds: 1));
 
     // Vérifiez si un utilisateur est déjà connecté
-    if (FirebaseAuth.instance.currentUser != null) {
-      GoRouter.of(context).pushReplacementNamed(
-          "Home"); // Redirigez vers la page d'accueil si l'utilisateur est déjà connecté
-    } else {
-      GoRouter.of(context).pushReplacementNamed(
-          "SignInAndUpPage"); // Sinon, redirigez vers la page de connexion
-    }
+    GoRouter.of(context).pushReplacementNamed("AllComponents");
+    // if (FirebaseAuth.instance.currentUser != null) {
+    //   GoRouter.of(context).pushReplacementNamed(
+    //       "Home"); // Redirigez vers la page d'accueil si l'utilisateur est déjà connecté
+    // } else {
+    //   GoRouter.of(context).pushReplacementNamed(
+    //       "SignInAndUpPage"); // Sinon, redirigez vers la page de connexion
+    // }
   }
 
   @override
