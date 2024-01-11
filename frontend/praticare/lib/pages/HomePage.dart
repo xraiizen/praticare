@@ -112,6 +112,22 @@ class _HomePageState extends State<HomePage> {
                                 metier: "Cardiologue",
                                 dateRdvPasser: "02/09/23",
                               ),
+                              CardPraticien(
+                                isInRow: sectionRdvPasser,
+                                urlImage:
+                                    "https://images.pexels.com/photos/220453/pexels-photo-220453.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
+                                name: "Stonewall Middle Schools",
+                                metier: "Cardiologue",
+                                dateRdvPasser: "02/09/23",
+                              ),
+                              CardPraticien(
+                                isInRow: sectionRdvPasser,
+                                urlImage:
+                                    "https://images.pexels.com/photos/220453/pexels-photo-220453.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
+                                name: "Stonewall Middle Schools",
+                                metier: "Cardiologue",
+                                dateRdvPasser: "02/09/23",
+                              ),
                             ],
                           ),
                         ],

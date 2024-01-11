@@ -8,6 +8,7 @@ import 'package:praticare/components/BtnValidator.dart';
 import 'package:praticare/components/Text_field_sign.dart';
 import 'package:praticare/components/sections/SectionFavorie.dart';
 import '../components/interface/BottomBar.dart';
+import 'package:praticare/theme/theme.dart' as theme;
 
 class AccountPage extends StatefulWidget {
   const AccountPage({super.key, required this.title});
@@ -26,11 +27,13 @@ class _AccountPageState extends State<AccountPage> {
   final bornDateController = TextEditingController();
   final bornCityController = TextEditingController();
   final adressController = TextEditingController();
+  late String fullName = '';
 
   @override
   void initState() {
     super.initState();
-    _loadUserData();
+    // _loadUserData();
+    // _loadUserName();
   }
 
   Future<void> _loadUserData() async {
@@ -51,6 +54,21 @@ class _AccountPageState extends State<AccountPage> {
         print(bornDateController.text);
         print(bornCityController.text);
         print(adressController.text);
+      });
+    }
+  }
+
+  Future<void> _loadUserName() async {
+    currentUser = FirebaseAuth.instance.currentUser;
+    if (currentUser != null) {
+      final DocumentReference userDoc =
+          FirebaseFirestore.instance.collection('users').doc(currentUser!.uid);
+      final DocumentSnapshot userSnapshot = await userDoc.get();
+      setState(() {
+        userData = userSnapshot.data() as Map<String, dynamic>?;
+        print(userData);
+        fullName = userData!['firstname'] + " " + userData!['lastname'];
+        print(fullName);
       });
     }
   }
@@ -101,63 +119,138 @@ class _AccountPageState extends State<AccountPage> {
 
   @override
   Widget build(BuildContext context) {
+    double height = MediaQuery.of(context).size.height;
+    double width = MediaQuery.of(context).size.width;
     return Scaffold(
-      bottomNavigationBar: CircularBottomBar(
-        selectedIndex: _selectedIndex,
-      ),
-      body: Center(
-        child: SingleChildScrollView(
-          child: SectionHome(
-            isRow: false,
-            title: 'Votre profil',
-            children: [
-              TextFieldSign(
-                title: 'Prénom',
-                controller: firstnameController,
-                keyboardType: TextInputType.name,
-                hintText: 'Saisissez votre prénom',
-              ),
-              TextFieldSign(
-                title: 'Nom',
-                controller: lastnameController,
-                keyboardType: TextInputType.name,
-                hintText: 'Saisissez votre nom',
-              ),
-              TextFieldSign(
-                title: 'Date de naissance',
-                controller: bornDateController,
-                keyboardType: TextInputType.datetime,
-                hintText: 'Saisissez votre date de naissance',
-              ),
-              TextFieldSign(
-                title: 'Lieu de naissance',
-                controller: bornCityController,
-                keyboardType: TextInputType.streetAddress,
-                hintText: 'Saisissez votre lieu de naissance',
-              ),
-              TextFieldSign(
-                title: 'Adresse',
-                controller: adressController,
-                keyboardType: TextInputType.streetAddress,
-                hintText: 'Saisissez votre adresse',
-              ),
-              const SizedBox(
-                height: 24,
-              ),
-              BtnValidator(
-                text: "Enregistrer",
-                activePrimaryTheme: true,
-                onPressed: _saveUserData,
-              ),
-              BtnValidator(
-                text: "Deconnexion",
-                activePrimaryTheme: false,
-                onPressed: signOut,
-              ),
-            ],
-          ),
+        extendBody: true,
+        backgroundColor: theme.violetText,
+        bottomNavigationBar: CircularBottomBar(
+          selectedIndex: _selectedIndex,
         ),
-      ),
-    );
+        body: Stack(
+          children: [
+            Align(
+              alignment: Alignment.bottomCenter,
+              child: Container(
+                decoration: const BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.only(
+                    topLeft: Radius.circular(40),
+                    topRight: Radius.circular(40),
+                  ),
+                ),
+                padding: EdgeInsets.only(top: height - (height * (718 / 812))),
+                constraints: BoxConstraints(
+                  maxHeight: MediaQuery.of(context).size.height * (618 / 812),
+                  minHeight: MediaQuery.of(context).size.height * (618 / 812),
+                ),
+                child: Column(children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text(fullName,
+                          style: const TextStyle(
+                              color: Colors.black,
+                              fontSize: 24,
+                              fontWeight: FontWeight.bold)),
+                    ],
+                  ),
+                ]),
+              ),
+            ),
+            Positioned(
+              top: height - (height * (618 / 812)) - 55,
+              right: width / 2 - 55,
+              child: const CircleAvatar(
+                backgroundColor: Colors.white,
+                radius: 57,
+                child: CircleAvatar(
+                  radius: 55,
+                  // * IMAGE DE PROFIL *
+                  backgroundImage: NetworkImage(
+                      "https://images.pexels.com/photos/220453/pexels-photo-220453.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"),
+                ),
+              ),
+            ),
+            // * SignOut *
+            Positioned(
+              top: height - (height * (755 / 812)),
+              right: width / 11,
+              child: Container(
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(57),
+                ),
+                child: IconButton(
+                  color: Colors.red,
+                  onPressed: () => signOut,
+                  icon: const Icon(Icons.logout_outlined),
+                ),
+              ),
+            ),
+          ],
+        ));
   }
 }
+//   @override
+//   Widget build(BuildContext context) {
+//     return Scaffold(
+//       bottomNavigationBar: CircularBottomBar(
+//         selectedIndex: _selectedIndex,
+//       ),
+//       body: Center(
+//         child: SingleChildScrollView(
+//           child: SectionHome(
+//             isRow: false,
+//             title: 'Votre profil',
+//             children: [
+//               TextFieldSign(
+//                 title: 'Prénom',
+//                 controller: firstnameController,
+//                 keyboardType: TextInputType.name,
+//                 hintText: 'Saisissez votre prénom',
+//               ),
+//               TextFieldSign(
+//                 title: 'Nom',
+//                 controller: lastnameController,
+//                 keyboardType: TextInputType.name,
+//                 hintText: 'Saisissez votre nom',
+//               ),
+//               TextFieldSign(
+//                 title: 'Date de naissance',
+//                 controller: bornDateController,
+//                 keyboardType: TextInputType.datetime,
+//                 hintText: 'Saisissez votre date de naissance',
+//               ),
+//               TextFieldSign(
+//                 title: 'Lieu de naissance',
+//                 controller: bornCityController,
+//                 keyboardType: TextInputType.streetAddress,
+//                 hintText: 'Saisissez votre lieu de naissance',
+//               ),
+//               TextFieldSign(
+//                 title: 'Adresse',
+//                 controller: adressController,
+//                 keyboardType: TextInputType.streetAddress,
+//                 hintText: 'Saisissez votre adresse',
+//               ),
+//               const SizedBox(
+//                 height: 24,
+//               ),
+//               BtnValidator(
+//                 text: "Enregistrer",
+//                 activePrimaryTheme: true,
+//                 onPressed: _saveUserData,
+//               ),
+//               BtnValidator(
+//                 text: "Deconnexion",
+//                 activePrimaryTheme: false,
+//                 onPressed: signOut,
+//               ),
+//             ],
+//           ),
+//         ),
+//       ),
+//     );
+//   }
+// }

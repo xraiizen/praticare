@@ -70,9 +70,10 @@ class _CircularBottomBarState extends State<CircularBottomBar> {
     return CircularBottomNavigation(
       tabItems,
       controller: _navigationController,
-      barHeight: 70,
+      barHeight: 85,
       circleStrokeWidth: 0,
       normalIconColor: theme.violetText,
+      barBackgroundColor: Colors.white,
       backgroundBoxShadow: [
         BoxShadow(
           color: const Color.fromARGB(0, 196, 196, 196).withOpacity(0.2),
