@@ -5,6 +5,7 @@ import 'package:circular_bottom_navigation/tab_item.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:praticare/theme/theme.dart' as theme;
+import 'package:unicons/unicons.dart';
 
 class CircularBottomBar extends StatefulWidget {
   final int selectedIndex;
@@ -19,16 +20,16 @@ class _CircularBottomBarState extends State<CircularBottomBar> {
   late CircularBottomNavigationController _navigationController;
   late int _selectedIndex;
   List<TabItem> tabItems = List.of([
-    TabItem(Icons.home, "Accueil", theme.violetText,
+    TabItem(UniconsLine.home_alt, "Accueil", theme.violetText,
         labelStyle:
             TextStyle(color: theme.violetText, fontWeight: FontWeight.normal)),
-    TabItem(Icons.calendar_today, "Rendez-vous", theme.violetText,
+    TabItem(UniconsLine.calendar_alt, "Rendez-vous", theme.violetText,
         labelStyle:
             TextStyle(color: theme.violetText, fontWeight: FontWeight.normal)),
-    TabItem(Icons.person_outline, "Profil", theme.violetText,
+    TabItem(UniconsLine.user, "Profil", theme.violetText,
         labelStyle:
             TextStyle(color: theme.violetText, fontWeight: FontWeight.normal)),
-    TabItem(Icons.search, "Recherche", theme.violetText,
+    TabItem(UniconsLine.search_alt, "Recherche", theme.violetText,
         labelStyle:
             TextStyle(color: theme.violetText, fontWeight: FontWeight.normal)),
   ]);
