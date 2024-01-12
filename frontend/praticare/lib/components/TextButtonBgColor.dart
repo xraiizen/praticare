@@ -6,12 +6,19 @@ import 'package:praticare/theme/theme.dart' as theme;
 class TextButtonBgColor extends StatelessWidget {
   Color? backgroundColor;
   String text;
+  double? fontSize;
   VoidCallback? onPressed;
   EdgeInsetsGeometry? padding;
+  Size? size;
+  EdgeInsetsGeometry? margin;
+
   TextButtonBgColor(
       {super.key,
       required this.text,
+      this.fontSize,
       this.backgroundColor,
+      this.size,
+      this.margin,
       this.onPressed,
       this.padding});
 
@@ -21,15 +28,16 @@ class TextButtonBgColor extends StatelessWidget {
       padding: padding ?? const EdgeInsets.symmetric(vertical: 20),
       child: TextButton(
         style: TextButton.styleFrom(
-          fixedSize: const Size(220, 50),
+          fixedSize: size ?? const Size(220, 50),
           backgroundColor: backgroundColor ?? theme.violetText,
         ),
         onPressed: onPressed ?? () => debugPrint(text),
         child: Padding(
-          padding: const EdgeInsets.symmetric(
-            vertical: 2,
-            horizontal: 35,
-          ),
+          padding: margin ??
+              const EdgeInsets.symmetric(
+                vertical: 2,
+                horizontal: 35,
+              ),
           child: Text(
             text,
             style: const TextStyle(

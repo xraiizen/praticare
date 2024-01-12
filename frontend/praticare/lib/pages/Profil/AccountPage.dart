@@ -87,9 +87,9 @@ class _AccountPageState extends State<AccountPage> {
                     topRight: Radius.circular(40),
                   ),
                 ),
-                width: MediaQuery.of(context).size.height * (618 / 812),
-                height: MediaQuery.of(context).size.height * (618 / 812),
-                padding: EdgeInsets.only(top: height - (height * (718 / 812))),
+                width: MediaQuery.of(context).size.height * (655 / 812),
+                height: MediaQuery.of(context).size.height * (655 / 812),
+                padding: EdgeInsets.only(top: height - (height * (755 / 812))),
                 child: SingleChildScrollView(
                   child: Column(children: [
                     Text(fullName,
@@ -139,7 +139,7 @@ class _AccountPageState extends State<AccountPage> {
               ),
             ),
             Positioned(
-              top: height - (height * (618 / 812)) - 55,
+              top: height - (height * (670 / 812)) - 55,
               right: width / 2 - 55,
               child: const CircleAvatar(
                 backgroundColor: Colors.white,
@@ -265,124 +265,3 @@ class BtnAccountPage extends StatelessWidget {
     );
   }
 }
-
-
-
-
-  // final firstnameController = TextEditingController();
-  // final lastnameController = TextEditingController();
-  // final bornDateController = TextEditingController();
-  // final bornCityController = TextEditingController();
-  // final adressController = TextEditingController();
-  // Future<void> _loadUserData() async {
-  //   currentUser = FirebaseAuth.instance.currentUser;
-  //   if (currentUser != null) {
-  //     final DocumentReference userDoc =
-  //         FirebaseFirestore.instance.collection('users').doc(currentUser!.uid);
-  //     final DocumentSnapshot userSnapshot = await userDoc.get();
-  //     setState(() {
-  //       userData = userSnapshot.data() as Map<String, dynamic>?;
-  //       firstnameController.text = userData!['firstname'] ?? '';
-  //       lastnameController.text = userData!['lastname'] ?? '';
-  //       bornDateController.text = userData!['bornDate'] ?? '';
-  //       bornCityController.text = userData!['bornCity'] ?? '';
-  //       adressController.text = userData!['adress'] ?? '';
-  //       print(firstnameController.text);
-  //       print(lastnameController.text);
-  //       print(bornDateController.text);
-  //       print(bornCityController.text);
-  //       print(adressController.text);
-  //     });
-  //   }
-  // }
-  // Future<void> _saveUserData() async {
-  //   if (currentUser != null) {
-  //     final DocumentReference userDoc =
-  //         FirebaseFirestore.instance.collection('users').doc(currentUser!.uid);
-  //     if (userDoc.id.isNotEmpty) {
-  //       return userDoc
-  //           .update({
-  //             'firstname': firstnameController.text,
-  //             'lastname': lastnameController.text,
-  //             'bornDate': bornDateController.text,
-  //             'bornCity': bornCityController.text,
-  //             'adress': adressController.text,
-  //           })
-  //           .then((value) => print("User Info Updated"))
-  //           .catchError((error) => print("Failed to update user info: $error"));
-  //     } else {
-  //       return userDoc
-  //           .set({
-  //             'firstname': firstnameController.text,
-  //             'lastname': lastnameController.text,
-  //             'bornDate': bornDateController.text,
-  //             'bornCity': bornCityController.text,
-  //             'adress': adressController.text,
-  //           })
-  //           .then((value) => print("User Info Updated"))
-  //           .catchError((error) => print("Failed to update user info: $error"));
-  //     }
-  //   }
-  // }
-//   @override
-//   Widget build(BuildContext context) {
-//     return Scaffold(
-//       bottomNavigationBar: CircularBottomBar(
-//         selectedIndex: _selectedIndex,
-//       ),
-//       body: Center(
-//         child: SingleChildScrollView(
-//           child: SectionHome(
-//             isRow: false,
-//             title: 'Votre profil',
-//             children: [
-//               TextFieldSign(
-//                 title: 'Prénom',
-//                 controller: firstnameController,
-//                 keyboardType: TextInputType.name,
-//                 hintText: 'Saisissez votre prénom',
-//               ),
-//               TextFieldSign(
-//                 title: 'Nom',
-//                 controller: lastnameController,
-//                 keyboardType: TextInputType.name,
-//                 hintText: 'Saisissez votre nom',
-//               ),
-//               TextFieldSign(
-//                 title: 'Date de naissance',
-//                 controller: bornDateController,
-//                 keyboardType: TextInputType.datetime,
-//                 hintText: 'Saisissez votre date de naissance',
-//               ),
-//               TextFieldSign(
-//                 title: 'Lieu de naissance',
-//                 controller: bornCityController,
-//                 keyboardType: TextInputType.streetAddress,
-//                 hintText: 'Saisissez votre lieu de naissance',
-//               ),
-//               TextFieldSign(
-//                 title: 'Adresse',
-//                 controller: adressController,
-//                 keyboardType: TextInputType.streetAddress,
-//                 hintText: 'Saisissez votre adresse',
-//               ),
-//               const SizedBox(
-//                 height: 24,
-//               ),
-//               BtnValidator(
-//                 text: "Enregistrer",
-//                 activePrimaryTheme: true,
-//                 onPressed: _saveUserData,
-//               ),
-//               BtnValidator(
-//                 text: "Deconnexion",
-//                 activePrimaryTheme: false,
-//                 onPressed: signOut,
-//               ),
-//             ],
-//           ),
-//         ),
-//       ),
-//     );
-//   }
-// }

@@ -1,10 +1,8 @@
 // ignore_for_file: library_private_types_in_public_api, must_be_immutable
-
-import 'dart:math';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:praticare/components/TextButtonBgColor.dart';
 import 'package:praticare/components/Text_field_sign.dart';
 import 'package:praticare/components/interface/BottomBar.dart';
 import 'package:praticare/theme/theme.dart' as theme;
@@ -25,7 +23,6 @@ class _PersonalInformationsPageState extends State<PersonalInformationsPage> {
   final lastnameController = TextEditingController();
   final bornDateController = TextEditingController();
   final adressController = TextEditingController();
-  final passwordController = TextEditingController();
   Future<void> _loadUserData() async {
     currentUser = FirebaseAuth.instance.currentUser;
     if (currentUser != null) {
@@ -38,13 +35,76 @@ class _PersonalInformationsPageState extends State<PersonalInformationsPage> {
         lastnameController.text = userData!['lastname'] ?? '';
         bornDateController.text = userData!['bornDate'] ?? '';
         adressController.text = userData!['adress'] ?? '';
-        passwordController.text = userData!['password'] ?? '';
         print(firstnameController.text);
         print(lastnameController.text);
         print(bornDateController.text);
-        print(passwordController.text);
         print(adressController.text);
       });
+    }
+  }
+
+  Future<void> sendPasswordResetEmail(
+      String email, BuildContext context) async {
+    try {
+      await FirebaseAuth.instance.sendPasswordResetEmail(email: email);
+      // Popup de succès
+      showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: Text("E-mail envoyé"),
+            content: Text(
+                "Un e-mail de réinitialisation de mot de passe a été envoyé à $email."),
+            actions: [
+              TextButton(
+                child: Text("OK"),
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+              ),
+            ],
+          );
+        },
+      );
+    } on FirebaseAuthException catch (e) {
+      // Popup d'erreur spécifique à Firebase
+      showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: Text("Erreur"),
+            content: Text(
+                "Une erreur est survenue lors de l'envoi de l'e-mail: ${e.message}"),
+            actions: [
+              TextButton(
+                child: Text("Fermer"),
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+              ),
+            ],
+          );
+        },
+      );
+    } catch (e) {
+      // Popup pour d'autres erreurs
+      showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: Text("Erreur"),
+            content: Text("Une erreur est survenue: $e"),
+            actions: [
+              TextButton(
+                child: Text("Fermer"),
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+              ),
+            ],
+          );
+        },
+      );
     }
   }
 
@@ -59,7 +119,6 @@ class _PersonalInformationsPageState extends State<PersonalInformationsPage> {
               'lastname': lastnameController.text,
               'bornDate': bornDateController.text,
               'adress': adressController.text,
-              'password': passwordController.text,
             })
             .then((value) => print("User Info Updated"))
             .catchError((error) => print("Failed to update user info: $error"));
@@ -70,7 +129,6 @@ class _PersonalInformationsPageState extends State<PersonalInformationsPage> {
               'lastname': lastnameController.text,
               'bornDate': bornDateController.text,
               'adress': adressController.text,
-              'password': passwordController.text,
             })
             .then((value) => print("User Info Updated"))
             .catchError((error) => print("Failed to update user info: $error"));
@@ -106,51 +164,122 @@ class _PersonalInformationsPageState extends State<PersonalInformationsPage> {
                     topRight: Radius.circular(40),
                   ),
                 ),
-                width: MediaQuery.of(context).size.height * (618 / 812),
-                height: MediaQuery.of(context).size.height * (618 / 812),
-                padding: EdgeInsets.only(top: height - (height * (718 / 812))),
-                child: SingleChildScrollView(
-                  child: Column(children: [
-                    TextFieldSign(
-                      title: 'Prénom',
-                      controller: firstnameController,
-                      keyboardType: TextInputType.name,
-                      hintText: 'Saisissez votre prénom',
+                width: MediaQuery.of(context).size.height * (655 / 812),
+                height: MediaQuery.of(context).size.height * (655 / 812),
+                padding: EdgeInsets.only(
+                  top: height - (height * (780 / 812)),
+                ),
+                child: ShaderMask(
+                  shaderCallback: (Rect rect) {
+                    return const LinearGradient(
+                      begin: Alignment.topCenter,
+                      end: Alignment.bottomCenter,
+                      colors: [
+                        Colors.purple,
+                        Colors.transparent,
+                        Colors.transparent,
+                        Colors.purple
+                      ],
+                      stops: [
+                        0.0,
+                        0.2,
+                        0.9,
+                        1.0
+                      ], // 10% purple, 80% transparent, 10% purple
+                    ).createShader(rect);
+                  },
+                  blendMode: BlendMode.dstOut,
+                  child: Padding(
+                    padding: const EdgeInsets.only(top: 50),
+                    child: SingleChildScrollView(
+                      child: Column(children: [
+                        TextFieldSign(
+                          padding: const EdgeInsets.symmetric(
+                              vertical: 5, horizontal: 20),
+                          title: 'Prénom',
+                          controller: firstnameController,
+                          keyboardType: TextInputType.name,
+                          hintText: 'Saisissez votre prénom',
+                          bgColor: theme.violetbgInput,
+                        ),
+                        TextFieldSign(
+                          padding: const EdgeInsets.symmetric(
+                              vertical: 5, horizontal: 20),
+                          title: 'Nom',
+                          controller: lastnameController,
+                          keyboardType: TextInputType.name,
+                          hintText: 'Saisissez votre nom',
+                          bgColor: theme.violetbgInput,
+                        ),
+                        TextFieldSign(
+                          padding: const EdgeInsets.symmetric(
+                              vertical: 5, horizontal: 20),
+                          isDate: true,
+                          title: 'Date de naissance',
+                          controller: bornDateController,
+                          keyboardType: TextInputType.datetime,
+                          hintText: 'Saisissez votre date de naissance',
+                          bgColor: theme.violetbgInput,
+                        ),
+                        TextFieldSign(
+                          padding: const EdgeInsets.symmetric(
+                              vertical: 5, horizontal: 20),
+                          title: 'Adresse',
+                          controller: adressController,
+                          keyboardType: TextInputType.datetime,
+                          hintText: 'Saisissez votre adresse',
+                          bgColor: theme.violetbgInput,
+                        ),
+                        TextButtonBgColor(
+                            text: "Réinitialisé le mot de passe",
+                            fontSize: 15,
+                            margin: const EdgeInsets.symmetric(
+                                horizontal: 5, vertical: 0),
+                            padding: const EdgeInsets.symmetric(
+                                vertical: 20, horizontal: 40),
+                            size: Size(width, 50),
+                            onPressed: () async {
+                              sendPasswordResetEmail(
+                                  currentUser!.email!, context);
+                            }),
+                        SizedBox(
+                          width: width,
+                          height: 100,
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              TextButtonBgColor(
+                                text: "Annuler",
+                                fontSize: 15,
+                                backgroundColor: Colors.red,
+                                margin: const EdgeInsets.symmetric(
+                                    horizontal: 5, vertical: 0),
+                                size: Size(width / 2.5, 50),
+                                onPressed: _loadUserData,
+                              ),
+                              TextButtonBgColor(
+                                text: "Valider",
+                                fontSize: 15,
+                                margin: const EdgeInsets.symmetric(
+                                    horizontal: 5, vertical: 0),
+                                size: Size(width / 2.5, 50),
+                                onPressed: _saveUserData,
+                              ),
+                            ],
+                          ),
+                        ),
+                        SizedBox(
+                          height: height / 7,
+                        )
+                      ]),
                     ),
-                    TextFieldSign(
-                      title: 'Nom',
-                      controller: lastnameController,
-                      keyboardType: TextInputType.name,
-                      hintText: 'Saisissez votre nom',
-                    ),
-                    TextFieldSign(
-                      isDate: true,
-                      title: 'Date de naissance',
-                      controller: bornDateController,
-                      keyboardType: TextInputType.datetime,
-                      hintText: 'Saisissez votre date de naissance',
-                    ),
-                    TextFieldSign(
-                      title: 'Adresse',
-                      controller: adressController,
-                      keyboardType: TextInputType.datetime,
-                      hintText: 'Saisissez votre adresse',
-                    ),
-                    TextFieldSign(
-                      title: 'Mot de passe',
-                      controller: passwordController,
-                      keyboardType: TextInputType.text,
-                      hintText: 'Saisissez votre mot de passe',
-                    ),
-                    SizedBox(
-                      height: height / 7,
-                    )
-                  ]),
+                  ),
                 ),
               ),
             ),
             Positioned(
-              top: height - (height * (618 / 812)) - 55,
+              top: height - (height * (670 / 812)) - 55,
               right: width / 2 - 55,
               child: const CircleAvatar(
                 backgroundColor: Colors.white,
