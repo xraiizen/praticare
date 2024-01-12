@@ -1,8 +1,11 @@
 // ignore_for_file: library_private_types_in_public_api, must_be_immutable
 
+import 'dart:math';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:praticare/components/Text_field_sign.dart';
 import 'package:praticare/components/interface/BottomBar.dart';
 import 'package:praticare/theme/theme.dart' as theme;
 
@@ -16,17 +19,14 @@ class PersonalInformationsPage extends StatefulWidget {
 class _PersonalInformationsPageState extends State<PersonalInformationsPage> {
   final int _selectedIndex = 2;
   User? currentUser;
+  Map<String, dynamic>? userData;
 
-  late String fullName = '';
-
-  @override
-  void initState() {
-    super.initState();
-    _loadUserName();
-  }
-
-  Future<void> _loadUserName() async {
-    Map<String, dynamic>? userData;
+  final firstnameController = TextEditingController();
+  final lastnameController = TextEditingController();
+  final bornDateController = TextEditingController();
+  final adressController = TextEditingController();
+  final passwordController = TextEditingController();
+  Future<void> _loadUserData() async {
     currentUser = FirebaseAuth.instance.currentUser;
     if (currentUser != null) {
       final DocumentReference userDoc =
@@ -34,19 +34,54 @@ class _PersonalInformationsPageState extends State<PersonalInformationsPage> {
       final DocumentSnapshot userSnapshot = await userDoc.get();
       setState(() {
         userData = userSnapshot.data() as Map<String, dynamic>?;
-        print(userData);
-        fullName =
-            "${capitalizeFirstLetter(userData!['firstname'])} ${capitalizeFirstLetter(userData!['lastname'])}";
-        print(fullName);
+        firstnameController.text = userData!['firstname'] ?? '';
+        lastnameController.text = userData!['lastname'] ?? '';
+        bornDateController.text = userData!['bornDate'] ?? '';
+        adressController.text = userData!['adress'] ?? '';
+        passwordController.text = userData!['password'] ?? '';
+        print(firstnameController.text);
+        print(lastnameController.text);
+        print(bornDateController.text);
+        print(passwordController.text);
+        print(adressController.text);
       });
     }
   }
 
-  String capitalizeFirstLetter(String text) {
-    if (text.isEmpty) {
-      return text;
+  Future<void> _saveUserData() async {
+    if (currentUser != null) {
+      final DocumentReference userDoc =
+          FirebaseFirestore.instance.collection('users').doc(currentUser!.uid);
+      if (userDoc.id.isNotEmpty) {
+        return userDoc
+            .update({
+              'firstname': firstnameController.text,
+              'lastname': lastnameController.text,
+              'bornDate': bornDateController.text,
+              'adress': adressController.text,
+              'password': passwordController.text,
+            })
+            .then((value) => print("User Info Updated"))
+            .catchError((error) => print("Failed to update user info: $error"));
+      } else {
+        return userDoc
+            .set({
+              'firstname': firstnameController.text,
+              'lastname': lastnameController.text,
+              'bornDate': bornDateController.text,
+              'adress': adressController.text,
+              'password': passwordController.text,
+            })
+            .then((value) => print("User Info Updated"))
+            .catchError((error) => print("Failed to update user info: $error"));
+      }
     }
-    return text[0].toUpperCase() + text.substring(1);
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    _loadUserData();
   }
 
   @override
@@ -76,12 +111,37 @@ class _PersonalInformationsPageState extends State<PersonalInformationsPage> {
                 padding: EdgeInsets.only(top: height - (height * (718 / 812))),
                 child: SingleChildScrollView(
                   child: Column(children: [
-                    Text(fullName,
-                        style: const TextStyle(
-                            color: Colors.black,
-                            fontSize: 32,
-                            fontFamily: "Poppins",
-                            fontWeight: FontWeight.w400)),
+                    TextFieldSign(
+                      title: 'Prénom',
+                      controller: firstnameController,
+                      keyboardType: TextInputType.name,
+                      hintText: 'Saisissez votre prénom',
+                    ),
+                    TextFieldSign(
+                      title: 'Nom',
+                      controller: lastnameController,
+                      keyboardType: TextInputType.name,
+                      hintText: 'Saisissez votre nom',
+                    ),
+                    TextFieldSign(
+                      isDate: true,
+                      title: 'Date de naissance',
+                      controller: bornDateController,
+                      keyboardType: TextInputType.datetime,
+                      hintText: 'Saisissez votre date de naissance',
+                    ),
+                    TextFieldSign(
+                      title: 'Adresse',
+                      controller: adressController,
+                      keyboardType: TextInputType.datetime,
+                      hintText: 'Saisissez votre adresse',
+                    ),
+                    TextFieldSign(
+                      title: 'Mot de passe',
+                      controller: passwordController,
+                      keyboardType: TextInputType.text,
+                      hintText: 'Saisissez votre mot de passe',
+                    ),
                     SizedBox(
                       height: height / 7,
                     )
