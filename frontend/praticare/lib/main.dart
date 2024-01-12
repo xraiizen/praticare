@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:go_router/go_router.dart';
-import 'package:praticare/pages/AccountPage.dart';
+import 'package:praticare/pages/Profil/AccountPage.dart';
 import 'package:praticare/pages/AllComponentsScreen.dart';
 import 'package:praticare/pages/AppointmentPage.dart';
 import 'package:praticare/pages/ErrorPage.dart';
 import 'package:praticare/pages/FavoritePage.dart';
 import 'package:praticare/pages/HomePage.dart';
 import 'package:praticare/pages/LoginPage.dart';
+import 'package:praticare/pages/Profil/PersonalInformationsPage.dart';
 import 'package:praticare/pages/SearchMapPage.dart';
 import 'package:praticare/pages/SearchPage.dart';
 import 'package:praticare/pages/SignInAndUpPage.dart';
@@ -173,18 +174,30 @@ final GoRouter _router = GoRouter(
               ),
             ),
             GoRoute(
-              path: 'Account',
-              name: 'Account',
-              pageBuilder: (context, state) => CustomTransitionPage<void>(
-                key: state.pageKey,
-                child: const AccountPage(
-                  title: "Compte",
-                ),
-                transitionsBuilder:
-                    (context, animation, secondaryAnimation, child) =>
-                        FadeTransition(opacity: animation, child: child),
-              ),
-            ),
+                path: 'Account',
+                name: 'Account',
+                pageBuilder: (context, state) => CustomTransitionPage<void>(
+                      key: state.pageKey,
+                      child: const AccountPage(
+                        title: "Compte",
+                      ),
+                      transitionsBuilder:
+                          (context, animation, secondaryAnimation, child) =>
+                              FadeTransition(opacity: animation, child: child),
+                    ),
+                routes: [
+                  GoRoute(
+                    path: "PersonalInformationsPage",
+                    name: 'PersonalInformationsPage',
+                    pageBuilder: (context, state) => CustomTransitionPage<void>(
+                      key: state.pageKey,
+                      child: PersonalInformationsPage(),
+                      transitionsBuilder:
+                          (context, animation, secondaryAnimation, child) =>
+                              FadeTransition(opacity: animation, child: child),
+                    ),
+                  ),
+                ]),
             GoRoute(
               path: 'AllComponents',
               name: 'AllComponents',
