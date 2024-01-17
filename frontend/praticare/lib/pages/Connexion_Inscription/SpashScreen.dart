@@ -22,8 +22,8 @@ class _SplashScreenState extends State<SplashScreen> {
   void initialization() async {
     await Future.delayed(const Duration(seconds: 1));
 
-    // Vérifiez si un utilisateur est déjà connecté
     // GoRouter.of(context).pushReplacementNamed("AllComponents");
+    // Vérifiez si un utilisateur est déjà connecté
     if (FirebaseAuth.instance.currentUser != null) {
       GoRouter.of(context).pushReplacementNamed(
           "Home"); // Redirigez vers la page d'accueil si l'utilisateur est déjà connecté

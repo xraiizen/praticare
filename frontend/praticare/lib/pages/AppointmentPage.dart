@@ -33,25 +33,28 @@ class _AppointmentPageState extends State<AppointmentPage> {
       bottomNavigationBar: CircularBottomBar(
         selectedIndex: _selectedIndex,
       ),
-      body: Column(
-        children: [
-          Center(
-            child: SingleChildScrollView(
-                child: SizedBox(
-              width: MediaQuery.of(context).size.width,
-              height: MediaQuery.of(context).size.height,
-              child: SectionHome(isRow: false, title: 'Rendez-vous', children: [
-                CardPageRendezVous(
-                  name: name,
-                  specialite: specialite,
-                  adresse: adresse,
-                  heure: heure,
-                  date: date,
-                ),
-              ]),
-            )),
-          ),
-        ],
+      body: SafeArea(
+        child: Column(
+          children: [
+            Center(
+              child: SingleChildScrollView(
+                  child: SizedBox(
+                width: MediaQuery.of(context).size.width,
+                // height: MediaQuery.of(context).size.height,
+                child:
+                    SectionHome(isRow: false, title: 'Rendez-vous', children: [
+                  CardPageRendezVous(
+                    name: name,
+                    specialite: specialite,
+                    adresse: adresse,
+                    heure: heure,
+                    date: date,
+                  ),
+                ]),
+              )),
+            ),
+          ],
+        ),
       ),
     );
   }

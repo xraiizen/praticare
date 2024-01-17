@@ -76,9 +76,9 @@ class _CircularBottomBarState extends State<CircularBottomBar> {
       normalIconColor: theme.violetText,
       barBackgroundColor: Colors.white,
       animationDuration: const Duration(milliseconds: 0),
-      backgroundBoxShadow: [
+      backgroundBoxShadow: const [
         BoxShadow(
-          color: const Color.fromARGB(0, 196, 196, 196).withOpacity(0.2),
+          color: Colors.transparent,
           blurRadius: 10,
         ),
       ],
