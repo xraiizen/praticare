@@ -1,40 +1,39 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:praticare/models/userModel.dart';
+// ignore_for_file: file_names
 
 class School {
-  final String? imageUrl;
-  final String name;
-  final String metier;
-  final String dateRdvPasser;
-  final String address;
-
+  final String id;
+  final String adresse;
+  final String codePostal;
+  final String nom;
+  final String secteur;
+  final String ville;
+  double latitude;
+  double longitude;
   School({
-    this.imageUrl,
-    required this.name,
-    required this.metier,
-    required this.dateRdvPasser,
-    required this.address,
+    required this.id,
+    required this.adresse,
+    required this.codePostal,
+    required this.nom,
+    required this.secteur,
+    required this.ville,
+    required this.latitude,
+    required this.longitude,
   });
 
-  factory School.fromDocument(DocumentSnapshot doc) {
+  factory School.fromMap(Map<String, dynamic> map, String documentId) {
     return School(
-      imageUrl: doc['imageUrl'],
-      name: doc['firstname'],
-      metier: doc['metier'],
-      dateRdvPasser: doc['dateRdvPasser'],
-      address: doc['address'],
+      id: documentId,
+      adresse: map['adresse'],
+      codePostal: map['code_postal'],
+      nom: map['nom'],
+      secteur: map['secteur'],
+      ville: map['ville'],
+      latitude: map['latitude'] ?? 0.0,
+      longitude: map['longitude'] ?? 0.0,
     );
   }
-
-  // Convertir une Ecole en Map pour Firestore
-  Map<String, dynamic> toMap() {
-    return {
-      'imageUrl': imageUrl ?? 'assets/images/ecole_de_medecine.png',
-      'name': name,
-      'metier': metier,
-      'dateRdvPasser': dateRdvPasser,
-      'address': address,
-      'role': UserType.Ecole,
-    };
+  @override
+  toString() {
+    return 'School{id: $id, adresse: $adresse, codePostal: $codePostal, nom: $nom, secteur: $secteur, ville: $ville, latitude: $latitude, longitude: $longitude}';
   }
 }
