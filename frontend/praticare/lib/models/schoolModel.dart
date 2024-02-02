@@ -7,9 +7,12 @@ class School {
   final String nom;
   final String secteur;
   final String ville;
+  final String numeroTel;
   double latitude;
   double longitude;
+  bool isFavorite;
   School({
+    required this.numeroTel,
     required this.id,
     required this.adresse,
     required this.codePostal,
@@ -18,6 +21,7 @@ class School {
     required this.ville,
     required this.latitude,
     required this.longitude,
+    this.isFavorite = false,
   });
 
   factory School.fromMap(Map<String, dynamic> map, String documentId) {
@@ -28,12 +32,14 @@ class School {
       nom: map['nom'],
       secteur: map['secteur'],
       ville: map['ville'],
+      numeroTel: map['numero_tel'],
       latitude: map['latitude'] ?? 0.0,
       longitude: map['longitude'] ?? 0.0,
+      isFavorite: map['isFavorite'] ?? false,
     );
   }
   @override
   toString() {
-    return 'School{id: $id, adresse: $adresse, codePostal: $codePostal, nom: $nom, secteur: $secteur, ville: $ville, latitude: $latitude, longitude: $longitude}';
+    return 'School{id: $id, adresse: $adresse, codePostal: $codePostal, nom: $nom, secteur: $secteur, ville: $ville, latitude: $latitude, longitude: $longitude, numeroTel: $numeroTel , isFavorite: $isFavorite}';
   }
 }

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:intl/date_symbol_data_local.dart';
 import 'package:flutter/services.dart';
 import 'package:go_router/go_router.dart';
 import 'package:praticare/pages/Connexion_Inscription/LoginPage.dart';
@@ -12,6 +13,7 @@ import 'package:praticare/pages/ErrorPage.dart';
 import 'package:praticare/pages/FavoritePage.dart';
 import 'package:praticare/pages/HomePage.dart';
 import 'package:praticare/pages/Profil/PersonalInformationsPage.dart';
+import 'package:praticare/pages/SchoolDetailPage.dart';
 import 'package:praticare/pages/SearchMapPage.dart';
 import 'package:praticare/pages/SearchPage.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -27,6 +29,7 @@ void main() async {
     DeviceOrientation.portraitUp,
     DeviceOrientation.portraitDown,
   ]);
+  await initializeDateFormatting('fr_FR', null);
   runApp(const MyApp());
 }
 
@@ -39,6 +42,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp.router(
       title: 'Praticare',
       debugShowCheckedModeBanner: false,
+      locale: const Locale('fr', 'FR'),
       theme: ThemeData(
         primaryColor: theme.primary400,
         fontFamily: 'Poppins',
@@ -146,6 +150,20 @@ final GoRouter _router = GoRouter(
                     (context, animation, secondaryAnimation, child) =>
                         FadeTransition(opacity: animation, child: child),
               ),
+            ),
+            GoRoute(
+              path: 'school/:id',
+              pageBuilder: (context, state) {
+                final schoolId = state
+                    .params['id']!; // Récupère l'ID de l'école depuis l'URL
+                return CustomTransitionPage<void>(
+                  key: state.pageKey,
+                  child: SchoolDetailPage(schoolId: schoolId),
+                  transitionsBuilder:
+                      (context, animation, secondaryAnimation, child) =>
+                          FadeTransition(opacity: animation, child: child),
+                );
+              },
             ),
             GoRoute(
               path: 'Favories',
