@@ -234,7 +234,9 @@ class _SchoolDetailPageState extends State<SchoolDetailPage> {
                     height:
                         MediaQuery.of(context).size.height - 27 - heightHeader,
                     padding: const EdgeInsets.only(top: 5, left: 5, right: 5),
-                    child: const MyDatePicker(),
+                    child: MyDatePicker(
+                      schoolID: widget.schoolId,
+                    ),
                   )),
             ],
           ),

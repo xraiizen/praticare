@@ -2,19 +2,26 @@
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:intl/intl.dart';
 import 'package:flutter/material.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:praticare/models/disponibilite.dart';
 import 'package:praticare/theme/theme.dart' as theme;
 
 class MyDatePicker extends StatefulWidget {
-  const MyDatePicker({super.key});
+  final String schoolID;
+  const MyDatePicker({super.key, required this.schoolID});
 
   @override
   _MyDatePickerState createState() => _MyDatePickerState();
 }
 
 class _MyDatePickerState extends State<MyDatePicker> {
+  final FirebaseFirestore _firestore = FirebaseFirestore.instance;
+
+  // Identifiant de l'école pour laquelle charger les données
+  // À définir selon votre logique d'application
+  final String schoolId = "yourSchoolIdHere";
+
   List<TimeOfDay> timeSlots = [];
-  int crossAxisCount = 3;
-  double childAspectRatio = 3 / 1.5;
   TimeOfDay? selectedTime;
   DateTime selectedDate = DateTime.now();
   List<String> months = [
@@ -34,7 +41,10 @@ class _MyDatePickerState extends State<MyDatePicker> {
   @override
   void initState() {
     super.initState();
-    addTimeSlot();
+    // addTimeSlot();
+    // fetchDisponibilites(widget.schoolID, selectedDate).then((value) {
+    //   print(value);
+    // });
   }
 
   void addTimeSlot() {
@@ -45,6 +55,38 @@ class _MyDatePickerState extends State<MyDatePicker> {
         });
       }
     }
+  }
+
+  Future<List<Disponibilite>> fetchDisponibilites(
+      String ecoleId, DateTime date) async {
+    FirebaseFirestore firestore = FirebaseFirestore.instance;
+
+    // Début de la journée en UTC (minuit)
+    DateTime startOfDay = DateTime.utc(date.year, date.month, date.day);
+    // Fin de la journée en UTC (juste avant minuit)
+    DateTime endOfDay =
+        DateTime.utc(date.year, date.month, date.day, 23, 59, 59);
+
+    // Conversion en Timestamps
+    Timestamp startTimestamp = Timestamp.fromDate(startOfDay);
+    Timestamp endTimestamp = Timestamp.fromDate(endOfDay);
+    print(startTimestamp);
+    print(endTimestamp);
+    // Requête Firestore pour obtenir les disponibilités entre le début et la fin de la journée
+    QuerySnapshot querySnapshot = await firestore
+        .collection('ecole')
+        .doc(ecoleId)
+        .collection('Disponibilites')
+        .where("Date", isGreaterThanOrEqualTo: startTimestamp)
+        .where("Date", isLessThanOrEqualTo: endTimestamp)
+        .get();
+
+    // Traitement des résultats
+    List<Disponibilite> disponibilites = querySnapshot.docs.map((doc) {
+      return Disponibilite.fromFirestore(doc);
+    }).toList();
+
+    return disponibilites;
   }
 
   @override
@@ -82,6 +124,7 @@ class _MyDatePickerState extends State<MyDatePicker> {
                   onTap: () {
                     setState(() {
                       selectedDate = day;
+                      fetchDisponibilites(widget.schoolID, selectedDate);
                     });
                   },
                   child: Container(
