@@ -29,6 +29,21 @@ class School {
   });
 
   factory School.fromMap(Map<String, dynamic> map, String documentId) {
+    var rawRendezVous = map['rendez-vous'] as List<dynamic>? ?? [];
+    List<Map<String, dynamic>> rendezVous = [];
+
+    for (var element in rawRendezVous) {
+      if (element is Map<String, dynamic>) {
+        rendezVous.add(element);
+      } else {
+        print("Warning: encountered a non-map element in rendez-vous list");
+      }
+    }
+    // Handling horairesDeFermeture casting
+    var rawHorairesDeFermeture =
+        map['horaire de fermeture'] as List<dynamic>? ?? [];
+    List<String?> horairesDeFermeture =
+        rawHorairesDeFermeture.map((e) => e as String?).toList();
     return School(
       id: documentId,
       adresse: map['adresse'],
@@ -40,8 +55,8 @@ class School {
       latitude: map['latitude'] ?? 0.0,
       longitude: map['longitude'] ?? 0.0,
       isFavorite: map['isFavorite'] ?? false,
-      horairesDeFermeture: map['horaire de fermeture'],
-      rendezVous: map['rendez-vous'],
+      horairesDeFermeture: horairesDeFermeture,
+      rendezVous: rendezVous,
     );
   }
   @override

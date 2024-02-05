@@ -3,17 +3,18 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
+import 'package:praticare/models/schoolModel.dart';
 import 'package:praticare/theme/theme.dart' as theme;
 
 class HoursSelector extends StatefulWidget {
-  const HoursSelector({super.key});
+  final School school;
+  const HoursSelector({super.key, required this.school});
 
   @override
   _HoursSelectorState createState() => _HoursSelectorState();
 }
 
 class _HoursSelectorState extends State<HoursSelector> {
-  final FirebaseFirestore _firestore = FirebaseFirestore.instance;
   List<TimeOfDay> timeSlots = [];
   TimeOfDay? selectedTime;
 

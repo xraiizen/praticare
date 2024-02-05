@@ -55,10 +55,11 @@ class _SchoolDetailPageState extends State<SchoolDetailPage> {
       // Gérer les erreurs éventuelles
       debugPrint("Erreur lors de la récupération de l'école: $e");
     }
+    debugPrint("school: ${school.toString()}");
   }
 
-  void getFavoriteStatus() async {
-    isFavorite = await FirebaseUtils.isFavorite(widget.schoolId);
+  void getFavoriteStatus() {
+    isFavorite = school.isFavorite;
     setState(() {});
   }
 
@@ -240,7 +241,7 @@ class _SchoolDetailPageState extends State<SchoolDetailPage> {
                     child: Stack(
                       children: [
                         MyDatePicker(
-                          schoolID: widget.schoolId,
+                          school: school,
                         ),
                         Padding(
                           padding: const EdgeInsets.only(bottom: 20),

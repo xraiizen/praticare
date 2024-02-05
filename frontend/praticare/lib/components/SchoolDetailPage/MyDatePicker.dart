@@ -3,10 +3,11 @@ import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:praticare/components/SchoolDetailPage/DaySelector.dart';
 import 'package:praticare/components/SchoolDetailPage/HoursSelector.dart';
+import 'package:praticare/models/schoolModel.dart';
 
 class MyDatePicker extends StatefulWidget {
-  final String schoolID;
-  const MyDatePicker({super.key, required this.schoolID});
+  final School school;
+  const MyDatePicker({super.key, required this.school});
 
   @override
   _MyDatePickerState createState() => _MyDatePickerState();
@@ -22,9 +23,13 @@ class _MyDatePickerState extends State<MyDatePicker> {
         mainAxisAlignment: MainAxisAlignment.start,
         children: <Widget>[
           // Jours de la semaine
-          DaySelector(schoolID: widget.schoolID),
+          DaySelector(
+            school: widget.school,
+          ),
           // Créneaux horaires et lignes pointillées
-          const HoursSelector(),
+          HoursSelector(
+            school: widget.school,
+          ),
         ],
       ),
     );

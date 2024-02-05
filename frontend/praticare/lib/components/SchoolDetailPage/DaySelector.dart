@@ -1,11 +1,12 @@
 // ignore_for_file: library_private_types_in_public_api, depend_on_referenced_packages, file_names, must_be_immutable
 import 'package:flutter/material.dart';
+import 'package:praticare/models/schoolModel.dart';
 import 'package:praticare/theme/theme.dart' as theme;
 import 'package:intl/intl.dart' as intl;
 
 class DaySelector extends StatefulWidget {
-  String schoolID;
-  DaySelector({super.key, required this.schoolID});
+  final School school;
+  DaySelector({super.key, required this.school});
 
   @override
   _DaySelectorState createState() => _DaySelectorState();
