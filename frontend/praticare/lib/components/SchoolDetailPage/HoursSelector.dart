@@ -43,35 +43,33 @@ class _HoursSelectorState extends State<HoursSelector> {
         physics: const NeverScrollableScrollPhysics(),
         semanticChildCount: timeSlots.length,
         children: [
-          Expanded(
-            child: StaggeredGrid.count(
-              crossAxisCount: 3,
-              mainAxisSpacing: 1,
-              crossAxisSpacing: 1,
-              children: [
-                for (var i = 0; i < timeSlots.length; i++)
-                  i % 7 != 0
-                      ? StaggeredGridTile.count(
-                          crossAxisCellCount: 1,
-                          mainAxisCellCount: 0.5,
-                          child: timeSlotWidget(timeSlots[i]),
-                        )
-                      : StaggeredGridTile.count(
-                          crossAxisCellCount: 3,
-                          mainAxisCellCount: 0.3,
-                          child: Row(
-                            children: [
-                              Text(
-                                "${timeSlots[i].hour}h   ",
-                                style: TextStyle(color: theme.violetText),
-                              ),
-                              MySeparator(
-                                color: theme.violetText,
-                              ),
-                            ],
-                          )),
-              ],
-            ),
+          StaggeredGrid.count(
+            crossAxisCount: 3,
+            mainAxisSpacing: 1,
+            crossAxisSpacing: 1,
+            children: [
+              for (var i = 0; i < timeSlots.length; i++)
+                i % 7 != 0
+                    ? StaggeredGridTile.count(
+                        crossAxisCellCount: 1,
+                        mainAxisCellCount: 0.5,
+                        child: timeSlotWidget(timeSlots[i]),
+                      )
+                    : StaggeredGridTile.count(
+                        crossAxisCellCount: 3,
+                        mainAxisCellCount: 0.3,
+                        child: Row(
+                          children: [
+                            Text(
+                              "${timeSlots[i].hour}h   ",
+                              style: TextStyle(color: theme.violetText),
+                            ),
+                            MySeparator(
+                              color: theme.violetText,
+                            ),
+                          ],
+                        )),
+            ],
           ),
           const SizedBox(height: 100)
         ],

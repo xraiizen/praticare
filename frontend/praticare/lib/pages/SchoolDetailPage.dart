@@ -1,7 +1,6 @@
 // ignore_for_file: file_names, library_private_types_in_public_api
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
 import 'package:praticare/components/SchoolDetailPage/MyDatePicker.dart';
 import 'package:praticare/models/schoolModel.dart';
 import 'package:praticare/theme/theme.dart' as theme;
@@ -71,163 +70,156 @@ class _SchoolDetailPageState extends State<SchoolDetailPage> {
         body: SafeArea(
           child: Column(
             children: [
-              Container(
-                  padding: const EdgeInsets.only(left: 20, right: 20, top: 10),
-                  width: double.infinity,
-                  height: heightHeader,
-                  child: Expanded(
-                    child: Column(
+              Expanded(
+                  child: Container(
+                padding: const EdgeInsets.only(left: 20, right: 20, top: 10),
+                width: double.infinity,
+                height: heightHeader,
+                child: Column(
+                  children: [
+                    Flex(
+                      direction: Axis.horizontal,
                       children: [
-                        Flex(
-                          direction: Axis.horizontal,
-                          children: [
-                            Expanded(
-                              flex: 2,
-                              child: Align(
-                                alignment: Alignment.centerLeft,
-                                child: IconButton(
-                                  onPressed: () {
-                                    Navigator.pop(context, true);
-                                  },
-                                  icon: Icon(
-                                    Icons.arrow_back,
-                                    size: iconSize,
-                                  ),
-                                  color: Colors.white,
-                                ),
+                        Expanded(
+                          flex: 2,
+                          child: Align(
+                            alignment: Alignment.centerLeft,
+                            child: IconButton(
+                              onPressed: () {
+                                Navigator.pop(context, true);
+                              },
+                              icon: Icon(
+                                Icons.arrow_back,
+                                size: iconSize,
                               ),
+                              color: Colors.white,
                             ),
-
-                            // Utilisez Expanded pour forcer les boutons à prendre l'espace minimal, centrant ainsi l'image
-                            const Expanded(
-                              flex: 4,
-                              child: CircleAvatar(
-                                radius: 40,
-                                backgroundColor: Colors.white,
-                                child: CircleAvatar(
-                                  radius: 38,
-                                  backgroundImage: AssetImage(
-                                      'assets/images/ecole_de_medecine.png'),
-                                ),
-                              ),
-                            ),
-
-                            // Mettez les boutons dans un widget pour les grouper ensemble
-                            Expanded(
-                                flex: 1,
-                                child: IconButton(
-                                  icon: isFavorite
-                                      ? Icon(
-                                          Icons.favorite,
-                                          color: Colors.white,
-                                          size: iconSize,
-                                        )
-                                      : Icon(
-                                          Icons.favorite_border,
-                                          size: iconSize,
-                                          color: Colors.white,
-                                        ),
-                                  onPressed: () {
-                                    FirebaseUtils.toggleFavorite(
-                                        widget.schoolId);
-                                    setState(() {});
-                                  },
-                                )),
-                            Expanded(
-                              flex: 1,
-                              child: IconButton(
-                                onPressed: () {
-                                  // Partager l'école
-                                },
-                                icon: Icon(
-                                  Icons.info_outline,
-                                  size: iconSize,
-                                ),
-                                color: Colors.white,
-                              ),
-                            ),
-                          ],
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.symmetric(vertical: 10),
-                          child: Text(school.nom,
-                              style: const TextStyle(
-                                  color: Colors.white,
-                                  fontFamily: 'Poppins',
-                                  fontSize: 32,
-                                  fontWeight: FontWeight.w400)),
-                        ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: [
-                            Text(
-                              school.adresse,
-                              style: const TextStyle(
-                                  color: Colors.white,
-                                  fontFamily: 'Poppins',
-                                  fontSize: 14,
-                                  fontWeight: FontWeight.w400),
-                            ),
-                            Text(
-                              school.numeroTel,
-                              style: const TextStyle(
-                                  color: Colors.white,
-                                  fontFamily: 'Poppins',
-                                  fontSize: 14,
-                                  fontWeight: FontWeight.w400),
-                            )
-                          ],
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.only(top: 10),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                            children: [
-                              TextButton(
-                                  style: TextButton.styleFrom(
-                                      fixedSize: const Size(150, 40),
-                                      foregroundColor: theme.violetText,
-                                      backgroundColor: Colors.white,
-                                      textStyle: const TextStyle(
-                                          fontSize: 14,
-                                          fontWeight: FontWeight.w400)),
-                                  onPressed: () {},
-                                  child: const Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceEvenly,
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.center,
-                                    children: [
-                                      Icon(Icons.place_outlined),
-                                      Text("Afficher le lieu")
-                                    ],
-                                  )),
-                              TextButton(
-                                style: TextButton.styleFrom(
-                                    fixedSize: const Size(150, 40),
-                                    foregroundColor: theme.violetText,
-                                    backgroundColor: Colors.white,
-                                    textStyle: const TextStyle(
-                                        fontSize: 14,
-                                        fontWeight: FontWeight.w400)),
-                                onPressed: () {},
-                                child: const Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceEvenly,
-                                  crossAxisAlignment: CrossAxisAlignment.center,
-                                  children: [
-                                    Icon(Icons.phone),
-                                    Text("Appeler")
-                                  ],
-                                ),
-                              ),
-                            ],
                           ),
+                        ),
+
+                        // Utilisez Expanded pour forcer les boutons à prendre l'espace minimal, centrant ainsi l'image
+                        const Expanded(
+                          flex: 4,
+                          child: CircleAvatar(
+                            radius: 40,
+                            backgroundColor: Colors.white,
+                            child: CircleAvatar(
+                              radius: 38,
+                              backgroundImage: AssetImage(
+                                  'assets/images/ecole_de_medecine.png'),
+                            ),
+                          ),
+                        ),
+
+                        // Mettez les boutons dans un widget pour les grouper ensemble
+                        Expanded(
+                            flex: 1,
+                            child: IconButton(
+                              icon: isFavorite
+                                  ? Icon(
+                                      Icons.favorite,
+                                      color: Colors.white,
+                                      size: iconSize,
+                                    )
+                                  : Icon(
+                                      Icons.favorite_border,
+                                      size: iconSize,
+                                      color: Colors.white,
+                                    ),
+                              onPressed: () {
+                                FirebaseUtils.toggleFavorite(widget.schoolId);
+                                setState(() {});
+                              },
+                            )),
+                        Expanded(
+                          flex: 1,
+                          child: IconButton(
+                            onPressed: () {
+                              // Partager l'école
+                            },
+                            icon: Icon(
+                              Icons.info_outline,
+                              size: iconSize,
+                            ),
+                            color: Colors.white,
+                          ),
+                        ),
+                      ],
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(vertical: 10),
+                      child: Text(school.nom,
+                          style: const TextStyle(
+                              color: Colors.white,
+                              fontFamily: 'Poppins',
+                              fontSize: 32,
+                              fontWeight: FontWeight.w400)),
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Text(
+                          school.adresse,
+                          style: const TextStyle(
+                              color: Colors.white,
+                              fontFamily: 'Poppins',
+                              fontSize: 14,
+                              fontWeight: FontWeight.w400),
+                        ),
+                        Text(
+                          school.numeroTel,
+                          style: const TextStyle(
+                              color: Colors.white,
+                              fontFamily: 'Poppins',
+                              fontSize: 14,
+                              fontWeight: FontWeight.w400),
                         )
                       ],
                     ),
-                  )),
+                    Padding(
+                      padding: const EdgeInsets.only(top: 10),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: [
+                          TextButton(
+                              style: TextButton.styleFrom(
+                                  fixedSize: const Size(150, 40),
+                                  foregroundColor: theme.violetText,
+                                  backgroundColor: Colors.white,
+                                  textStyle: const TextStyle(
+                                      fontSize: 14,
+                                      fontWeight: FontWeight.w400)),
+                              onPressed: () {},
+                              child: const Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceEvenly,
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: [
+                                  Icon(Icons.place_outlined),
+                                  Text("Afficher le lieu")
+                                ],
+                              )),
+                          TextButton(
+                            style: TextButton.styleFrom(
+                                fixedSize: const Size(150, 40),
+                                foregroundColor: theme.violetText,
+                                backgroundColor: Colors.white,
+                                textStyle: const TextStyle(
+                                    fontSize: 14, fontWeight: FontWeight.w400)),
+                            onPressed: () {},
+                            child: const Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [Icon(Icons.phone), Text("Appeler")],
+                            ),
+                          ),
+                        ],
+                      ),
+                    )
+                  ],
+                ),
+              )),
               ClipRRect(
                   borderRadius: const BorderRadius.only(
                       topLeft: Radius.circular(40),

@@ -6,13 +6,14 @@ import 'package:intl/intl.dart' as intl;
 
 class DaySelector extends StatefulWidget {
   final School school;
-  DaySelector({super.key, required this.school});
+  const DaySelector({super.key, required this.school});
 
   @override
   _DaySelectorState createState() => _DaySelectorState();
 }
 
 class _DaySelectorState extends State<DaySelector> {
+  late School school;
   DateTime selectedDate = DateTime.now();
   List<String> months = [
     "Janvier",
@@ -29,13 +30,27 @@ class _DaySelectorState extends State<DaySelector> {
     "Décembre"
   ];
 
+  bool isClosed(DateTime day) {
+    // Convertit le DateTime en nom de jour
+    String dayName = intl.DateFormat('EEEE', "fr_FR").format(day).toLowerCase();
+    // Vérifie si le jour est dans la liste des jours de fermeture
+    bool result = widget.school.horairesDeFermeture
+        .map((e) => e?.toLowerCase())
+        .contains(dayName);
+    debugPrint("Day: $dayName, isClosed: $result");
+    return result;
+  }
+
   Color getColorsText(DateTime date) {
-    if (date.day.compareTo(DateTime.now().day) < 0) {
-      return const Color(0xFFBDBDBD);
+    // Ajout de la vérification pour les jours de fermeture
+    if (isClosed(date)) {
+      return const Color(0xFFBDBDBD); // Gris pour les jours fermés
+    } else if (date.compareTo(DateTime.now()) < 0) {
+      return const Color(0xFFBDBDBD); // Gris pour les jours passés
     } else if (date.day == selectedDate.day) {
-      return Colors.white;
+      return Colors.white; // Blanc pour le jour sélectionné
     } else {
-      return Colors.black;
+      return Colors.black; // Noir pour les autres jours
     }
   }
 
@@ -85,6 +100,8 @@ class _DaySelectorState extends State<DaySelector> {
   @override
   void initState() {
     super.initState();
+    school = widget.school;
+    debugPrint(school.toString());
   }
 
   @override
@@ -111,8 +128,9 @@ class _DaySelectorState extends State<DaySelector> {
             itemBuilder: (context, index) {
               DateTime day =
                   DateTime(selectedDate.year, selectedDate.month, index + 1);
+              print("Day: $day");
               return InkWell(
-                onTap: day.day.compareTo(DateTime.now().day) >= 0
+                onTap: (!isClosed(day) && day.compareTo(DateTime.now()) >= 0)
                     ? () {
                         setState(() {
                           // TODO FETCH DISPONIBILITE FOR THIS DAY
