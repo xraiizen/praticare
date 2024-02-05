@@ -1,6 +1,7 @@
 // ignore_for_file: file_names, library_private_types_in_public_api
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 import 'package:praticare/components/SchoolDetailPage/MyDatePicker.dart';
 import 'package:praticare/models/schoolModel.dart';
 import 'package:praticare/theme/theme.dart' as theme;
@@ -26,7 +27,9 @@ class _SchoolDetailPageState extends State<SchoolDetailPage> {
       ville: '',
       latitude: 0.0,
       longitude: 0.0,
-      isFavorite: false);
+      isFavorite: false,
+      horairesDeFermeture: [],
+      rendezVous: []);
   bool isFavorite = false;
 
   @override
@@ -234,8 +237,33 @@ class _SchoolDetailPageState extends State<SchoolDetailPage> {
                     height:
                         MediaQuery.of(context).size.height - 27 - heightHeader,
                     padding: const EdgeInsets.only(top: 5, left: 5, right: 5),
-                    child: MyDatePicker(
-                      schoolID: widget.schoolId,
+                    child: Stack(
+                      children: [
+                        MyDatePicker(
+                          schoolID: widget.schoolId,
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.only(bottom: 20),
+                          child: Align(
+                            alignment: Alignment.bottomCenter,
+                            child: TextButton(
+                                onPressed: () {},
+                                style: TextButton.styleFrom(
+                                  fixedSize: Size(
+                                      MediaQuery.of(context).size.width * 0.5,
+                                      45),
+                                  shadowColor: Colors.black,
+                                  foregroundColor: Colors.white,
+                                  elevation: 5,
+                                  backgroundColor: theme.violetText,
+                                ),
+                                child: const Text("Réserver",
+                                    style: TextStyle(
+                                        fontSize: 20,
+                                        fontWeight: FontWeight.w400))),
+                          ),
+                        )
+                      ],
                     ),
                   )),
             ],

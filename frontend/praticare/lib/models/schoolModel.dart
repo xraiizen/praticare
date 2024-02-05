@@ -8,6 +8,8 @@ class School {
   final String secteur;
   final String ville;
   final String numeroTel;
+  List<String?> horairesDeFermeture;
+  List<Map<String, dynamic>> rendezVous;
   double latitude;
   double longitude;
   bool isFavorite;
@@ -21,6 +23,8 @@ class School {
     required this.ville,
     required this.latitude,
     required this.longitude,
+    required this.horairesDeFermeture,
+    required this.rendezVous,
     this.isFavorite = false,
   });
 
@@ -36,10 +40,12 @@ class School {
       latitude: map['latitude'] ?? 0.0,
       longitude: map['longitude'] ?? 0.0,
       isFavorite: map['isFavorite'] ?? false,
+      horairesDeFermeture: map['horaire de fermeture'],
+      rendezVous: map['rendez-vous'],
     );
   }
   @override
   toString() {
-    return 'School{id: $id, adresse: $adresse, codePostal: $codePostal, nom: $nom, secteur: $secteur, ville: $ville, latitude: $latitude, longitude: $longitude, numeroTel: $numeroTel , isFavorite: $isFavorite}';
+    return 'School{id: $id, adresse: $adresse, codePostal: $codePostal, nom: $nom, secteur: $secteur, ville: $ville, latitude: $latitude, longitude: $longitude, numeroTel: $numeroTel , isFavorite: $isFavorite, horairesDeFermeture: $horairesDeFermeture, rendezVous: $rendezVous}';
   }
 }
