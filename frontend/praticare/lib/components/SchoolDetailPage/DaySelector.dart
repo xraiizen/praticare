@@ -6,7 +6,13 @@ import 'package:intl/intl.dart' as intl;
 
 class DaySelector extends StatefulWidget {
   final School school;
-  const DaySelector({super.key, required this.school});
+  final Function(DateTime) onDaySelected;
+  final DateTime selectedDay;
+  const DaySelector(
+      {super.key,
+      required this.school,
+      required this.onDaySelected,
+      required this.selectedDay});
 
   @override
   _DaySelectorState createState() => _DaySelectorState();
@@ -14,7 +20,8 @@ class DaySelector extends StatefulWidget {
 
 class _DaySelectorState extends State<DaySelector> {
   late School school;
-  DateTime selectedDate = DateTime.now();
+  late DateTime selectedDate;
+  ScrollController _scrollController = ScrollController();
   List<String> months = [
     "Janvier",
     "Février",
@@ -30,24 +37,33 @@ class _DaySelectorState extends State<DaySelector> {
     "Décembre"
   ];
 
-  bool isClosed(DateTime day) {
-    // Convertit le DateTime en nom de jour
-    String dayName = intl.DateFormat('EEEE', "fr_FR").format(day).toLowerCase();
-    // Vérifie si le jour est dans la liste des jours de fermeture
-    bool result = widget.school.horairesDeFermeture
-        .map((e) => e?.toLowerCase())
-        .contains(dayName);
-    debugPrint("Day: $dayName, isClosed: $result");
-    return result;
+  @override
+  void initState() {
+    super.initState();
+    selectedDate = widget.selectedDay;
+    school = widget.school;
+    _scrollController = ScrollController();
+    WidgetsBinding.instance.addPostFrameCallback((_) => scrollToCurrentDay());
   }
 
   Color getColorsText(DateTime date) {
-    // Ajout de la vérification pour les jours de fermeture
-    if (isClosed(date)) {
-      return const Color(0xFFBDBDBD); // Gris pour les jours fermés
-    } else if (date.compareTo(DateTime.now()) < 0) {
-      return const Color(0xFFBDBDBD); // Gris pour les jours passés
-    } else if (date.day == selectedDate.day) {
+    // Obtenez la date actuelle sans l'heure
+    DateTime now = DateTime.now();
+    DateTime today = DateTime(now.year, now.month, now.day);
+    DateTime selectedDay =
+        DateTime(selectedDate.year, selectedDate.month, selectedDate.day);
+    date = DateTime(date.year, date.month,
+        date.day); // Assurez-vous que date n'a pas d'heure
+
+    // Conversion du jour de la semaine en nom complet
+    String dayName =
+        intl.DateFormat('EEEE', 'fr_FR').format(date).toLowerCase();
+
+    // Vérification si le jour est passé ou est un jour de fermeture
+    if (date.isBefore(today) || school.horairesDeFermeture.contains(dayName)) {
+      return const Color(
+          0xFFBDBDBD); // Gris pour les jours passés et les jours de fermeture
+    } else if (date.isAtSameMomentAs(selectedDay)) {
       return Colors.white; // Blanc pour le jour sélectionné
     } else {
       return Colors.black; // Noir pour les autres jours
@@ -77,6 +93,7 @@ class _DaySelectorState extends State<DaySelector> {
                     setState(() {
                       selectedDate = DateTime(
                           selectedDate.year, index + 1, selectedDate.day);
+                      widget.onDaySelected(selectedDate);
                     });
                     Navigator.of(context).pop();
                   },
@@ -97,11 +114,22 @@ class _DaySelectorState extends State<DaySelector> {
     return firstDayNextMonth.difference(firstDayThisMonth).inDays;
   }
 
+  void scrollToCurrentDay() {
+    // Calculez la position à laquelle vous souhaitez faire défiler
+    int dayIndex = DateTime.now().day - 1; // Index du jour actuel dans le mois
+    double scrollPosition =
+        dayIndex * 55.0; // Remplacez 55.0 par la largeur de votre item + margin
+    _scrollController.animateTo(
+      scrollPosition,
+      duration: const Duration(milliseconds: 500),
+      curve: Curves.easeInOut,
+    );
+  }
+
   @override
-  void initState() {
-    super.initState();
-    school = widget.school;
-    debugPrint(school.toString());
+  void dispose() {
+    _scrollController.dispose(); // N'oubliez pas de disposer le contrôleur
+    super.dispose();
   }
 
   @override
@@ -123,21 +151,30 @@ class _DaySelectorState extends State<DaySelector> {
         SizedBox(
           height: 75,
           child: ListView.builder(
+            controller: _scrollController,
             scrollDirection: Axis.horizontal,
             itemCount: daysInMonth(selectedDate),
             itemBuilder: (context, index) {
               DateTime day =
                   DateTime(selectedDate.year, selectedDate.month, index + 1);
-              print("Day: $day");
+              String dayName =
+                  intl.DateFormat('EEEE', 'fr_FR').format(day).toLowerCase();
+
+// Obtenez la date actuelle sans l'heure pour une comparaison juste des dates
+              DateTime now = DateTime.now();
+              DateTime today = DateTime(now.year, now.month, now.day);
+              day = DateTime(day.year, day.month, day.day);
               return InkWell(
-                onTap: (!isClosed(day) && day.compareTo(DateTime.now()) >= 0)
-                    ? () {
-                        setState(() {
-                          // TODO FETCH DISPONIBILITE FOR THIS DAY
-                          selectedDate = day;
-                        });
-                      }
-                    : null,
+                onTap: () {
+                  // Activez le onTap seulement si le jour n'est pas passé et n'est pas un jour de fermeture
+                  if (!day.isBefore(today) &&
+                      !school.horairesDeFermeture.contains(dayName)) {
+                    setState(() {
+                      selectedDate = day;
+                    });
+                    widget.onDaySelected(day);
+                  }
+                },
                 child: Container(
                   width: 55,
                   height: 75,

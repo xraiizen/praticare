@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:intl/date_symbol_data_local.dart';
+import 'package:intl/date_symbol_data_local.dart' as intl;
 import 'package:flutter/services.dart';
 import 'package:go_router/go_router.dart';
 import 'package:praticare/pages/Connexion_Inscription/LoginPage.dart';
@@ -29,7 +29,7 @@ void main() async {
     DeviceOrientation.portraitUp,
     DeviceOrientation.portraitDown,
   ]);
-  await initializeDateFormatting('fr_FR', null);
+  await intl.initializeDateFormatting('fr_FR', null);
   runApp(const MyApp());
 }
 

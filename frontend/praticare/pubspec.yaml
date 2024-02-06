@@ -51,7 +51,8 @@ dependencies:
   circular_bottom_navigation: ^2.3.0
   geocoding: ^2.1.1
   flutter_staggered_grid_view: ^0.7.0
-  
+  flutter_local_notifications: ^16.3.2
+  add_2_calendar: ^3.0.1
 
 
 dev_dependencies:

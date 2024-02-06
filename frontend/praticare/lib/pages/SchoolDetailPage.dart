@@ -5,6 +5,7 @@ import 'package:praticare/components/SchoolDetailPage/MyDatePicker.dart';
 import 'package:praticare/models/schoolModel.dart';
 import 'package:praticare/theme/theme.dart' as theme;
 import 'package:praticare/utils/firebase_utils.dart';
+import 'package:add_2_calendar/add_2_calendar.dart';
 
 class SchoolDetailPage extends StatefulWidget {
   final String schoolId;
@@ -16,31 +17,21 @@ class SchoolDetailPage extends StatefulWidget {
 
 class _SchoolDetailPageState extends State<SchoolDetailPage> {
   final double iconSize = 30;
-  School school = School(
-      numeroTel: '',
-      id: '',
-      adresse: '',
-      codePostal: '',
-      nom: '',
-      secteur: '',
-      ville: '',
-      latitude: 0.0,
-      longitude: 0.0,
-      isFavorite: false,
-      horairesDeFermeture: [],
-      rendezVous: []);
-  bool isFavorite = false;
+  School? school;
+  bool isLoading = true; // Ajouter un indicateur de chargement
+  DateTime? rdvDateTime;
 
   @override
   void initState() {
     super.initState();
     getSchoolInfo(widget.schoolId);
-    getFavoriteStatus();
   }
 
   Future<void> getSchoolInfo(String schoolId) async {
+    setState(() {
+      isLoading = true; // Commence le chargement
+    });
     try {
-      // Accéder à la collection où sont stockées les écoles
       DocumentSnapshot docSnapshot = await FirebaseFirestore.instance
           .collection('ecole')
           .doc(schoolId)
@@ -48,22 +39,117 @@ class _SchoolDetailPageState extends State<SchoolDetailPage> {
       if (docSnapshot.exists) {
         School currschool = School.fromMap(
             docSnapshot.data() as Map<String, dynamic>, docSnapshot.id);
-        school = currschool;
+        setState(() {
+          school = currschool;
+          isLoading = false; // Fin du chargement
+        });
       }
     } catch (e) {
-      // Gérer les erreurs éventuelles
       debugPrint("Erreur lors de la récupération de l'école: $e");
+      setState(() {
+        isLoading =
+            false; // Assurez-vous de mettre fin au chargement même en cas d'erreur
+      });
     }
-    debugPrint("school: ${school.toString()}");
   }
 
-  void getFavoriteStatus() {
-    isFavorite = school.isFavorite;
-    setState(() {});
+  void onDateTimeSelected(DateTime? dateTime) {
+    setState(() {
+      rdvDateTime = dateTime;
+    });
+    debugPrint(dateTime.toString());
+  }
+
+  void addReminderToCalendar(DateTime startDateTime) {
+    final Event event = Event(
+      title: 'Rendez-vous ${school!.nom}',
+      description:
+          'Rendez-vous avec l\'école ${school!.nom} a l\'adresse : ${school!.adresse}.',
+      startDate: startDateTime,
+      endDate: startDateTime.add(const Duration(hours: 1)),
+      // Assumption: 1 hour duration
+      location: school!.adresse,
+    );
+
+    Add2Calendar.addEvent2Cal(event);
+  }
+
+  Future<void> addAppointmentToArray(DateTime appointmentDateTime) async {
+    String userId = FirebaseUtils
+        .getCurrentUserId()!; // Assurez-vous d'obtenir l'ID d'utilisateur actuel
+
+    // Préparez le rendez-vous à ajouter
+    var newAppointment = {
+      userId: Timestamp.fromDate(appointmentDateTime),
+    };
+
+    // Document de l'école
+    DocumentReference schoolDocRef =
+        FirebaseFirestore.instance.collection('ecole').doc(school!.id);
+
+    // Ajouter le rendez-vous au tableau dans le document de l'école
+    await schoolDocRef.update({
+      'rendez-vous': FieldValue.arrayUnion([newAppointment]),
+    });
+
+    // Document de l'utilisateur
+    DocumentReference userDocRef =
+        FirebaseFirestore.instance.collection('users').doc(userId);
+
+    // Ajouter le rendez-vous au tableau dans le document de l'utilisateur
+
+    await userDocRef.set({
+      'rendez-vous': FieldValue.arrayUnion([newAppointment]),
+    }, SetOptions(merge: true)).catchError((error) => debugPrint(
+        "Erreur lors de l'ajout du rendez-vous à l'utilisateur: $error"));
+  }
+
+  void showThankYouDialog(
+    BuildContext context,
+  ) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Text("Rendez-vous confirmé"),
+          content: const Text(
+              "Merci d'avoir pris rendez-vous. Voulez-vous ajouter un rappel pour cet événement ?"),
+          actions: <Widget>[
+            TextButton(
+              child: const Text("Non"),
+              onPressed: () {
+                Navigator.of(context).pop(); // Ferme le dialogue
+              },
+            ),
+            TextButton(
+              child: const Text("Ajouter un rappel"),
+              onPressed: () {
+                addReminderToCalendar(rdvDateTime!);
+                // Ici, ajoutez la logique pour ajouter un rappel
+                Navigator.of(context)
+                    .pop(); // Optionnellement ferme le dialogue
+              },
+            ),
+          ],
+        );
+      },
+    );
   }
 
   @override
   Widget build(BuildContext context) {
+    if (isLoading) {
+      // Afficher un indicateur de chargement pendant le chargement des données
+      return const Scaffold(
+        body: Center(child: CircularProgressIndicator()),
+      );
+    }
+    // Assurez-vous que `school` n'est pas null ici avant de continuer
+    if (school == null) {
+      return const Scaffold(
+        body: Center(child: Text("L'école n'a pas été trouvée")),
+      );
+    }
     double heightHeader = MediaQuery.of(context).size.height / 3;
     return Scaffold(
         backgroundColor: theme.violetText,
@@ -115,7 +201,7 @@ class _SchoolDetailPageState extends State<SchoolDetailPage> {
                         Expanded(
                             flex: 1,
                             child: IconButton(
-                              icon: isFavorite
+                              icon: school!.isFavorite
                                   ? Icon(
                                       Icons.favorite,
                                       color: Colors.white,
@@ -127,8 +213,9 @@ class _SchoolDetailPageState extends State<SchoolDetailPage> {
                                       color: Colors.white,
                                     ),
                               onPressed: () {
-                                FirebaseUtils.toggleFavorite(widget.schoolId);
-                                setState(() {});
+                                setState(() {
+                                  // TODO GESTION DES FAVORIS
+                                });
                               },
                             )),
                         Expanded(
@@ -148,7 +235,7 @@ class _SchoolDetailPageState extends State<SchoolDetailPage> {
                     ),
                     Padding(
                       padding: const EdgeInsets.symmetric(vertical: 10),
-                      child: Text(school.nom,
+                      child: Text(school!.nom,
                           style: const TextStyle(
                               color: Colors.white,
                               fontFamily: 'Poppins',
@@ -160,7 +247,7 @@ class _SchoolDetailPageState extends State<SchoolDetailPage> {
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
                         Text(
-                          school.adresse,
+                          school!.adresse,
                           style: const TextStyle(
                               color: Colors.white,
                               fontFamily: 'Poppins',
@@ -168,7 +255,7 @@ class _SchoolDetailPageState extends State<SchoolDetailPage> {
                               fontWeight: FontWeight.w400),
                         ),
                         Text(
-                          school.numeroTel,
+                          school!.numeroTel,
                           style: const TextStyle(
                               color: Colors.white,
                               fontFamily: 'Poppins',
@@ -233,26 +320,50 @@ class _SchoolDetailPageState extends State<SchoolDetailPage> {
                     child: Stack(
                       children: [
                         MyDatePicker(
-                          school: school,
+                          school: school!,
+                          onDateTimeSelected: onDateTimeSelected,
                         ),
                         Padding(
                           padding: const EdgeInsets.only(bottom: 20),
                           child: Align(
                             alignment: Alignment.bottomCenter,
                             child: TextButton(
-                                onPressed: () {},
+                                onPressed: () {
+                                  if (rdvDateTime != null) {
+                                    // Appeler la fonction pour ajouter le rendez-vous
+                                    if (rdvDateTime != null) {
+                                      addAppointmentToArray(rdvDateTime!)
+                                          .then((_) {
+                                        debugPrint(
+                                            "Rendez-vous ajouté avec succès");
+                                        showThankYouDialog(context);
+                                        // Peut-être montrer une confirmation à l'utilisateur ici
+                                      }).catchError((error) {
+                                        // Gérer l'erreur ici
+                                        debugPrint(
+                                            "Erreur lors de l'ajout du rendez-vous: $error");
+                                      });
+                                    }
+                                  }
+                                },
                                 style: TextButton.styleFrom(
                                   fixedSize: Size(
                                       MediaQuery.of(context).size.width * 0.5,
                                       45),
                                   shadowColor: Colors.black,
                                   foregroundColor: Colors.white,
-                                  elevation: 5,
-                                  backgroundColor: theme.violetText,
+                                  elevation: rdvDateTime != null ? 5 : 1,
+                                  backgroundColor: rdvDateTime != null
+                                      ? theme.violetText
+                                      : const Color(0xFFBDBDBD),
                                 ),
-                                child: const Text("Réserver",
+                                child: Text("Réserver",
                                     style: TextStyle(
                                         fontSize: 20,
+                                        color: rdvDateTime != null
+                                            ? Colors.white
+                                            : const Color.fromARGB(
+                                                207, 87, 87, 87),
                                         fontWeight: FontWeight.w400))),
                           ),
                         )
