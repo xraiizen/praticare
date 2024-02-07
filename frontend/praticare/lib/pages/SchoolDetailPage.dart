@@ -6,6 +6,7 @@ import 'package:praticare/models/schoolModel.dart';
 import 'package:praticare/theme/theme.dart' as theme;
 import 'package:praticare/utils/firebase_utils.dart';
 import 'package:add_2_calendar/add_2_calendar.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class SchoolDetailPage extends StatefulWidget {
   final String schoolId;
@@ -79,8 +80,11 @@ class _SchoolDetailPageState extends State<SchoolDetailPage> {
         .getCurrentUserId()!; // Assurez-vous d'obtenir l'ID d'utilisateur actuel
 
     // Préparez le rendez-vous à ajouter
-    var newAppointment = {
+    var newSchoolAppointment = {
       userId: Timestamp.fromDate(appointmentDateTime),
+    };
+    var newUserAppointment = {
+      school!.id: Timestamp.fromDate(appointmentDateTime),
     };
 
     // Document de l'école
@@ -89,7 +93,7 @@ class _SchoolDetailPageState extends State<SchoolDetailPage> {
 
     // Ajouter le rendez-vous au tableau dans le document de l'école
     await schoolDocRef.update({
-      'rendez-vous': FieldValue.arrayUnion([newAppointment]),
+      'rendez-vous': FieldValue.arrayUnion([newSchoolAppointment]),
     });
 
     // Document de l'utilisateur
@@ -99,7 +103,7 @@ class _SchoolDetailPageState extends State<SchoolDetailPage> {
     // Ajouter le rendez-vous au tableau dans le document de l'utilisateur
 
     await userDocRef.set({
-      'rendez-vous': FieldValue.arrayUnion([newAppointment]),
+      'rendez-vous': FieldValue.arrayUnion([newUserAppointment]),
     }, SetOptions(merge: true)).catchError((error) => debugPrint(
         "Erreur lors de l'ajout du rendez-vous à l'utilisateur: $error"));
   }
@@ -134,6 +138,24 @@ class _SchoolDetailPageState extends State<SchoolDetailPage> {
         );
       },
     );
+  }
+
+  Future<void> openMap(String adresse) async {
+    // Encodez l'adresse pour l'URL
+    String query = Uri.encodeComponent(adresse);
+    // Construisez l'URL pour Google Maps
+    Uri googleUrl =
+        Uri.parse('https://www.google.com/maps/search/?api=1&query=$query');
+
+    // Pour iOS, vous pouvez utiliser une URL Apple Maps si vous préférez
+    // String appleUrl = 'https://maps.apple.com/?q=$query';
+    debugPrint(googleUrl.toString());
+    if (!await launchUrl(
+      googleUrl,
+      mode: LaunchMode.externalApplication,
+    )) {
+      throw Exception('Could not open the map $googleUrl');
+    }
   }
 
   @override
@@ -277,7 +299,12 @@ class _SchoolDetailPageState extends State<SchoolDetailPage> {
                                   textStyle: const TextStyle(
                                       fontSize: 14,
                                       fontWeight: FontWeight.w400)),
-                              onPressed: () {},
+                              onPressed: () {
+                                // Afficher le lieu
+                                openMap(school!.adresse +
+                                    school!.codePostal +
+                                    school!.ville);
+                              },
                               child: const Row(
                                 mainAxisAlignment:
                                     MainAxisAlignment.spaceEvenly,
@@ -294,7 +321,12 @@ class _SchoolDetailPageState extends State<SchoolDetailPage> {
                                 backgroundColor: Colors.white,
                                 textStyle: const TextStyle(
                                     fontSize: 14, fontWeight: FontWeight.w400)),
-                            onPressed: () {},
+                            onPressed: () {
+                              Uri phoneUri = Uri(
+                                  scheme: 'tel',
+                                  path: school!.numeroTel.replaceAll(" ", ""));
+                              launchUrl(phoneUri);
+                            },
                             child: const Row(
                               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                               crossAxisAlignment: CrossAxisAlignment.center,
@@ -333,7 +365,7 @@ class _SchoolDetailPageState extends State<SchoolDetailPage> {
                                     // Appeler la fonction pour ajouter le rendez-vous
                                     if (rdvDateTime != null) {
                                       addAppointmentToArray(rdvDateTime!)
-                                          .then((_) {
+                                          .then((value) {
                                         debugPrint(
                                             "Rendez-vous ajouté avec succès");
                                         showThankYouDialog(context);

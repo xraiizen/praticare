@@ -10,12 +10,10 @@ import 'package:praticare/pages/Profil/AccountPage.dart';
 import 'package:praticare/pages/AllComponentsScreen.dart';
 import 'package:praticare/pages/AppointmentPage.dart';
 import 'package:praticare/pages/ErrorPage.dart';
-import 'package:praticare/pages/FavoritePage.dart';
 import 'package:praticare/pages/HomePage.dart';
 import 'package:praticare/pages/Profil/PersonalInformationsPage.dart';
 import 'package:praticare/pages/SchoolDetailPage.dart';
 import 'package:praticare/pages/SearchMapPage.dart';
-import 'package:praticare/pages/SearchPage.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'firebase_options.dart';
 import 'package:praticare/theme/theme.dart' as theme;
@@ -126,19 +124,6 @@ final GoRouter _router = GoRouter(
               ),
             ),
             GoRoute(
-              path: 'SearchPage',
-              name: 'SearchPage',
-              pageBuilder: (context, state) => CustomTransitionPage<void>(
-                key: state.pageKey,
-                child: const SearchPage(
-                  title: 'Recherche',
-                ),
-                transitionsBuilder:
-                    (context, animation, secondaryAnimation, child) =>
-                        FadeTransition(opacity: animation, child: child),
-              ),
-            ),
-            GoRoute(
               path: 'SearchMapPage',
               name: 'SearchMapPage',
               pageBuilder: (context, state) => CustomTransitionPage<void>(
@@ -165,19 +150,19 @@ final GoRouter _router = GoRouter(
                 );
               },
             ),
-            GoRoute(
-              path: 'Favories',
-              name: 'Favorite',
-              pageBuilder: (context, state) => CustomTransitionPage<void>(
-                key: state.pageKey,
-                child: const FavoritePage(
-                  title: "Favories",
-                ),
-                transitionsBuilder:
-                    (context, animation, secondaryAnimation, child) =>
-                        FadeTransition(opacity: animation, child: child),
-              ),
-            ),
+            // GoRoute(
+            //   path: 'Favories',
+            //   name: 'Favorite',
+            //   pageBuilder: (context, state) => CustomTransitionPage<void>(
+            //     key: state.pageKey,
+            //     child: const FavoritePage(
+            //       title: "Favories",
+            //     ),
+            //     transitionsBuilder:
+            //         (context, animation, secondaryAnimation, child) =>
+            //             FadeTransition(opacity: animation, child: child),
+            //   ),
+            // ),
             GoRoute(
               path: 'Appointment',
               name: 'Appointment',

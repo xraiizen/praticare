@@ -10,6 +10,7 @@ class School {
   final String numeroTel;
   List<String?> horairesDeFermeture;
   List<Map<String, dynamic>> rendezVous;
+  DateTime? rendezVousDate;
   double latitude;
   double longitude;
   bool isFavorite;

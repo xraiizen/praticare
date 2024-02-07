@@ -1,21 +1,20 @@
 // ignore_for_file: unused_import, library_private_types_in_public_api, must_be_immutable
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:go_router/go_router.dart';
+import 'package:praticare/models/schoolModel.dart';
 import 'package:praticare/theme/theme.dart' as theme;
+import 'package:intl/intl.dart';
 
 class CardPraticien extends StatefulWidget {
   bool? isInRow;
   final String urlImage;
-  final String name;
+  School school;
 
-  final String metier;
-  final String dateRdvPasser;
   CardPraticien({
     super.key,
+    required this.school,
     required this.urlImage,
-    required this.name,
-    required this.metier,
-    required this.dateRdvPasser,
     this.isInRow,
   });
 
@@ -44,7 +43,8 @@ class _CardPraticienState extends State<CardPraticien> {
                   borderRadius: BorderRadius.circular(15),
                 ),
                 onTap: () {
-                  print("card");
+                  debugPrint(widget.school.id);
+                  GoRouter.of(context).push('/school/${widget.school.id}');
                 },
                 child: Padding(
                   padding:
@@ -61,7 +61,7 @@ class _CardPraticienState extends State<CardPraticien> {
                         ),
                       ),
                       Text(
-                        widget.name,
+                        widget.school.nom,
                         textAlign: TextAlign.center,
                         style: const TextStyle(
                           fontSize: 14,
@@ -87,7 +87,8 @@ class _CardPraticienState extends State<CardPraticien> {
                     borderRadius: BorderRadius.circular(15),
                   ),
                   onTap: () {
-                    print("card");
+                    debugPrint(widget.school.id);
+                    GoRouter.of(context).push('/school/${widget.school.id}');
                   },
                   child: Padding(
                     padding: const EdgeInsets.all(8.0),
@@ -109,7 +110,7 @@ class _CardPraticienState extends State<CardPraticien> {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Text(
-                                widget.name,
+                                widget.school.nom,
                                 overflow: TextOverflow.ellipsis,
                                 style: const TextStyle(
                                   fontSize: 14,
@@ -117,20 +118,23 @@ class _CardPraticienState extends State<CardPraticien> {
                                 ),
                               ),
                               Text(
-                                widget.metier,
+                                widget.school.secteur,
                                 style: const TextStyle(
                                     fontSize: 12, fontWeight: FontWeight.w400),
                               ),
                             ],
                           ),
                         ),
-                        Text(
-                          widget.dateRdvPasser,
-                          style: const TextStyle(
-                              color: Colors.grey,
-                              fontSize: 11,
-                              fontWeight: FontWeight.w400),
-                        )
+                        widget.school.rendezVousDate != null
+                            ? Text(
+                                DateFormat('dd/MM/yy')
+                                    .format(widget.school.rendezVousDate!),
+                                style: const TextStyle(
+                                    color: Colors.grey,
+                                    fontSize: 11,
+                                    fontWeight: FontWeight.w400),
+                              )
+                            : const SizedBox.shrink(),
                       ],
                     ),
                   ),
