@@ -19,6 +19,10 @@ import 'firebase_options.dart';
 import 'package:praticare/theme/theme.dart' as theme;
 
 void main() async {
+  FlutterError.onError = (FlutterErrorDetails details) {
+    FlutterError.dumpErrorToConsole(details);
+    // Ajouter toute logique supplémentaire ici, comme un enregistrement dans un fichier journal
+  };
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
@@ -28,7 +32,9 @@ void main() async {
     DeviceOrientation.portraitDown,
   ]);
   await intl.initializeDateFormatting('fr_FR', null);
-  runApp(const MyApp());
+  WidgetsFlutterBinding.ensureInitialized();
+  SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersive)
+      .then((_) => runApp(const MyApp()));
 }
 
 class MyApp extends StatelessWidget {
@@ -194,7 +200,7 @@ final GoRouter _router = GoRouter(
                     name: 'PersonalInformationsPage',
                     pageBuilder: (context, state) => CustomTransitionPage<void>(
                       key: state.pageKey,
-                      child: PersonalInformationsPage(),
+                      child: const PersonalInformationsPage(),
                       transitionsBuilder:
                           (context, animation, secondaryAnimation, child) =>
                               FadeTransition(opacity: animation, child: child),

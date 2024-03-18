@@ -6,6 +6,7 @@ import 'package:praticare/components/cardPraticiens/CardPageRendezVous.dart';
 import 'package:praticare/components/sections/SectionFavorie.dart';
 import 'package:praticare/utils/firebase_utils.dart';
 import '../components/interface/BottomBar.dart';
+import 'package:praticare/theme/theme.dart' as theme;
 import 'package:intl/intl.dart';
 
 class AppointmentPage extends StatefulWidget {
@@ -17,7 +18,6 @@ class AppointmentPage extends StatefulWidget {
 }
 
 class _AppointmentPageState extends State<AppointmentPage> {
-  final int _selectedIndex = 1;
   List<Map<String, dynamic>> appointments = [];
   List<Map<String, dynamic>> filteredAppointments = [];
   TextEditingController searchController = TextEditingController();
@@ -39,7 +39,7 @@ class _AppointmentPageState extends State<AppointmentPage> {
     String userId = FirebaseUtils.getCurrentUserId()!;
     var userDoc = FirebaseFirestore.instance.collection('users').doc(userId);
     var userData = await userDoc.get();
-    var userRendezvous = userData.data()?['rendez-vous'] as List<dynamic> ?? [];
+    var userRendezvous = userData.data()?['rendez-vous'] as List<dynamic>;
 
     for (var rdv in userRendezvous) {
       String ecoleId = rdv.keys.first;
@@ -83,42 +83,54 @@ class _AppointmentPageState extends State<AppointmentPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       bottomNavigationBar: CircularBottomBar(
-        selectedIndex: _selectedIndex,
+        key: GlobalKey(),
+        indexNav: 1,
       ),
       body: SafeArea(
         child: Column(
           children: [
             Padding(
-              padding: const EdgeInsets.all(8.0),
+              padding: const EdgeInsets.only(
+                  top: 45, right: 20, left: 20, bottom: 0),
               child: TextField(
                 controller: searchController,
-                decoration: const InputDecoration(
-                  labelText: 'Chercher un rendez-vous',
-                  suffixIcon: Icon(Icons.search),
+                style: const TextStyle(color: Colors.white), // Couleur du texte
+                decoration: InputDecoration(
+                  filled: true, // Ajout d'un fond
+                  fillColor: theme.violetText, // Couleur de fond violet
+                  hintText:
+                      'Chercher un rendez-vous', // Texte à afficher quand le champ est vide
+                  hintStyle: TextStyle(
+                      color: Colors.white
+                          .withOpacity(0.7)), // Style du texte indicatif
+                  prefixIcon: const Icon(Icons.search,
+                      color: Colors.white), // Icône de loupe
+                  border: OutlineInputBorder(
+                    // Bordure du champ
+                    borderRadius: BorderRadius.circular(30), // Bords arrondis
+                    borderSide: BorderSide.none, // Pas de bordure visible
+                  ),
                 ),
                 onChanged: filterAppointments,
               ),
             ),
             Expanded(
-              child: SingleChildScrollView(
-                child: SizedBox(
-                  width: MediaQuery.of(context).size.width,
-                  child: SectionHome(
-                    isRow: false,
-                    title: '',
-                    children: filteredAppointments
-                        .map((appointment) => CardPageRendezVous(
-                              // Utilisation de filteredAppointments ici
-                              name: appointment['name'],
-                              specialite: appointment['specialite'],
-                              adresse: appointment['adresse'],
-                              heure: DateFormat('HH:mm')
-                                  .format(appointment['dateTimeRdv'].toDate()),
-                              date: DateFormat('dd/MM/yyyy')
-                                  .format(appointment['dateTimeRdv'].toDate()),
-                            ))
-                        .toList(),
-                  ),
+              child: SizedBox(
+                width: MediaQuery.of(context).size.width,
+                child: SectionHome(
+                  title: '',
+                  children: filteredAppointments
+                      .map((appointment) => CardPageRendezVous(
+                            idecole: appointment['idecole'],
+                            name: appointment['name'],
+                            specialite: appointment['specialite'],
+                            adresse: appointment['adresse'],
+                            heure: DateFormat('HH:mm')
+                                .format(appointment['dateTimeRdv'].toDate()),
+                            date: DateFormat('dd/MM/yyyy')
+                                .format(appointment['dateTimeRdv'].toDate()),
+                          ))
+                      .toList(),
                 ),
               ),
             ),

@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:praticare/theme/theme.dart' as theme;
 
 class SectionHome extends StatelessWidget {
-  final String title;
+  String? title;
   String? subtitle;
   bool? isRow;
   final List<Widget?> children;
@@ -23,7 +23,7 @@ class SectionHome extends StatelessWidget {
   Widget build(BuildContext context) {
     isRow == null || isRow == false ? isRow = false : isRow;
     showMore == null || showMore == false ? showMore = false : showMore;
-    String titleIsRowIsEmplty = title;
+    String titleIsRowIsEmplty = title ?? '';
     if (titleIsRowIsEmplty.isNotEmpty &&
         titleIsRowIsEmplty.toLowerCase().endsWith('s')) {
       titleIsRowIsEmplty =
@@ -40,13 +40,15 @@ class SectionHome extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(
-                  title,
-                  style: const TextStyle(
-                    fontSize: 20,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
+                title != null && title!.isNotEmpty
+                    ? Text(
+                        title!,
+                        style: const TextStyle(
+                          fontSize: 20,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      )
+                    : const SizedBox.shrink(),
                 showMore!
                     ? TextButton(
                         onPressed: () {},

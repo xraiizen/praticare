@@ -21,7 +21,6 @@ class _SearchMapPageState extends State<SearchMapPage> {
       Completer<GoogleMapController>();
   final DraggableScrollableController _draggableScrollableController =
       DraggableScrollableController();
-  final int _selectedIndex = 3;
   static const CameraPosition _kGooglePlex = CameraPosition(
     target: LatLng(48.113759033957265, -1.6780924051285282),
     zoom: 13,
@@ -91,26 +90,25 @@ class _SearchMapPageState extends State<SearchMapPage> {
       extendBody: true,
       extendBodyBehindAppBar: true,
       bottomNavigationBar: CircularBottomBar(
-        selectedIndex: _selectedIndex,
+        key: GlobalKey(),
+        indexNav: 3,
       ),
-      body: SafeArea(
-        child: Stack(
-          children: [
-            GoogleMap(
-              initialCameraPosition: _kGooglePlex,
-              onMapCreated: (GoogleMapController controller) {
-                _controller.complete(controller);
-                controller.setMapStyle(global.customMapStyle);
-              },
-              markers: Set<Marker>.of(markers),
-            ),
-            DraggableSearch(
-              schools: schools,
-              onSchoolSelected: _onSchoolSelected,
-              draggableScrollableController: _draggableScrollableController,
-            ),
-          ],
-        ),
+      body: Stack(
+        children: [
+          GoogleMap(
+            initialCameraPosition: _kGooglePlex,
+            onMapCreated: (GoogleMapController controller) {
+              _controller.complete(controller);
+              controller.setMapStyle(global.customMapStyle);
+            },
+            markers: Set<Marker>.of(markers),
+          ),
+          DraggableSearch(
+            schools: schools,
+            onSchoolSelected: _onSchoolSelected,
+            draggableScrollableController: _draggableScrollableController,
+          ),
+        ],
       ),
     );
   }

@@ -20,8 +20,12 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   bool sectionRdvPasser = false;
   bool sectionFavoris = true;
-  final int _selectedIndex = 0;
   var refreshKey = GlobalKey<RefreshIndicatorState>();
+
+  @override
+  void initState() {
+    super.initState();
+  }
 
   Future<void> refresh() async {
     refreshKey.currentState?.show(atTop: false);
@@ -117,7 +121,8 @@ class _HomePageState extends State<HomePage> {
         extendBodyBehindAppBar: true,
         appBar: MyAppBar().appBar(AppBar().preferredSize.height, context),
         bottomNavigationBar: CircularBottomBar(
-          selectedIndex: _selectedIndex,
+          key: GlobalKey(),
+          indexNav: 0,
         ),
         body: Padding(
           padding: EdgeInsets.only(top: AppBar().preferredSize.height + 130),

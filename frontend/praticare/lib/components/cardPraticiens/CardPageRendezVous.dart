@@ -1,9 +1,11 @@
 // ignore_for_file: unused_import, library_private_types_in_public_api, must_be_immutable
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:go_router/go_router.dart';
 import 'package:praticare/theme/theme.dart' as theme;
 
 class CardPageRendezVous extends StatefulWidget {
+  String idecole;
   String name;
   String specialite;
   String heure;
@@ -12,6 +14,7 @@ class CardPageRendezVous extends StatefulWidget {
 
   CardPageRendezVous({
     super.key,
+    required this.idecole,
     required this.name,
     required this.specialite,
     required this.heure,
@@ -40,6 +43,7 @@ class _CardPageRendezVousState extends State<CardPageRendezVous> {
         child: InkWell(
           onTap: () {
             print("Rendez-vous ${widget.name}");
+            GoRouter.of(context).push('/school/${widget.idecole}');
           },
           child: Column(
             children: [

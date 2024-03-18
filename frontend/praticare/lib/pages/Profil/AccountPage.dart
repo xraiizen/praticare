@@ -18,7 +18,6 @@ class AccountPage extends StatefulWidget {
 }
 
 class _AccountPageState extends State<AccountPage> {
-  final int _selectedIndex = 2;
   User? currentUser;
   Map<String, dynamic>? userData;
   late String fullName = '';
@@ -74,7 +73,8 @@ class _AccountPageState extends State<AccountPage> {
         extendBody: true,
         backgroundColor: theme.violetText,
         bottomNavigationBar: CircularBottomBar(
-          selectedIndex: _selectedIndex,
+          key: GlobalKey(),
+          indexNav: 2,
         ),
         body: Stack(
           children: [
@@ -108,7 +108,7 @@ class _AccountPageState extends State<AccountPage> {
                       subtitle:
                           "Apporter des modifications à vos informations personnelles",
                       onTap: () => GoRouter.of(context)
-                          .goNamed("PersonalInformationsPage"),
+                          .pushNamed("PersonalInformationsPage"),
                     ),
                     // * Informations de connexion *
                     BtnAccountPage(

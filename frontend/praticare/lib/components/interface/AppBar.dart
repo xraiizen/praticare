@@ -6,7 +6,8 @@ import 'package:praticare/theme/theme.dart' as theme;
 
 class MyAppBar {
   appBar(height, context) => PreferredSize(
-        preferredSize: Size(MediaQuery.of(context).size.width, height + 130),
+        preferredSize: Size(MediaQuery.of(context).size.width,
+            MediaQuery.of(context).size.height),
         child: Stack(
           children: <Widget>[
             ClipRRect(

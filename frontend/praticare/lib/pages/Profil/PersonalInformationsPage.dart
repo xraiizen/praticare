@@ -15,7 +15,6 @@ class PersonalInformationsPage extends StatefulWidget {
 }
 
 class _PersonalInformationsPageState extends State<PersonalInformationsPage> {
-  final int _selectedIndex = 2;
   User? currentUser;
   Map<String, dynamic>? userData;
 
@@ -24,22 +23,24 @@ class _PersonalInformationsPageState extends State<PersonalInformationsPage> {
   final bornDateController = TextEditingController();
   final adressController = TextEditingController();
   Future<void> _loadUserData() async {
-    currentUser = FirebaseAuth.instance.currentUser;
-    if (currentUser != null) {
-      final DocumentReference userDoc =
-          FirebaseFirestore.instance.collection('users').doc(currentUser!.uid);
-      final DocumentSnapshot userSnapshot = await userDoc.get();
-      setState(() {
-        userData = userSnapshot.data() as Map<String, dynamic>?;
-        firstnameController.text = userData!['firstname'] ?? '';
-        lastnameController.text = userData!['lastname'] ?? '';
-        bornDateController.text = userData!['bornDate'] ?? '';
-        adressController.text = userData!['adress'] ?? '';
-        print(firstnameController.text);
-        print(lastnameController.text);
-        print(bornDateController.text);
-        print(adressController.text);
-      });
+    try {
+      currentUser = FirebaseAuth.instance.currentUser;
+      if (currentUser != null) {
+        final DocumentReference userDoc = FirebaseFirestore.instance
+            .collection('users')
+            .doc(currentUser!.uid);
+        final DocumentSnapshot userSnapshot = await userDoc.get();
+        setState(() {
+          userData = userSnapshot.data() as Map<String, dynamic>?;
+          firstnameController.text = userData!['firstname'] ?? '';
+          lastnameController.text = userData!['lastname'] ?? '';
+          bornDateController.text = userData!['bornDate'] ?? '';
+          adressController.text = userData!['adress'] ?? '';
+        });
+      }
+    } catch (e) {
+      print("Erreur lors du chargement des données utilisateur: $e");
+      // Gérer l'erreur ou afficher un message à l'utilisateur
     }
   }
 
@@ -52,12 +53,12 @@ class _PersonalInformationsPageState extends State<PersonalInformationsPage> {
         context: context,
         builder: (BuildContext context) {
           return AlertDialog(
-            title: Text("E-mail envoyé"),
+            title: const Text("E-mail envoyé"),
             content: Text(
                 "Un e-mail de réinitialisation de mot de passe a été envoyé à $email."),
             actions: [
               TextButton(
-                child: Text("OK"),
+                child: const Text("OK"),
                 onPressed: () {
                   Navigator.of(context).pop();
                 },
@@ -149,8 +150,8 @@ class _PersonalInformationsPageState extends State<PersonalInformationsPage> {
     return Scaffold(
         extendBody: true,
         backgroundColor: theme.violetText,
-        bottomNavigationBar: CircularBottomBar(
-          selectedIndex: _selectedIndex,
+        bottomNavigationBar: const CircularBottomBar(
+          indexNav: 2,
         ),
         body: Stack(
           children: [
@@ -305,6 +306,20 @@ class _PersonalInformationsPageState extends State<PersonalInformationsPage> {
                   color: Colors.red,
                   onPressed: () {},
                   icon: const Icon(Icons.logout_outlined),
+                ),
+              ),
+            ),
+            Positioned(
+              top: height - (height * (755 / 812)),
+              left: width / 20,
+              child: IconButton(
+                onPressed: () {
+                  Navigator.pop(context);
+                },
+                icon: const Icon(
+                  Icons.arrow_back,
+                  color: Colors.white,
+                  size: 34,
                 ),
               ),
             ),

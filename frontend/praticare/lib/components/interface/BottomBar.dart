@@ -8,17 +8,14 @@ import 'package:praticare/theme/theme.dart' as theme;
 import 'package:unicons/unicons.dart';
 
 class CircularBottomBar extends StatefulWidget {
-  final int selectedIndex;
-  const CircularBottomBar({Key? key, required this.selectedIndex})
-      : super(key: key);
+  final int? indexNav;
+  const CircularBottomBar({Key? key, this.indexNav}) : super(key: key);
 
   @override
   _CircularBottomBarState createState() => _CircularBottomBarState();
 }
 
 class _CircularBottomBarState extends State<CircularBottomBar> {
-  late CircularBottomNavigationController _navigationController;
-  late int _selectedIndex;
   List<TabItem> tabItems = List.of([
     TabItem(UniconsLine.home_alt, "Accueil", theme.violetText,
         labelStyle:
@@ -34,19 +31,10 @@ class _CircularBottomBarState extends State<CircularBottomBar> {
             TextStyle(color: theme.violetText, fontWeight: FontWeight.normal)),
   ]);
 
-  @override
-  void initState() {
-    super.initState();
-    _navigationController =
-        CircularBottomNavigationController(widget.selectedIndex);
-    _selectedIndex = widget.selectedIndex;
-  }
-
   void _updateIndex(int? index) {
     setState(() {
       if (index != null) {
-        _selectedIndex = index;
-        switch (_selectedIndex) {
+        switch (index) {
           case 0:
             GoRouter.of(context).pushNamed("Home");
             break;
@@ -67,9 +55,11 @@ class _CircularBottomBarState extends State<CircularBottomBar> {
 
   @override
   Widget build(BuildContext context) {
+    CircularBottomNavigationController navigationController =
+        CircularBottomNavigationController(widget.indexNav);
     return CircularBottomNavigation(
       tabItems,
-      controller: _navigationController,
+      controller: navigationController,
       barHeight: 60,
       circleStrokeWidth: 0,
       circleSize: 55,
