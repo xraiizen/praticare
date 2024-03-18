@@ -93,11 +93,13 @@ class SectionHome extends StatelessWidget {
                                   .map((widget) => widget!)
                                   .toList()),
                     )
-                  : Center(
-                      child: Text(
-                        "vous n'avez aucun ${titleIsRowIsEmplty.toLowerCase()}",
-                        textAlign: TextAlign.center,
-                        style: const TextStyle(fontSize: 16),
+                  : Align(
+                      child: Center(
+                        child: Text(
+                          "vous n'avez aucun ${titleIsRowIsEmplty.toLowerCase()}s",
+                          textAlign: TextAlign.center,
+                          style: const TextStyle(fontSize: 16),
+                        ),
                       ),
                     )),
         ],
