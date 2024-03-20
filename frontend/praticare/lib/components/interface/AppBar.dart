@@ -2,12 +2,41 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:go_router/go_router.dart';
+import 'package:praticare/models/schoolModel.dart';
+import 'package:intl/intl.dart';
 import 'package:praticare/theme/theme.dart' as theme;
+import 'package:url_launcher/url_launcher.dart';
+
+Future<void> openMap(String adresse) async {
+  // Encodez l'adresse pour l'URL
+  String query = Uri.encodeComponent(adresse);
+  // Construisez l'URL pour Google Maps
+  Uri googleUrl =
+      Uri.parse('https://www.google.com/maps/search/?api=1&query=$query');
+
+  // Pour iOS, vous pouvez utiliser une URL Apple Maps si vous préférez
+  // String appleUrl = 'https://maps.apple.com/?q=$query';
+  debugPrint(googleUrl.toString());
+  if (!await launchUrl(
+    googleUrl,
+    mode: LaunchMode.externalApplication,
+  )) {
+    throw Exception('Could not open the map $googleUrl');
+  }
+}
 
 class MyAppBar {
-  appBar(height, context) => PreferredSize(
-        preferredSize: Size(MediaQuery.of(context).size.width,
-            MediaQuery.of(context).size.height),
+  appBar(height, context, dateTime, School school) {
+    String formattedDate = DateFormat('dd/MM/yyyy').format(dateTime);
+    String formattedTime = DateFormat('HH:mm').format(dateTime);
+    return PreferredSize(
+      preferredSize: Size(MediaQuery.of(context).size.width,
+          MediaQuery.of(context).size.height),
+      child: GestureDetector(
+        onTap: () {
+          GoRouter.of(context).push('/school/${school.id}');
+        },
         child: Stack(
           children: <Widget>[
             ClipRRect(
@@ -21,8 +50,9 @@ class MyAppBar {
                 height: height + 125,
                 width: MediaQuery.of(context).size.width,
                 // Background
-                child: const Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 15, vertical: 40),
+                child: Padding(
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 15, vertical: 40),
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.start,
                     crossAxisAlignment: CrossAxisAlignment.center,
@@ -31,7 +61,7 @@ class MyAppBar {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
-                            Text(
+                            const Text(
                               "Prochain rendez-vous",
                               style: TextStyle(
                                 fontSize: 23,
@@ -40,47 +70,52 @@ class MyAppBar {
                               ),
                             ),
                             Text(
-                              "08/12/2023",
-                              style: TextStyle(
+                              formattedDate,
+                              style: const TextStyle(
                                 fontSize: 12,
                                 fontWeight: FontWeight.w300,
                                 color: Colors.white,
                               ),
                             ),
                           ]),
-                      SizedBox(height: 10),
+                      const SizedBox(height: 10),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceAround,
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
-                          CircleAvatar(
+                          const CircleAvatar(
                             radius: 27,
                             backgroundColor: Color.fromARGB(255, 255, 255, 255),
                             child: CircleAvatar(
                               radius: 25,
-                              backgroundImage: AssetImage(
-                                  "assets/images/ecole_de_medecine.png"),
+                              backgroundImage: NetworkImage(
+                                  "https://www.magazine-cerise.com/wp-content/uploads/2021/07/ecole-medecine-1080x675.jpg"),
                             ),
                           ),
-                          Spacer(
+                          const Spacer(
                             flex: 1,
                           ),
                           Column(
                             mainAxisAlignment: MainAxisAlignment.center,
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Text(
-                                "Stonewall Middle School",
-                                style: TextStyle(
-                                  fontSize: 15,
-                                  fontWeight: FontWeight.w600,
-                                  color: Colors.white,
+                              SizedBox(
+                                width: MediaQuery.of(context).size.width * 0.5,
+                                child: Text(
+                                  school.nom,
+                                  overflow: TextOverflow.ellipsis,
+                                  maxLines: 1,
+                                  style: const TextStyle(
+                                    fontSize: 15,
+                                    fontWeight: FontWeight.w600,
+                                    color: Colors.white,
+                                  ),
                                 ),
                               ),
-                              SizedBox(height: 5),
+                              const SizedBox(height: 5),
                               Text(
-                                "Médecine Généraliste",
-                                style: TextStyle(
+                                school.secteur,
+                                style: const TextStyle(
                                   fontSize: 13,
                                   fontWeight: FontWeight.w300,
                                   color: Colors.white,
@@ -88,12 +123,12 @@ class MyAppBar {
                               ),
                             ],
                           ),
-                          Spacer(
+                          const Spacer(
                             flex: 2,
                           ),
                           Text(
-                            "11:30",
-                            style: TextStyle(
+                            formattedTime,
+                            style: const TextStyle(
                               fontSize: 28,
                               fontWeight: FontWeight.w700,
                               color: Colors.white,
@@ -130,6 +165,8 @@ class MyAppBar {
                     ),
                     onPressed: () {
                       // Add your logic here
+                      openMap(
+                          school.adresse + school.codePostal + school.ville);
                     },
                     icon: Icon(
                       Icons.location_on_outlined,
@@ -149,5 +186,7 @@ class MyAppBar {
             )
           ],
         ),
-      );
+      ),
+    );
+  }
 }

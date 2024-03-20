@@ -21,6 +21,8 @@ class _AppointmentPageState extends State<AppointmentPage> {
   List<Map<String, dynamic>> appointments = [];
   List<Map<String, dynamic>> filteredAppointments = [];
   TextEditingController searchController = TextEditingController();
+  bool isSortedAscending =
+      true; // true si tri croissant, false si tri décroissant
 
   @override
   void initState() {
@@ -79,6 +81,20 @@ class _AppointmentPageState extends State<AppointmentPage> {
     }
   }
 
+  void sortAppointments() {
+    setState(() {
+      if (isSortedAscending) {
+        filteredAppointments.sort((a, b) =>
+            b['dateTimeRdv'].toDate().compareTo(a['dateTimeRdv'].toDate()));
+      } else {
+        filteredAppointments.sort((a, b) =>
+            a['dateTimeRdv'].toDate().compareTo(b['dateTimeRdv'].toDate()));
+      }
+      isSortedAscending =
+          !isSortedAscending; // Change le sens du tri pour le prochain appui
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -86,35 +102,73 @@ class _AppointmentPageState extends State<AppointmentPage> {
         key: GlobalKey(),
         indexNav: 1,
       ),
-      body: SafeArea(
-        child: Column(
-          children: [
-            Padding(
-              padding: const EdgeInsets.only(
-                  top: 45, right: 20, left: 20, bottom: 0),
-              child: TextField(
-                controller: searchController,
-                style: const TextStyle(color: Colors.white), // Couleur du texte
-                decoration: InputDecoration(
-                  filled: true, // Ajout d'un fond
-                  fillColor: theme.violetText, // Couleur de fond violet
-                  hintText:
-                      'Chercher un rendez-vous', // Texte à afficher quand le champ est vide
-                  hintStyle: TextStyle(
-                      color: Colors.white
-                          .withOpacity(0.7)), // Style du texte indicatif
-                  prefixIcon: const Icon(Icons.search,
-                      color: Colors.white), // Icône de loupe
-                  border: OutlineInputBorder(
-                    // Bordure du champ
-                    borderRadius: BorderRadius.circular(30), // Bords arrondis
-                    borderSide: BorderSide.none, // Pas de bordure visible
+      body: Column(
+        crossAxisAlignment: CrossAxisAlignment.end,
+        children: [
+          SizedBox(
+            width: MediaQuery.of(context).size.width,
+            height: 100,
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Expanded(
+                  child: Padding(
+                    padding: const EdgeInsets.only(
+                        top: 45, right: 20, left: 20, bottom: 0),
+                    child: TextField(
+                      controller: searchController,
+                      style: const TextStyle(
+                          decoration: TextDecoration.none,
+                          decorationThickness: 0,
+                          color: Colors.white), // Couleur du texte
+                      decoration: InputDecoration(
+                        filled: true, // Ajout d'un fond
+                        fillColor: theme.violetText, // Couleur de fond violet
+                        hintText:
+                            'Chercher un rendez-vous', // Texte à afficher quand le champ est vide
+                        hintStyle: TextStyle(
+                            color: Colors.white
+                                .withOpacity(0.7)), // Style du texte indicatif
+                        prefixIcon: const Icon(Icons.search,
+                            color: Colors.white), // Icône de loupe
+                        border: OutlineInputBorder(
+                          // Bordure du champ
+                          borderRadius:
+                              BorderRadius.circular(30), // Bords arrondis
+                          borderSide: BorderSide.none, // Pas de bordure visible
+                        ),
+                      ),
+                      onChanged: filterAppointments,
+                    ),
                   ),
                 ),
-                onChanged: filterAppointments,
-              ),
+                Padding(
+                  padding: const EdgeInsets.only(right: 20, top: 50),
+                  child: IconButton(
+                    style: ButtonStyle(
+                      backgroundColor:
+                          MaterialStateProperty.all<Color>(theme.violetText),
+                      shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                        RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(30.0),
+                        ),
+                      ),
+                    ),
+                    icon: Icon(
+                        isSortedAscending
+                            ? Icons.arrow_downward
+                            : Icons.arrow_upward,
+                        color: Colors.white),
+                    onPressed: () {
+                      sortAppointments();
+                    },
+                  ),
+                ),
+              ],
             ),
-            Expanded(
+          ),
+          Expanded(
+            child: SingleChildScrollView(
               child: SizedBox(
                 width: MediaQuery.of(context).size.width,
                 child: SectionHome(
@@ -134,8 +188,8 @@ class _AppointmentPageState extends State<AppointmentPage> {
                 ),
               ),
             ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }

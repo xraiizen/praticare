@@ -1,6 +1,7 @@
 // ignore_for_file: file_names, library_private_types_in_public_api
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:praticare/components/SchoolDetailPage/MyDatePicker.dart';
 import 'package:praticare/models/schoolModel.dart';
 import 'package:praticare/theme/theme.dart' as theme;
@@ -44,6 +45,7 @@ class _SchoolDetailPageState extends State<SchoolDetailPage> {
           school = currschool;
           isLoading = false; // Fin du chargement
         });
+        print(currschool);
       }
     } catch (e) {
       debugPrint("Erreur lors de la récupération de l'école: $e");
@@ -115,14 +117,32 @@ class _SchoolDetailPageState extends State<SchoolDetailPage> {
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: const Text("Rendez-vous confirmé"),
-          content: const Text(
-              "Merci d'avoir pris rendez-vous. Voulez-vous ajouter un rappel pour cet événement ?"),
+          title: const Text(
+            "Rendez-vous confirmé",
+            textAlign: TextAlign.center,
+          ),
+          content: Container(
+            constraints: const BoxConstraints(maxHeight: 175),
+            child: const Column(
+              children: [
+                Padding(
+                  padding: EdgeInsets.only(bottom: 10),
+                  child:
+                      Icon(Icons.check_circle, color: Colors.green, size: 70),
+                ),
+                Text(
+                  "Merci d'avoir pris rendez-vous. Voulez-vous ajouter un rappel pour cet événement ?",
+                  textAlign: TextAlign.center,
+                ),
+              ],
+            ),
+          ),
           actions: <Widget>[
             TextButton(
               child: const Text("Non"),
               onPressed: () {
-                Navigator.of(context).pop(); // Ferme le dialogue
+                GoRouter.of(context).pop(); // Ferme le dialogue
+                GoRouter.of(context).pushNamed("Home");
               },
             ),
             TextButton(
@@ -130,8 +150,8 @@ class _SchoolDetailPageState extends State<SchoolDetailPage> {
               onPressed: () {
                 addReminderToCalendar(rdvDateTime!);
                 // Ici, ajoutez la logique pour ajouter un rappel
-                Navigator.of(context)
-                    .pop(); // Optionnellement ferme le dialogue
+                GoRouter.of(context).pop(); // Optionnellement ferme le dialogue
+                GoRouter.of(context).pushNamed("Home");
               },
             ),
           ],
@@ -218,30 +238,8 @@ class _SchoolDetailPageState extends State<SchoolDetailPage> {
                             ),
                           ),
                         ),
-
-                        // Mettez les boutons dans un widget pour les grouper ensemble
                         Expanded(
-                            flex: 1,
-                            child: IconButton(
-                              icon: school!.isFavorite
-                                  ? Icon(
-                                      Icons.favorite,
-                                      color: Colors.white,
-                                      size: iconSize,
-                                    )
-                                  : Icon(
-                                      Icons.favorite_border,
-                                      size: iconSize,
-                                      color: Colors.white,
-                                    ),
-                              onPressed: () {
-                                setState(() {
-                                  // TODO GESTION DES FAVORIS
-                                });
-                              },
-                            )),
-                        Expanded(
-                          flex: 1,
+                          flex: 2,
                           child: IconButton(
                             onPressed: () {
                               // Partager l'école
@@ -368,8 +366,8 @@ class _SchoolDetailPageState extends State<SchoolDetailPage> {
                                           .then((value) {
                                         debugPrint(
                                             "Rendez-vous ajouté avec succès");
-                                        showThankYouDialog(context);
                                         // Peut-être montrer une confirmation à l'utilisateur ici
+                                        showThankYouDialog(context);
                                       }).catchError((error) {
                                         // Gérer l'erreur ici
                                         debugPrint(

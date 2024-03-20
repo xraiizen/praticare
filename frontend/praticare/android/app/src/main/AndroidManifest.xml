@@ -14,7 +14,7 @@
         android:label="praticare"
         android:name="${applicationName}"
         android:enableOnBackInvokedCallback="true"
-        android:icon="@mipmap/ic_launcher">
+        android:icon="@mipmap/launcher_icon">
  
          <meta-data android:name="com.google.android.geo.API_KEY" android:value="AIzaSyDiwHHHV32_GEcwJRg9q2x33quDN5zAF7I"/>
         <activity

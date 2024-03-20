@@ -208,13 +208,16 @@ class _DraggableSearchState extends State<DraggableSearch> {
                               GoRouter.of(context).push('/school/${school.id}');
                             },
                             leading: CircleAvatar(
-                                radius: 25,
-                                backgroundColor: theme.violetText,
-                                child: const Icon(
-                                  Icons.school,
-                                  size: 30,
-                                  color: Colors.white,
-                                )),
+                              radius: 25,
+                              backgroundColor: theme.violetText,
+                              backgroundImage: NetworkImage(
+                                  "https://www.magazine-cerise.com/wp-content/uploads/2021/07/ecole-medecine-1080x675.jpg"),
+                              // child: const Icon(
+                              //   Icons.school,
+                              //   size: 30,
+                              //   color: Colors.white,
+                              // ),
+                            ),
                             title: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [

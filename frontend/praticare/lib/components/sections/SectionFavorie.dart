@@ -98,7 +98,9 @@ class SectionHome extends StatelessWidget {
                   : Align(
                       child: Center(
                         child: Text(
-                          "vous n'avez aucun ${titleIsRowIsEmplty.toLowerCase()}s",
+                          titleIsRowIsEmplty != ''
+                              ? "vous n'avez aucun ${titleIsRowIsEmplty.toLowerCase()}s"
+                              : "vous n'avez aucun rendez-vous",
                           textAlign: TextAlign.center,
                           style: const TextStyle(fontSize: 16),
                         ),
